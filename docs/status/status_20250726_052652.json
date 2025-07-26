@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-07-26T05:26:52.787934",
+  "backlog_size_by_status": {
+    "READY": 2,
+    "DONE": 1,
+    "REFINED": 1,
+    "NEW": 2
+  },
+  "completed_ids": [
+    "backlog-003"
+  ],
+  "total_items": 6,
+  "ready_items": 2,
+  "wsjf_snapshot": {
+    "top_3_ready": [
+      {
+        "id": "backlog-002",
+        "title": "Create backlog discovery and normalization system",
+        "wsjf_score": 4.8
+      },
+      {
+        "id": "backlog-001",
+        "title": "Implement CLI foundation with basic commands",
+        "wsjf_score": 3.25
+      }
+    ]
+  }
+}
