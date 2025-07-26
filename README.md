@@ -23,6 +23,7 @@ graph TD
     C --> R(Reviewer Agent)
     R -- Fails --> H{Human-in-the-Loop via UserProxyAgent}
     R -- Passes --> G(GitHub PR)
+```
 
 ⚡ Quick Start
 Install the orchestrator: pip install agentic-dev-orchestrator
@@ -31,8 +32,7 @@ Set your GitHub token: export GITHUB_TOKEN='your_personal_access_token'
 Run the orchestrator: ado run
 🛠️ Configuration
 Backlog Schema backlog/issue-123.json
-Generated json
-{
+```{
   "title": "Implement user authentication endpoint",
   "wsjf": {
     "user_business_value": 8,
@@ -42,8 +42,8 @@ Generated json
   },
   "description": "Create a new FastAPI endpoint at /auth/login."
 }
-Use code with caution.
-Json
+```
+
 Environment Variables
 Variable	Description
 GITHUB_TOKEN	A GitHub Personal Access Token for creating PRs.
