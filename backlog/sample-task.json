@@ -1,0 +1,17 @@
+{
+  "title": "Add user authentication to API",
+  "description": "Implement JWT-based authentication for the API endpoints to secure user access",
+  "wsjf": {
+    "user_business_value": 8,
+    "time_criticality": 5,
+    "risk_reduction_opportunity_enablement": 8,
+    "job_size": 5
+  },
+  "acceptance_criteria": [
+    "Users can register with email and password",
+    "Users can login and receive JWT token",
+    "Protected endpoints verify JWT tokens",
+    "Invalid tokens return 401 Unauthorized",
+    "Passwords are hashed securely"
+  ]
+}
