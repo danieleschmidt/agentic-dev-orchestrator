@@ -23,8 +23,7 @@ graph TD
     C --> R(Reviewer Agent)
     R -- Fails --> H{Human-in-the-Loop via UserProxyAgent}
     R -- Passes --> G(GitHub PR)
-Use code with caution.
-Markdown
+
 ⚡ Quick Start
 Install the orchestrator: pip install agentic-dev-orchestrator
 Initialize the project: ado init
