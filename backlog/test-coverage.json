@@ -1,0 +1,17 @@
+{
+  "title": "Add comprehensive unit tests",
+  "description": "Create pytest-based test suite for backlog_manager.py and autonomous_executor.py with >80% coverage",
+  "wsjf": {
+    "user_business_value": 3,
+    "time_criticality": 2,
+    "risk_reduction_opportunity_enablement": 8,
+    "job_size": 5
+  },
+  "acceptance_criteria": [
+    "Test coverage >80% for core modules",
+    "Tests for WSJF calculation edge cases", 
+    "Tests for discovery deduplication",
+    "Tests for status transitions",
+    "Mock tests for git operations"
+  ]
+}

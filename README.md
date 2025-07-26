@@ -26,10 +26,28 @@ graph TD
 ```
 
 ⚡ Quick Start
-Install the orchestrator: pip install agentic-dev-orchestrator
-Initialize the project: ado init
-Set your GitHub token: export GITHUB_TOKEN='your_personal_access_token'
-Run the orchestrator: ado run
+
+```bash
+# Install the orchestrator
+pip install agentic-dev-orchestrator
+
+# Initialize the project  
+ado init
+
+# Set your GitHub token
+export GITHUB_TOKEN='your_personal_access_token'
+
+# Run the orchestrator
+ado run
+```
+
+**Local Development:**
+```bash
+# Clone and install in development mode
+git clone <repo-url>
+cd agentic-dev-orchestrator
+pip install -e .
+```
 🛠️ Configuration
 Backlog Schema backlog/issue-123.json
 ```{

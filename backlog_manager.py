@@ -126,10 +126,10 @@ class BacklogManager:
         """Discover TODO/FIXME/HACK/BUG comments in codebase"""
         items = []
         patterns = [
-            r'# TODO:?\s*(.+)',
-            r'# FIXME:?\s*(.+)',
-            r'# HACK:?\s*(.+)',  
-            r'# BUG:?\s*(.+)',
+            r'#\s*TODO:?\s*(.+)',
+            r'#\s*FIXME:?\s*(.+)',
+            r'#\s*HACK:?\s*(.+)',  
+            r'#\s*BUG:?\s*(.+)',
             r'//\s*TODO:?\s*(.+)',
             r'//\s*FIXME:?\s*(.+)',
             r'/\*\s*TODO:?\s*(.+?)\s*\*/',
