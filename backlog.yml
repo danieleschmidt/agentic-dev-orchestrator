@@ -1,129 +1,10 @@
 version: '1.0'
 metadata:
-  created_at: '2025-07-26T05:28:43.505101Z'
-  last_updated: '2025-07-26T05:28:43.505115Z'
+  created_at: '2025-07-26T12:32:02.954113Z'
+  last_updated: '2025-07-26T12:32:02.954127Z'
   scoring_method: wsjf
   aging_multiplier_max: 2.0
 items:
-- id: backlog-001
-  title: Implement CLI foundation with basic commands
-  type: feature
-  description: Create the core CLI structure with init, run, and status commands as
-    outlined in the README
-  acceptance_criteria:
-  - CLI can be installed via pip install agentic-dev-orchestrator
-  - ado init creates basic project structure
-  - ado run executes backlog processing
-  - ado status shows current backlog state
-  effort: 8
-  value: 13
-  time_criticality: 8
-  risk_reduction: 5
-  status: READY
-  risk_tier: low
-  created_at: '2025-07-26T00:00:00Z'
-  links: []
-  wsjf_score: 3.25
-  aging_multiplier: 1.0
-- id: backlog-002
-  title: Create backlog discovery and normalization system
-  type: feature
-  description: Implement system to discover backlog items from various sources (JSON
-    files, TODOs, issues)
-  acceptance_criteria:
-  - Can parse backlog/*.json files with WSJF schema
-  - Discovers TODO/FIXME comments in codebase
-  - Normalizes all items to consistent schema
-  - Handles deduplication and merging
-  effort: 5
-  value: 8
-  time_criticality: 8
-  risk_reduction: 8
-  status: READY
-  risk_tier: low
-  created_at: '2025-07-26T00:00:00Z'
-  links: []
-  wsjf_score: 4.8
-  aging_multiplier: 1.0
-- id: backlog-003
-  title: Implement WSJF scoring and prioritization engine
-  type: feature
-  description: Core WSJF calculation with aging multiplier and backlog ordering
-  acceptance_criteria:
-  - 'Calculates WSJF score: (value + time_criticality + risk_reduction) / effort'
-  - Applies aging multiplier for stale items
-  - "Maintains backlog state transitions: NEW \u2192 REFINED \u2192 READY \u2192 DOING\
-    \ \u2192 PR \u2192 DONE/BLOCKED"
-  - Outputs prioritized backlog
-  effort: 3
-  value: 13
-  time_criticality: 13
-  risk_reduction: 8
-  status: READY
-  risk_tier: low
-  created_at: '2025-07-26T00:00:00Z'
-  links: []
-  wsjf_score: 11.333333333333334
-  aging_multiplier: 1.0
-- id: backlog-004
-  title: Build AutoGen multi-agent execution pipeline
-  type: feature
-  description: Implement Planner, Coder, Reviewer, Merger agents using AutoGen framework
-  acceptance_criteria:
-  - Planner agent breaks down tasks into implementation steps
-  - Coder agent implements changes with TDD approach
-  - Reviewer agent validates code quality and tests
-  - Merger agent handles PR creation and merging
-  - Human-in-the-loop escalation for high-risk items
-  effort: 13
-  value: 13
-  time_criticality: 5
-  risk_reduction: 8
-  status: REFINED
-  risk_tier: medium
-  created_at: '2025-07-26T00:00:00Z'
-  links: []
-  wsjf_score: 2.0
-  aging_multiplier: 1.0
-- id: backlog-005
-  title: Add security and quality gates
-  type: feature
-  description: Implement security checklist and quality validation in micro-cycle
-  acceptance_criteria:
-  - Input validation checks
-  - Auth/ACL verification
-  - Secrets handling via environment variables
-  - Safe logging practices
-  - 'CI gates: lint + tests + type-checks + build'
-  effort: 8
-  value: 8
-  time_criticality: 3
-  risk_reduction: 13
-  status: NEW
-  risk_tier: high
-  created_at: '2025-07-26T00:00:00Z'
-  links: []
-  wsjf_score: 3.0
-  aging_multiplier: 1.0
-- id: backlog-006
-  title: Create metrics and reporting system
-  type: feature
-  description: Implement status tracking and metrics collection as specified
-  acceptance_criteria:
-  - Outputs JSON/MD reports to docs/status/
-  - 'Tracks: completed_ids, coverage_delta, flaky_tests, ci_summary'
-  - 'Monitors: open_prs, risks_or_blocks, backlog_size_by_status'
-  - 'Calculates: avg_cycle_time, wsjf_snapshot'
-  effort: 5
-  value: 3
-  time_criticality: 2
-  risk_reduction: 3
-  status: NEW
-  risk_tier: low
-  created_at: '2025-07-26T00:00:00Z'
-  links: []
-  wsjf_score: 1.6
-  aging_multiplier: 1.0
 - id: json-sample-task
   title: Add user authentication to API
   type: feature
@@ -141,9 +22,50 @@ items:
   risk_reduction: 8
   status: NEW
   risk_tier: low
-  created_at: '2025-07-26T05:28:43.500344Z'
+  created_at: '2025-07-26T12:28:30.098769Z'
   links: []
-  wsjf_score: null
+  wsjf_score: 4.2
+  aging_multiplier: 1.0
+- id: json-test-coverage
+  title: Add comprehensive unit tests
+  type: feature
+  description: Create pytest-based test suite for backlog_manager.py and autonomous_executor.py
+    with >80% coverage
+  acceptance_criteria:
+  - Test coverage >80% for core modules
+  - Tests for WSJF calculation edge cases
+  - Tests for discovery deduplication
+  - Tests for status transitions
+  - Mock tests for git operations
+  effort: 5
+  value: 3
+  time_criticality: 2
+  risk_reduction: 8
+  status: READY
+  risk_tier: low
+  created_at: '2025-07-26T12:29:23.374493Z'
+  links: []
+  wsjf_score: 2.6
+  aging_multiplier: 1.0
+- id: json-pip-installable
+  title: Create setup.py for pip installability
+  type: feature
+  description: Make ADO installable via 'pip install agentic-dev-orchestrator' as
+    mentioned in README
+  acceptance_criteria:
+  - setup.py with proper entry points
+  - Console script 'ado' command available
+  - Requirements properly specified
+  - Package metadata complete
+  effort: 2
+  value: 5
+  time_criticality: 3
+  risk_reduction: 2
+  status: DONE
+  risk_tier: low
+  created_at: '2025-07-26T12:29:23.374866Z'
+  links: []
+  wsjf_score: 5.0
   aging_multiplier: 1.0
 scoring_weights:
   value: 1.0

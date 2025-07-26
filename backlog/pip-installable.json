@@ -1,0 +1,16 @@
+{
+  "title": "Create setup.py for pip installability", 
+  "description": "Make ADO installable via 'pip install agentic-dev-orchestrator' as mentioned in README",
+  "wsjf": {
+    "user_business_value": 5,
+    "time_criticality": 3,
+    "risk_reduction_opportunity_enablement": 2,
+    "job_size": 2
+  },
+  "acceptance_criteria": [
+    "setup.py with proper entry points",
+    "Console script 'ado' command available", 
+    "Requirements properly specified",
+    "Package metadata complete"
+  ]
+}
