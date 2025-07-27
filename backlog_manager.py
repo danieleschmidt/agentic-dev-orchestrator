@@ -9,7 +9,7 @@ import json
 import re
 import os
 import datetime
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, asdict
 from pathlib import Path
 import subprocess
@@ -136,40 +136,54 @@ class BacklogManager:
         ]
         
         try:
-            # Use git to find tracked files to avoid .git directories
+            # Use grep to find TODO/FIXME comments
             result = subprocess.run(
-                ['git', 'ls-files'], 
+                ['grep', '-rn', '-E', 'TODO|FIXME|HACK|BUG', '.'],
                 cwd=self.repo_root,
                 capture_output=True, 
                 text=True
             )
-            if result.returncode != 0:
-                return items
-                
-            files = result.stdout.strip().split('\n')
             
-            for file_path in files:
-                full_path = self.repo_root / file_path
-                if not full_path.is_file():
-                    continue
-                    
-                try:
-                    with open(full_path, 'r', encoding='utf-8', errors='ignore') as f:
-                        content = f.read()
+            # Process grep output even if return code != 0 (no matches)
+            if result.stdout:
+                lines = result.stdout.strip().split('\n')
+                seen_comments = set()
+                
+                for line in lines:
+                    if ':' not in line:
+                        continue
                         
+                    parts = line.split(':', 2)
+                    if len(parts) < 3:
+                        continue
+                        
+                    file_path = parts[0]
+                    comment_text = parts[2].strip()
+                    
+                    # Skip binary files, git directories, etc.
+                    if '.git/' in file_path or file_path.endswith('.pyc'):
+                        continue
+                    
+                    # Extract actual comment text
                     for pattern in patterns:
-                        matches = re.finditer(pattern, content, re.IGNORECASE | re.MULTILINE)
-                        for match in matches:
-                            comment_text = match.group(1).strip()
-                            if len(comment_text) < 10:  # Skip trivial comments
+                        match = re.search(pattern, comment_text, re.IGNORECASE)
+                        if match:
+                            comment_content = match.group(1).strip()
+                            if len(comment_content) < 10:  # Skip trivial comments
                                 continue
+                            
+                            # Deduplicate by content
+                            comment_key = f"{file_path}:{comment_content}"
+                            if comment_key in seen_comments:
+                                continue
+                            seen_comments.add(comment_key)
                                 
-                            item_id = f"code-{hash(f'{file_path}:{comment_text}') % 10000:04d}"
+                            item_id = f"code-{abs(hash(comment_key)) % 10000:04d}"
                             item = BacklogItem(
                                 id=item_id,
-                                title=f"Address code comment: {comment_text[:50]}...",
+                                title=f"Address code comment: {comment_content[:50]}{'...' if len(comment_content) > 50 else ''}",
                                 type='tech_debt',
-                                description=f"Found in {file_path}: {comment_text}",
+                                description=f"Found in {file_path}: {comment_content}",
                                 acceptance_criteria=[f"Resolve comment in {file_path}"],
                                 effort=2,  # Default small effort
                                 value=2,
@@ -181,12 +195,11 @@ class BacklogManager:
                                 links=[f"file://{file_path}"]
                             )
                             items.append(item)
-                            
-                except Exception as e:
-                    continue  # Skip files that can't be read
+                            break  # Only match first pattern per line
                     
         except Exception as e:
-            print(f"Error discovering code comments: {e}")
+            # Fallback: return empty list if grep fails
+            pass
             
         return items
     
@@ -260,16 +273,18 @@ class BacklogManager:
         
         return len(self.items) - initial_count
     
-    def update_item_status(self, item_id: str, new_status: str) -> bool:
-        """Update status of a backlog item"""
+    def update_item_status_by_id(self, item_id: str, new_status: str) -> bool:
+        """Update status of a backlog item by ID"""
         valid_statuses = ['NEW', 'REFINED', 'READY', 'DOING', 'PR', 'DONE', 'BLOCKED']
         if new_status not in valid_statuses:
             return False
             
         for item in self.items:
             if item.id == item_id:
-                item.status = new_status
-                return True
+                if self.is_valid_transition(item.status, new_status):
+                    item.status = new_status
+                    return True
+                return False
         return False
     
     def generate_status_report(self) -> Dict:
@@ -315,6 +330,85 @@ class BacklogManager:
         latest_file = self.status_dir / "latest.json"
         with open(latest_file, 'w') as f:
             json.dump(report, f, indent=2)
+    
+    def calculate_wsjf(self, item: BacklogItem) -> float:
+        """Calculate WSJF score for a single item"""
+        if item.effort == 0:
+            return float('inf')  # Handle division by zero
+        
+        cost_of_delay = item.value + item.time_criticality + item.risk_reduction
+        base_score = cost_of_delay / item.effort
+        return base_score * item.aging_multiplier
+    
+    def deduplicate_items(self, items: List[Dict]) -> List[Dict]:
+        """Deduplicate items by title and description"""
+        seen = set()
+        deduplicated = []
+        
+        for item in items:
+            key = (item.get('title', ''), item.get('description', ''))
+            if key not in seen:
+                seen.add(key)
+                deduplicated.append(item)
+        
+        return deduplicated
+    
+    def is_valid_transition(self, from_status: str, to_status: str) -> bool:
+        """Check if status transition is valid"""
+        valid_transitions = {
+            'NEW': ['REFINED', 'BLOCKED'],
+            'REFINED': ['READY', 'NEW', 'BLOCKED'],
+            'READY': ['DOING', 'REFINED', 'BLOCKED'],
+            'DOING': ['PR', 'READY', 'BLOCKED'],
+            'PR': ['DONE', 'DOING', 'BLOCKED'],
+            'DONE': [],  # Terminal state
+            'BLOCKED': ['NEW', 'REFINED', 'READY', 'DOING', 'PR']  # Can return to any state
+        }
+        
+        return to_status in valid_transitions.get(from_status, [])
+    
+    def update_item_status(self, item: BacklogItem, new_status: str) -> bool:
+        """Update item status with validation"""
+        if not self.is_valid_transition(item.status, new_status):
+            return False
+        
+        item.status = new_status
+        return True
+    
+    def is_git_clean(self) -> bool:
+        """Check if git working directory is clean"""
+        try:
+            result = subprocess.run(
+                ['git', 'status', '--porcelain'],
+                cwd=self.repo_root,
+                capture_output=True,
+                text=True
+            )
+            return result.returncode == 0 and not result.stdout.strip()
+        except Exception:
+            return False
+    
+    def create_commit(self, message: str) -> bool:
+        """Create git commit with message"""
+        try:
+            # Add all changes
+            add_result = subprocess.run(
+                ['git', 'add', '.'],
+                cwd=self.repo_root,
+                capture_output=True
+            )
+            if add_result.returncode != 0:
+                return False
+            
+            # Commit changes
+            commit_result = subprocess.run(
+                ['git', 'commit', '-m', message],
+                cwd=self.repo_root,
+                capture_output=True
+            )
+            return commit_result.returncode == 0
+        except Exception:
+            return False
 
 
 def main():
