@@ -1,0 +1,448 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-dev-orchestrator"
+version = "0.1.0"
+authors = [
+    {name = "Terragon Labs", email = "noreply@terragonlabs.com"},
+]
+description = "A CLI and GitHub Action that unifies multi-agent development workflows"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.8"
+keywords = ["ai", "automation", "development", "orchestration", "agents", "wsjf"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "PyYAML>=6.0",
+    "pytest>=7.0",
+    "requests>=2.28.0",
+    "click>=8.0.0",
+    "rich>=12.0.0",
+    "pydantic>=1.10.0",
+    "python-dotenv>=0.19.0",
+    "gitpython>=3.1.0",
+    "jinja2>=3.0.0",
+    "python-dateutil>=2.8.0",
+    "packaging>=21.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-xdist>=3.0",
+    "pytest-mock>=3.10",
+    "pytest-asyncio>=0.21",
+    "pytest-benchmark>=4.0",
+    "coverage[toml]>=7.0",
+    "factory-boy>=3.2",
+    "freezegun>=1.2",
+    
+    # Code Quality
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "pre-commit>=3.0",
+    "bandit>=1.7",
+    "safety>=2.3",
+    "pip-audit>=2.6",
+    
+    # Documentation
+    "sphinx>=6.0",
+    "sphinx-rtd-theme>=1.2",
+    "myst-parser>=1.0",
+    "mkdocs>=1.4",
+    "mkdocs-material>=9.0",
+    "mkdocstrings[python]>=0.20",
+    
+    # Development Tools
+    "tox>=4.0",
+    "build>=0.10",
+    "twine>=4.0",
+    "setuptools-scm>=7.0",
+    "wheel>=0.38",
+    "pip-tools>=6.0",
+    
+    # Jupyter and Analysis
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+    "notebook>=6.5",
+    "jupyterlab>=3.6",
+    "pandas>=1.5",
+    "matplotlib>=3.6",
+    "seaborn>=0.12",
+]
+
+llm = [
+    # LLM Providers
+    "openai>=1.0",
+    "anthropic>=0.7",
+    "azure-openai>=0.1",
+    "langchain>=0.1.0",
+    "langchain-openai>=0.0.5",
+    "langchain-anthropic>=0.0.1",
+]
+
+github = [
+    # GitHub Integration
+    "PyGithub>=1.58",
+    "github3.py>=4.0",
+]
+
+monitoring = [
+    # Monitoring and Observability
+    "prometheus-client>=0.16",
+    "sentry-sdk>=1.0",
+    "datadog>=0.46",
+    "structlog>=23.0",
+    "loguru>=0.7",
+]
+
+integrations = [
+    # External Integrations
+    "slack-sdk>=3.0",
+    "slack-bolt>=1.16",
+    "python-jira>=3.0",
+    "azure-devops>=7.0",
+    "atlassian-python-api>=3.0",
+]
+
+security = [
+    # Security Tools
+    "semgrep>=1.0",
+    "cyclonedx-bom>=3.0",
+    "safety>=2.3",
+    "bandit>=1.7",
+    "pip-audit>=2.6",
+]
+
+performance = [
+    # Performance Testing
+    "locust>=2.0",
+    "pytest-benchmark>=4.0",
+    "memory-profiler>=0.60",
+    "py-spy>=0.3",
+]
+
+all = [
+    "agentic-dev-orchestrator[dev,llm,github,monitoring,integrations,security,performance]"
+]
+
+[project.urls]
+Homepage = "https://github.com/terragon-labs/agentic-dev-orchestrator"
+Repository = "https://github.com/terragon-labs/agentic-dev-orchestrator"
+Documentation = "https://agentic-dev-orchestrator.readthedocs.io/"
+"Bug Tracker" = "https://github.com/terragon-labs/agentic-dev-orchestrator/issues"
+Changelog = "https://github.com/terragon-labs/agentic-dev-orchestrator/blob/main/CHANGELOG.md"
+
+[project.scripts]
+ado = "ado:main"
+agentic-dev-orchestrator = "ado:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ado*", "backlog_manager*", "autonomous_executor*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yml", "*.yaml", "*.json", "*.md", "*.txt"]
+
+# =============================================================================
+# DEVELOPMENT TOOLS CONFIGURATION
+# =============================================================================
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=.",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+    "--cov-fail-under=80",
+    "--durations=10",
+]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "e2e: marks tests as end-to-end tests",
+    "github: marks tests that require GitHub API",
+    "llm: marks tests that require LLM API",
+    "requires_network: marks tests that require network access",
+]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["."]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/env/*",
+    "*/.tox/*",
+    "*/build/*",
+    "*/dist/*",
+    "setup.py",
+    "conftest.py",
+]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+show_missing = true
+skip_covered = false
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+target-version = "py38"
+line-length = 88
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "YTT", # flake8-2020
+    "ANN", # flake8-annotations
+    "S",   # flake8-bandit
+    "BLE", # flake8-blind-except
+    "FBT", # flake8-boolean-trap
+    "A",   # flake8-builtins
+    "COM", # flake8-commas
+    "C4",  # flake8-comprehensions
+    "DTZ", # flake8-datetimez
+    "T10", # flake8-debugger
+    "EM",  # flake8-errmsg
+    "EXE", # flake8-executable
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "G",   # flake8-logging-format
+    "INP", # flake8-no-pep420
+    "PIE", # flake8-pie
+    "T20", # flake8-print
+    "PT",  # flake8-pytest-style
+    "Q",   # flake8-quotes
+    "RSE", # flake8-raise
+    "RET", # flake8-return
+    "SLF", # flake8-self
+    "SIM", # flake8-simplify
+    "TID", # flake8-tidy-imports
+    "TCH", # flake8-type-checking
+    "ARG", # flake8-unused-arguments
+    "PTH", # flake8-use-pathlib
+    "ERA", # eradicate
+    "PD",  # pandas-vet
+    "PGH", # pygrep-hooks
+    "PL",  # pylint
+    "TRY", # tryceratops
+    "NPY", # numpy
+    "RUF", # ruff-specific rules
+]
+ignore = [
+    "ANN101", # Missing type annotation for self in method
+    "ANN102", # Missing type annotation for cls in classmethod
+    "D100",   # Missing docstring in public module
+    "D101",   # Missing docstring in public class
+    "D102",   # Missing docstring in public method
+    "D103",   # Missing docstring in public function
+    "D104",   # Missing docstring in public package
+    "D105",   # Missing docstring in magic method
+    "D106",   # Missing docstring in public nested class
+    "D107",   # Missing docstring in __init__
+    "S101",   # Use of assert detected
+    "PLR0913", # Too many arguments to function call
+    "PLR0915", # Too many statements
+    "PLR2004", # Magic value used in comparison
+    "FBT001", # Boolean positional arg in function definition
+    "FBT002", # Boolean default value in function definition
+]
+
+[tool.ruff.per-file-ignores]
+"tests/*" = [
+    "S101",    # Use of assert detected
+    "ANN",     # Type annotations not required in tests
+    "PLR2004", # Magic values are ok in tests
+    "S105",    # Possible hardcoded password
+    "S106",    # Possible hardcoded password
+]
+"setup.py" = ["ALL"]
+"conftest.py" = ["ALL"]
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.isort]
+known-first-party = ["ado", "backlog_manager", "autonomous_executor"]
+force-sort-within-sections = true
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+show_error_codes = true
+show_column_numbers = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[[tool.mypy.overrides]]
+module = [
+    "yaml.*",
+    "pytest.*",
+    "github.*",
+    "openai.*",
+    "anthropic.*",
+]
+ignore_missing_imports = true
+
+[tool.bandit]
+exclude_dirs = ["tests", "build", "dist"]
+skips = ["B101", "B601"]  # Skip assert statements and shell injection (paramiko)
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+isolated_build = true
+envlist = py38,py39,py310,py311,py312,coverage,lint,security,docs
+
+[testenv]
+deps = 
+    pytest
+    pytest-cov
+    pytest-mock
+    pytest-xdist
+commands = pytest {posargs}
+
+[testenv:coverage]
+deps = 
+    coverage[toml]
+    pytest
+    pytest-cov
+commands = 
+    coverage run -m pytest
+    coverage report
+    coverage html
+
+[testenv:lint]
+deps = 
+    black
+    ruff
+    mypy
+commands = 
+    black --check .
+    ruff check .
+    mypy .
+
+[testenv:security]
+deps = 
+    bandit
+    safety
+    pip-audit
+commands = 
+    bandit -r . -f json -o bandit-report.json
+    safety check --json --output safety-report.json
+    pip-audit --output-format=json --output-file=pip-audit-report.json
+
+[testenv:docs]
+deps = 
+    sphinx
+    sphinx-rtd-theme
+    myst-parser
+commands = sphinx-build -b html docs docs/_build/html
+"""
+
+# =============================================================================
+# SCRIPTS CONFIGURATION
+# =============================================================================
+
+[tool.setuptools_scm]
+write_to = "_version.py"
+version_scheme = "post-release"
+
+# Development scripts for common tasks
+[project.scripts]
+# Main CLI
+ado = "ado:main"
+
+# Development helpers (when installed in dev mode)
+ado-test = "scripts.dev_scripts:run_tests"
+ado-lint = "scripts.dev_scripts:run_lint"
+ado-format = "scripts.dev_scripts:run_format"
+ado-docs = "scripts.dev_scripts:build_docs"
+ado-clean = "scripts.dev_scripts:clean_artifacts"

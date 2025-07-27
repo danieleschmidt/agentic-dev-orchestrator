@@ -1,0 +1,189 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "develop",
+      "prerelease": "beta"
+    },
+    {
+      "name": "alpha",
+      "prerelease": "alpha"
+    }
+  ],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "type": "perf",
+            "release": "patch"
+          },
+          {
+            "type": "revert",
+            "release": "patch"
+          },
+          {
+            "type": "docs",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "release": false
+          },
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "type": "test",
+            "release": false
+          },
+          {
+            "type": "build",
+            "release": false
+          },
+          {
+            "type": "ci",
+            "release": false
+          },
+          {
+            "scope": "breaking",
+            "release": "major"
+          }
+        ],
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Bug Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "⚡ Performance Improvements"
+            },
+            {
+              "type": "revert",
+              "section": "🔄 Reverts"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            },
+            {
+              "type": "style",
+              "section": "💄 Styles"
+            },
+            {
+              "type": "refactor",
+              "section": "♻️ Code Refactoring"
+            },
+            {
+              "type": "test",
+              "section": "✅ Tests"
+            },
+            {
+              "type": "build",
+              "section": "🏗️ Build System"
+            },
+            {
+              "type": "ci",
+              "section": "👷 CI/CD"
+            },
+            {
+              "type": "chore",
+              "section": "🔧 Maintenance",
+              "hidden": false
+            }
+          ]
+        },
+        "writerOpts": {
+          "commitsSort": [
+            "subject",
+            "scope"
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n<!-- semantic-release automatically generates this changelog -->"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "verifyReleaseCmd": "echo 'Verifying release ${nextRelease.version}'",
+        "generateNotesCmd": "echo 'Generating notes for ${nextRelease.version}'",
+        "prepareCmd": "python scripts/update_version.py ${nextRelease.version}",
+        "publishCmd": "echo 'Publishing ${nextRelease.version}'"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "pyproject.toml",
+          "package.json"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "successComment": "🎉 This ${issue.pull_request ? 'PR is included' : 'issue has been resolved'} in version ${nextRelease.version} :tada:",
+        "failComment": "❌ The release from branch ${branch.name} had failed due to the following errors:\n- ${errors.map(err => err.message).join('\\n- ')}",
+        "releasedLabels": [
+          "released<%= nextRelease.channel ? \` on @\${nextRelease.channel}\` : \"\" %> in <%= nextRelease.version %>"
+        ],
+        "addReleases": "bottom",
+        "assets": [
+          {
+            "path": "dist/*.whl",
+            "label": "Python Wheel Distribution"
+          },
+          {
+            "path": "dist/*.tar.gz", 
+            "label": "Source Distribution"
+          }
+        ]
+      }
+    ]
+  ],
+  "preset": "conventionalcommits",
+  "tagFormat": "v${version}",
+  "repositoryUrl": "https://github.com/terragon-labs/agentic-dev-orchestrator.git",
+  "debug": false,
+  "dryRun": false,
+  "ci": true
+}

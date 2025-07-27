@@ -205,3 +205,193 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# =============================================================================
+# ADO (Agentic Development Orchestrator) Specific
+# =============================================================================
+
+# ADO runtime data and cache
+.ado/cache/
+.ado/locks/
+.ado/temp/
+
+# Environment configuration (keep .env.example)
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+
+# Security scan reports
+bandit-report.json
+safety-report.json
+pip-audit-report.json
+semgrep-report.json
+
+# Coverage reports
+.coverage.*
+coverage/
+htmlcov/
+coverage.xml
+coverage.json
+
+# Test artifacts
+.pytest_cache/
+test-results/
+test-reports/
+.tox/
+.nox/
+
+# Documentation builds
+docs/_build/
+docs/site/
+site/
+
+# Backup files
+*.bak
+*.backup
+*.orig
+.ado/backups/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Log files
+*.log
+logs/
+.ado/logs/
+
+# IDE and editor files
+.idea/
+.vscode/settings.json.bak
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker artifacts
+.dockerignore.bak
+docker-compose.override.yml
+
+# CI/CD artifacts
+.github/workflows/*.bak
+
+# Package manager artifacts
+poetry.lock
+Pipfile.lock
+yarn.lock
+package-lock.json
+
+# Security and secrets
+.secrets
+.credentials
+*.key
+*.pem
+*.crt
+*.cert
+
+# Performance and profiling
+.prof
+*.prof
+.profile
+perf.data*
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Package build artifacts
+*.tar.gz
+*.zip
+*.whl
+*.egg
+
+# Local development overrides
+docker-compose.local.yml
+.env.override
+local_settings.py
+
+# ADO specific exclusions (but keep structure)
+# Keep these directories but exclude their contents:
+# docs/status/ - Status reports (too many, keep latest only)
+# escalations/ - Human intervention logs
+# backlog/ - Individual backlog items (exclude patterns)
+
+# Exclude status files older than latest
+docs/status/status_*.json
+!docs/status/latest.json
+
+# Exclude test escalations
+escalations/test_*.json
+escalations/*_test.json
+
+# Keep backlog structure but exclude sensitive items
+# (No default exclusions - let team decide)
+
+# Development database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache and temporary processing
+.cache/
+tmp/
+temp/
+
+# Editor backup files
+*~
+.#*
+#*#
+
+# Python virtual environments
+venv*/
+env*/
+.python-version
+
+# Node.js (if any frontend components added)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Rust (if any Rust components added)
+target/
+Cargo.lock
+
+# Go (if any Go components added)
+go.sum
+vendor/
+
+# Java (if any Java components added)
+*.class
+*.jar
+*.war
+
+# Terraform (if any infrastructure code added)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Ansible (if any automation added)
+*.retry
+
+# Kubernetes (if any k8s configs added)
+*.kubeconfig
+
+# Local configuration overrides
+config.local.json
+config.local.yml
+settings.local.json
+settings.local.yml
