@@ -1,0 +1,55 @@
+# Markdown Linting Configuration for ADO
+
+# Default state for all rules
+default: true
+
+# Line length
+MD013:
+  line_length: 100
+  code_blocks: false
+  tables: false
+  headings: false
+
+# Multiple top-level headings
+MD025:
+  front_matter_title: "^\\s*title\\s*[:=]"
+
+# Inline HTML
+MD033:
+  allowed_elements: [
+    'br', 'sub', 'sup', 'kbd', 'details', 'summary',
+    'img', 'a', 'strong', 'em', 'code', 'pre'
+  ]
+
+# Bare URLs
+MD034: false
+
+# Horizontal rules
+MD035:
+  style: "---"
+
+# Emphasis style
+MD036: false
+
+# Code fence style
+MD040: true
+
+# First line heading
+MD041: false
+
+# No empty links
+MD042: true
+
+# Required link scheme
+MD045: false
+
+# Code fence language
+MD046:
+  style: "fenced"
+
+# Single trailing newline
+MD047: true
+
+# Code fence info
+MD048:
+  style: "backtick"

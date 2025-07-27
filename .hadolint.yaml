@@ -1,0 +1,33 @@
+# Hadolint configuration for Dockerfile linting
+
+# Ignore specific rules
+ignored:
+  - DL3008  # Pin versions in apt get install
+  - DL3009  # Delete the apt-get lists after installing something
+  - DL3015  # Avoid additional packages by specifying --no-install-recommends
+
+# Trusted registries for base images
+trustedRegistries:
+  - docker.io
+  - gcr.io
+  - mcr.microsoft.com
+  - ghcr.io
+  - quay.io
+
+# Override rules
+override:
+  error:
+    - DL3001  # For some bash commands it makes no sense to use pipes
+    - DL3002  # Last user should not be root
+  warning:
+    - DL3042  # Avoid cache directory with pip
+  info:
+    - DL3032  # `yum clean all` missing
+  style:
+    - DL3015  # Avoid additional packages
+
+# Disable inline ignore pragma parsing
+noInlineIgnores: false
+
+# Disable fail on specific error codes
+noFail: false

@@ -1,0 +1,152 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ADO: Run CLI",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ado.py",
+            "args": ["run"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "ADO_LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "ADO: Status",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ado.py",
+            "args": ["status"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "ADO_LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "ADO: Initialize",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ado.py",
+            "args": ["init"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "ADO_LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "ADO: Discover",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/ado.py",
+            "args": ["discover"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "ADO_LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: Pytest Current File",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["${file}", "-v"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Pytest All Tests",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests/", "-v"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Pytest with Coverage",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["--cov=.", "--cov-report=html", "--cov-report=term"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "ADO: Backlog Manager Debug",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backlog_manager.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "ADO_LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "ADO: Autonomous Executor Debug",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/autonomous_executor.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "ADO_LOG_LEVEL": "DEBUG"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Remote Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/app"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "agentic-dev-orchestrator",
+  "version": "0.1.0", 
+  "description": "A CLI and GitHub Action that unifies multi-agent development workflows",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terragon-labs/agentic-dev-orchestrator.git"
+  },
+  "keywords": [
+    "ai",
+    "automation", 
+    "development",
+    "orchestration",
+    "agents",
+    "wsjf",
+    "cli",
+    "github-action"
+  ],
+  "author": "Terragon Labs <noreply@terragonlabs.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/terragon-labs/agentic-dev-orchestrator/issues"
+  },
+  "homepage": "https://github.com/terragon-labs/agentic-dev-orchestrator#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
+    "semantic-release": "^22.0.12"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "version": "echo $npm_package_version"
+  },
+  "release": {
+    "extends": "./.releaserc.json"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "private": false
+}
