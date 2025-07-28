@@ -1,55 +1,111 @@
-# Markdown Linting Configuration for ADO
+# Markdown Lint Configuration for ADO
+# See https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
 
 # Default state for all rules
 default: true
 
-# Line length
+# MD013/line-length - Line length
 MD013:
-  line_length: 100
+  # Number of characters
+  line_length: 120
+  # Number of characters for headings
+  heading_line_length: 120
+  # Number of characters for code blocks
+  code_block_line_length: 120
+  # Include code blocks
   code_blocks: false
+  # Include tables
   tables: false
-  headings: false
+  # Include headings
+  headings: true
+  # Strict length checking
+  strict: false
+  # Stern length checking
+  stern: false
 
-# Multiple top-level headings
+# MD003/heading-style - Heading style
+MD003:
+  # Heading style
+  style: "consistent"
+
+# MD007/ul-indent - Unordered list indentation
+MD007:
+  # Spaces for indent
+  indent: 2
+  # Whether to indent the first level of the list
+  start_indented: false
+  # Spaces for first level indent (when start_indented is set)
+  start_indent: 2
+
+# MD024/no-duplicate-heading - Multiple headings with the same content
+MD024:
+  # Only check sibling headings
+  siblings_only: true
+
+# MD025/single-title - Multiple top-level headings in the same document
 MD025:
+  # Heading level
+  level: 1
+  # RegExp for matching title in front matter
   front_matter_title: "^\\s*title\\s*[:=]"
 
-# Inline HTML
+# MD026/no-trailing-punctuation - Trailing punctuation in heading
+MD026:
+  # Punctuation characters
+  punctuation: ".,;:!。，；：！"
+
+# MD029/ol-prefix - Ordered list item prefix
+MD029:
+  # List style
+  style: "one_or_ordered"
+
+# MD033/no-inline-html - Inline HTML
 MD033:
-  allowed_elements: [
-    'br', 'sub', 'sup', 'kbd', 'details', 'summary',
-    'img', 'a', 'strong', 'em', 'code', 'pre'
-  ]
+  # Allowed elements
+  allowed_elements: ["br", "sub", "sup", "b", "i", "strong", "em", "code", "kbd", "img", "a", "details", "summary"]
 
-# Bare URLs
-MD034: false
-
-# Horizontal rules
+# MD035/hr-style - Horizontal rule style
 MD035:
-  style: "---"
+  # Horizontal rule style
+  style: "consistent"
 
-# Emphasis style
-MD036: false
+# MD036/no-emphasis-as-heading - Emphasis used instead of a heading
+MD036:
+  # Punctuation characters
+  punctuation: ".,;:!?。，；：！？"
 
-# Code fence style
-MD040: true
+# MD040/fenced-code-language - Fenced code blocks should have a language specified
+MD040: false
 
-# First line heading
-MD041: false
+# MD041/first-line-heading - First line in a file should be a top-level heading
+MD041:
+  # Heading level
+  level: 1
+  # RegExp for matching title in front matter
+  front_matter_title: "^\\s*title\\s*[:=]"
 
-# No empty links
-MD042: true
-
-# Required link scheme
-MD045: false
-
-# Code fence language
+# MD046/code-block-style - Code block style
 MD046:
-  style: "fenced"
+  # Block style
+  style: "consistent"
 
-# Single trailing newline
-MD047: true
-
-# Code fence info
+# MD048/code-fence-style - Code fence style
 MD048:
-  style: "backtick"
+  # Code fence style
+  style: "consistent"
+
+# MD049/emphasis-style - Emphasis style should be consistent
+MD049:
+  # Emphasis style should be consistent
+  style: "consistent"
+
+# MD050/strong-style - Strong style should be consistent
+MD050:
+  # Strong style should be consistent
+  style: "consistent"
+
+# Disable specific rules that are too strict for documentation
+MD001: false  # Heading levels should only increment by one level at a time
+MD033: false  # Inline HTML is sometimes necessary
+MD034: false  # Bare URLs are sometimes OK in technical docs
+MD041: false  # First line doesn't always need to be a heading

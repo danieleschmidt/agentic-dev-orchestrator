@@ -34,7 +34,27 @@
   },
   "scripts": {
     "semantic-release": "semantic-release",
-    "version": "echo $npm_package_version"
+    "version": "echo $npm_package_version",
+    "test": "python -m pytest tests/ -v",
+    "test:coverage": "python -m pytest tests/ --cov=. --cov-report=html --cov-report=term-missing",
+    "test:watch": "python -m ptw tests/",
+    "lint": "ruff check . && mypy .",
+    "lint:fix": "ruff check --fix . && black .",
+    "format": "black . && isort .",
+    "format:check": "black --check . && isort --check-only .",
+    "security": "bandit -r . -x tests/ && safety check",
+    "type-check": "mypy .",
+    "build": "python -m build",
+    "build:docker": "docker build -t ado:latest .",
+    "dev": "python ado.py --help",
+    "clean": "find . -type d -name '__pycache__' -delete && find . -name '*.pyc' -delete && rm -rf .pytest_cache .coverage htmlcov .mypy_cache .tox build/ dist/ *.egg-info/",
+    "deps:update": "pip-compile --upgrade requirements.in && pip-compile --upgrade requirements-dev.in",
+    "deps:install": "pip install -r requirements.txt -r requirements-dev.txt",
+    "docs:build": "mkdocs build",
+    "docs:serve": "mkdocs serve",
+    "pre-commit": "pre-commit run --all-files",
+    "health-check": "python -c 'import ado; print(\"ADO health check passed\")'",
+    "validate": "npm run lint && npm run test && npm run security"
   },
   "release": {
     "extends": "./.releaserc.json"

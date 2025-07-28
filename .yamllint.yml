@@ -1,12 +1,27 @@
-# YAML Linting Configuration for ADO
+# YAML Lint Configuration for ADO
+# See https://yamllint.readthedocs.io/en/stable/configuration.html
 
 extends: default
 
 rules:
-  # Line length
+  # Line length can be longer for configuration files
   line-length:
     max: 120
     level: warning
+
+  # Allow truthy values like yes/no in YAML
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
+    check-keys: false
+
+  # Allow multiple documents in single file (common in k8s, CI)
+  document-start:
+    present: false
+
+  # Comments formatting
+  comments:
+    min-spaces-from-content: 1
+    require-starting-space: true
 
   # Indentation
   indentation:
@@ -14,18 +29,13 @@ rules:
     indent-sequences: true
     check-multi-line-strings: false
 
-  # Comments
-  comments:
-    min-spaces-from-content: 1
+  # Key ordering (not enforced for flexibility)
+  key-ordering: disable
 
-  # Document start/end
-  document-start:
-    present: false
-
-  # Truthy values
-  truthy:
-    allowed-values: ['true', 'false', 'yes', 'no']
-    check-keys: true
+  # Empty values allowed
+  empty-values:
+    forbid-in-block-mappings: false
+    forbid-in-flow-mappings: false
 
   # Brackets and braces
   brackets:
@@ -36,34 +46,16 @@ rules:
     min-spaces-inside: 0
     max-spaces-inside: 1
 
-  # Colons
-  colons:
-    max-spaces-before: 0
-    max-spaces-after: 1
-
-  # Commas
-  commas:
-    max-spaces-before: 0
-    max-spaces-after: 1
-
-  # Hyphens
-  hyphens:
-    max-spaces-after: 1
-
-  # Key duplicates
-  key-duplicates: enable
-
-  # Octal values
-  octal-values:
-    forbid-implicit-octal: true
-    forbid-explicit-octal: true
-
-  # Quoted strings
-  quoted-strings:
-    quote-type: any
-    required: only-when-needed
-
+# Ignore patterns
 ignore: |
-  docs/status/
-  .github/workflows/
-  .devcontainer/
+  .github/
+  node_modules/
+  .venv/
+  venv/
+  .tox/
+  .mypy_cache/
+  .pytest_cache/
+  htmlcov/
+  build/
+  dist/
+  *.egg-info/

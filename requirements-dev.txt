@@ -1,0 +1,187 @@
+# Development dependencies for Agentic Development Orchestrator
+# Install with: pip install -r requirements-dev.txt
+
+# Core testing framework
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-xdist>=3.3.1
+pytest-mock>=3.11.1
+pytest-asyncio>=0.21.1
+pytest-benchmark>=4.0.0
+pytest-timeout>=2.1.0
+pytest-randomly>=3.15.0
+pytest-sugar>=0.9.7
+pytest-clarity>=1.0.1
+
+# Test data and factories
+factory-boy>=3.3.0
+faker>=19.0.0
+freezegun>=1.2.2
+responses>=0.23.3
+httpx>=0.24.1
+aioresponses>=0.7.4
+
+# Code coverage
+coverage[toml]>=7.3.0
+pytest-html>=3.2.0
+coverage-badge>=1.1.0
+
+# Code quality and linting
+black>=23.7.0
+isort>=5.12.0
+ruff>=0.0.287
+mypy>=1.5.0
+pre-commit>=3.3.3
+commitizen>=3.7.0
+
+# Security scanning
+bandit>=1.7.5
+safety>=2.3.4
+pip-audit>=2.6.1
+semgrep>=1.33.2
+
+# Documentation
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+myst-parser>=2.0.0
+mkdocs>=1.5.0
+mkdocs-material>=9.2.0
+mkdocstrings[python]>=0.22.0
+mkdocs-gen-files>=0.5.0
+mkdocs-literate-nav>=0.6.0
+mkdocs-section-index>=0.3.5
+
+# Development tools
+tox>=4.6.4
+build>=0.10.0
+twine>=4.0.2
+wheel>=0.41.0
+setuptools-scm>=7.1.0
+pip-tools>=7.3.0
+
+# Performance testing
+locust>=2.16.1
+memory-profiler>=0.61.0
+py-spy>=0.3.14
+line-profiler>=4.1.1
+
+# Jupyter and data analysis
+jupyter>=1.0.0
+ipykernel>=6.25.0
+notebook>=7.0.2
+jupyterlab>=4.0.5
+pandas>=2.0.3
+matplotlib>=3.7.2
+seaborn>=0.12.2
+plotly>=5.15.0
+
+# API and HTTP testing
+httpx>=0.24.1
+requests-mock>=1.11.0
+vcr-py>=5.1.0
+betamax>=0.8.1
+
+# Database testing (for future use)
+pytest-postgresql>=5.0.0
+pytest-redis>=3.0.2
+pytest-mongodb>=2.4.1
+
+# Monitoring and observability testing
+prometheus-client>=0.17.1
+structlog>=23.1.0
+
+# GitHub integration testing
+PyGithub>=1.59.1
+github3.py>=4.0.1
+
+# LLM testing mocks
+openai>=0.27.8
+anthropic>=0.3.10
+
+# Container and deployment testing
+docker>=6.1.3
+testcontainers>=3.7.1
+
+# Load and stress testing
+pytest-benchmark>=4.0.0
+pytest-stress>=1.0.1
+
+# Mutation testing
+mutmut>=2.4.3
+cosmic-ray>=8.3.9
+
+# Property-based testing
+hypothesis>=6.82.0
+pytest-hypothesis>=0.19.0
+
+# Parallel testing
+pytest-parallel>=0.1.1
+pytest-forked>=1.6.0
+
+# Test reporting
+pytest-json-report>=1.5.0
+pytest-html>=3.2.0
+pytest-cov>=4.1.0
+allure-pytest>=2.13.2
+
+# Environment management
+python-dotenv>=1.0.0
+environs>=9.5.0
+
+# Debugging
+ipdb>=0.13.13
+pdbpp>=0.10.3
+pudb>=2022.1.3
+
+# Type checking support
+types-PyYAML>=6.0.12.11
+types-requests>=2.31.0.2
+types-python-dateutil>=2.8.19.14
+types-setuptools>=68.0.0.3
+
+# Static analysis
+vulture>=2.9.1
+radon>=6.0.1
+xenon>=0.9.1
+prospector>=1.10.2
+
+# License checking
+licensecheck>=2023.1.1
+pip-licenses>=4.3.0
+
+# Dependency scanning
+pipdeptree>=2.13.0
+johnnydep>=1.20.3
+
+# Git hooks and automation
+gitpython>=3.1.32
+dulwich>=0.21.5
+
+# Configuration validation
+jsonschema>=4.19.0
+cerberus>=1.3.4
+marshmallow>=3.20.1
+
+# Internationalization testing
+babel>=2.12.1
+lingua>=4.15.0
+
+# Web scraping (for docs validation)
+beautifulsoup4>=4.12.2
+lxml>=4.9.3
+
+# Network testing
+responses>=0.23.3
+httpretty>=1.1.4
+
+# Time and date testing
+arrow>=1.2.3
+pendulum>=2.1.2
+
+# Cryptography testing
+cryptography>=41.0.3
+pyotp>=2.9.0
+
+# XML/HTML processing
+xmltodict>=0.13.0
+html5lib>=1.1
