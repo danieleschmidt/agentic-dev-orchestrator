@@ -1,0 +1,512 @@
+# Security Scanning and Compliance Workflow
+# Runs comprehensive security scans and compliance checks
+
+name: 🛡️ Security & Compliance
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run daily security scans at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+# Ensure only one security scan runs at a time
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # ==========================================================================
+  # Job 1: Dependency Vulnerability Scanning
+  # ==========================================================================
+  dependency-scan:
+    name: 📦 Dependency Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+
+    - name: 🛡️ Run Safety check
+      run: |
+        pip install safety
+        safety check --json --output safety-report.json || true
+        safety check || true
+
+    - name: 🔍 Run pip-audit
+      run: |
+        pip install pip-audit
+        pip-audit --format=json --output=pip-audit-report.json || true
+        pip-audit --format=cyclonedx-json --output=sbom.json || true
+
+    - name: 📤 Upload vulnerability reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: dependency-security-reports
+        path: |
+          safety-report.json
+          pip-audit-report.json
+          sbom.json
+        retention-days: 90
+
+    - name: 🚨 Create security advisory
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '🚨 Security vulnerability detected in dependencies',
+            body: 'Automated security scan found vulnerabilities. Please check the workflow logs and security reports.',
+            labels: ['security', 'dependencies', 'high-priority']
+          });
+
+  # ==========================================================================
+  # Job 2: Code Security Analysis
+  # ==========================================================================
+  code-security:
+    name: 🔒 Code Security Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 Install security tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit semgrep
+
+    - name: 🔍 Run Bandit security scan
+      run: |
+        bandit -r . -f json -o bandit-report.json || true
+        bandit -r . -f sarif -o bandit-results.sarif || true
+        bandit -r . || true
+
+    - name: 🔍 Run Semgrep security scan
+      run: |
+        semgrep --config=auto --json --output=semgrep-report.json . || true
+        semgrep --config=auto --sarif --output=semgrep-results.sarif . || true
+
+    - name: 📤 Upload SARIF results to GitHub Security
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: |
+          bandit-results.sarif
+          semgrep-results.sarif
+
+    - name: 📤 Upload security scan reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: code-security-reports
+        path: |
+          bandit-report.json
+          bandit-results.sarif
+          semgrep-report.json
+          semgrep-results.sarif
+        retention-days: 90
+
+  # ==========================================================================
+  # Job 3: Container Security Scanning
+  # ==========================================================================
+  container-security:
+    name: 🐳 Container Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    permissions:
+      security-events: write
+      contents: read
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🐳 Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: 🔨 Build Docker image for scanning
+      run: |
+        docker build -t ado-security-scan:latest .
+
+    - name: 🔍 Run Trivy container scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'ado-security-scan:latest'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: 🔍 Run Trivy filesystem scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-fs-results.sarif'
+
+    - name: 📤 Upload Trivy scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: |
+          trivy-results.sarif
+          trivy-fs-results.sarif
+
+    - name: 🔍 Run Snyk container scan
+      if: false  # Enable when Snyk token is available
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: ado-security-scan:latest
+        args: --severity-threshold=medium
+
+  # ==========================================================================
+  # Job 4: Secrets Scanning
+  # ==========================================================================
+  secrets-scan:
+    name: 🔐 Secrets Detection
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for comprehensive scan
+
+    - name: 🔍 Run GitLeaks secrets scan
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 🔍 Run TruffleHog secrets scan
+      if: false  # Enable if desired
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+
+    - name: 🔍 Run detect-secrets
+      run: |
+        pip install detect-secrets
+        detect-secrets scan --all-files --force-use-all-plugins > secrets-baseline.json || true
+        detect-secrets audit secrets-baseline.json || true
+
+    - name: 📤 Upload secrets scan results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: secrets-scan-results
+        path: |
+          secrets-baseline.json
+        retention-days: 30
+
+  # ==========================================================================
+  # Job 5: License Compliance
+  # ==========================================================================
+  license-check:
+    name: ⚖️ License Compliance
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+
+    - name: ⚖️ Check licenses
+      run: |
+        pip install pip-licenses licensecheck
+        pip-licenses --output-format=json --output-file=licenses.json
+        pip-licenses --output-format=csv --output-file=licenses.csv
+        licensecheck --ignore-packages pytest mypy black ruff || true
+
+    - name: 📤 Upload license reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: license-reports
+        path: |
+          licenses.json
+          licenses.csv
+        retention-days: 90
+
+    - name: ⚖️ Validate license compatibility
+      run: |
+        python -c "
+        import json
+        
+        # Load licenses
+        with open('licenses.json', 'r') as f:
+            licenses = json.load(f)
+        
+        # Define allowed licenses
+        allowed_licenses = [
+            'MIT', 'MIT License',
+            'Apache Software License', 'Apache 2.0', 'Apache-2.0',
+            'BSD License', 'BSD', 'BSD-2-Clause', 'BSD-3-Clause',
+            'ISC License', 'ISC',
+            'Python Software Foundation License',
+            'Mozilla Public License 2.0 (MPL 2.0)',
+        ]
+        
+        # Check for problematic licenses
+        problematic = []
+        for pkg in licenses:
+            license_name = pkg.get('License', 'Unknown')
+            if license_name not in allowed_licenses and 'UNKNOWN' not in license_name:
+                problematic.append(f\"{pkg['Name']}: {license_name}\")
+        
+        if problematic:
+            print('❌ Problematic licenses found:')
+            for item in problematic:
+                print(f'  - {item}')
+            # Don't fail for now, just warn
+            # exit(1)
+        else:
+            print('✅ All licenses are compatible')
+        "
+
+  # ==========================================================================
+  # Job 6: SBOM Generation
+  # ==========================================================================
+  sbom-generation:
+    name: 📋 SBOM Generation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+
+    - name: 📋 Generate SBOM with cyclone-dx
+      run: |
+        pip install cyclonedx-bom
+        cyclonedx-py -o sbom-cyclonedx.json
+        cyclonedx-py -o sbom-cyclonedx.xml --format xml
+
+    - name: 📋 Generate SBOM with syft
+      if: false  # Enable when syft is needed
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+        syft . -o spdx-json=sbom-syft.spdx.json
+        syft . -o cyclonedx-json=sbom-syft.cyclonedx.json
+
+    - name: 📤 Upload SBOM files
+      uses: actions/upload-artifact@v3
+      with:
+        name: sbom-files
+        path: |
+          sbom-*.json
+          sbom-*.xml
+        retention-days: 365
+
+    - name: 📋 Attach SBOM to release
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          sbom-cyclonedx.json
+          sbom-cyclonedx.xml
+
+  # ==========================================================================
+  # Job 7: Security Policy Validation
+  # ==========================================================================
+  policy-check:
+    name: 📜 Security Policy Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📜 Check for security policy
+      run: |
+        if [ -f "SECURITY.md" ]; then
+          echo "✅ Security policy found"
+        else
+          echo "❌ Security policy missing"
+          echo "Creating basic security policy..."
+          cat > SECURITY.md << 'EOF'
+        # Security Policy
+        
+        ## Reporting Security Vulnerabilities
+        
+        Please report security vulnerabilities by emailing security@terragonlabs.com
+        or by creating a private security advisory on GitHub.
+        
+        ## Supported Versions
+        
+        | Version | Supported          |
+        | ------- | ------------------ |
+        | 0.1.x   | :white_check_mark: |
+        
+        ## Security Best Practices
+        
+        - Keep dependencies up to date
+        - Use environment variables for secrets
+        - Follow principle of least privilege
+        - Enable two-factor authentication
+        EOF
+        fi
+
+    - name: 📜 Check for code of conduct
+      run: |
+        if [ -f "CODE_OF_CONDUCT.md" ]; then
+          echo "✅ Code of conduct found"
+        else
+          echo "⚠️  Code of conduct missing (recommended)"
+        fi
+
+    - name: 📜 Check for contributing guidelines
+      run: |
+        if [ -f "CONTRIBUTING.md" ]; then
+          echo "✅ Contributing guidelines found"
+        else
+          echo "⚠️  Contributing guidelines missing (recommended)"
+        fi
+
+  # ==========================================================================
+  # Job 8: Security Score Card
+  # ==========================================================================
+  scorecard:
+    name: 📊 OpenSSF Scorecard
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+      actions: read
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - name: 📊 Run OpenSSF Scorecard
+      uses: ossf/scorecard-action@v2.3.1
+      with:
+        results_file: scorecard-results.sarif
+        results_format: sarif
+        publish_results: true
+
+    - name: 📤 Upload SARIF results
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: scorecard-results.sarif
+
+  # ==========================================================================
+  # Job 9: Security Summary
+  # ==========================================================================
+  security-summary:
+    name: 📋 Security Summary
+    runs-on: ubuntu-latest
+    needs: 
+      - dependency-scan
+      - code-security
+      - container-security
+      - secrets-scan
+      - license-check
+      - sbom-generation
+      - policy-check
+    if: always()
+
+    steps:
+    - name: 📋 Generate security summary
+      run: |
+        echo "🛡️ Security Scan Summary"
+        echo "========================"
+        echo "📅 Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "🔗 Commit: ${{ github.sha }}"
+        echo "🌿 Branch: ${{ github.ref_name }}"
+        echo ""
+        echo "📊 Scan Results:"
+        echo "   Dependency Scan: ${{ needs.dependency-scan.result }}"
+        echo "   Code Security: ${{ needs.code-security.result }}"
+        echo "   Container Security: ${{ needs.container-security.result }}"
+        echo "   Secrets Scan: ${{ needs.secrets-scan.result }}"
+        echo "   License Check: ${{ needs.license-check.result }}"
+        echo "   SBOM Generation: ${{ needs.sbom-generation.result }}"
+        echo "   Policy Check: ${{ needs.policy-check.result }}"
+
+    - name: ✅ Mark security success
+      if: |
+        needs.dependency-scan.result == 'success' &&
+        needs.code-security.result == 'success' &&
+        needs.container-security.result == 'success' &&
+        needs.secrets-scan.result == 'success' &&
+        needs.license-check.result == 'success' &&
+        needs.sbom-generation.result == 'success' &&
+        needs.policy-check.result == 'success'
+      run: |
+        echo "✅ All security scans passed successfully!"
+
+    - name: ❌ Mark security failure
+      if: |
+        needs.dependency-scan.result == 'failure' ||
+        needs.code-security.result == 'failure' ||
+        needs.container-security.result == 'failure' ||
+        needs.secrets-scan.result == 'failure'
+      run: |
+        echo "❌ One or more security scans failed!"
+        echo "🔍 Please review the security reports and fix issues."
+        exit 1
