@@ -1,0 +1,241 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate configuration for advanced dependency management",
+  "extends": [
+    "config:base",
+    "security:openssf-scorecard",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separatePatchReleases",
+    "helpers:pinGitHubActionDigests"
+  ],
+  
+  "schedule": ["before 6am on monday"],
+  "timezone": "UTC",
+  "baseBranches": ["main"],
+  "labels": ["dependencies", "renovate"],
+  "assignees": ["@maintainers"],
+  "reviewers": ["@security-team"],
+  
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 2,
+  "branchConcurrentLimit": 20,
+  
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  
+  "packageRules": [
+    {
+      "description": "Security updates - highest priority",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["security"],
+      "labels": ["security", "dependencies"],
+      "reviewers": ["@security-team"],
+      "assignees": ["@security-lead"],
+      "prPriority": 10,
+      "schedule": ["at any time"],
+      "automerge": false,
+      "stabilityDays": 0
+    },
+    
+    {
+      "description": "Python core dependencies - careful updates",
+      "matchPackageNames": [
+        "python",
+        "django",
+        "flask",
+        "fastapi",
+        "sqlalchemy",
+        "pytest"
+      ],
+      "matchUpdateTypes": ["major"],
+      "enabled": false,
+      "reviewers": ["@architecture-team"],
+      "labels": ["major-update", "breaking-change"]
+    },
+    
+    {
+      "description": "Development dependencies - more permissive",
+      "matchDepTypes": ["devDependencies"],
+      "matchCategories": ["test", "lint", "dev"],
+      "automerge": true,
+      "matchUpdateTypes": ["patch", "minor"],
+      "stabilityDays": 3,
+      "minimumReleaseAge": "3 days"
+    },
+    
+    {
+      "description": "GitHub Actions - pin to digest and update regularly",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["pin"],
+      "automerge": true,
+      "pinDigests": true,
+      "labels": ["github-actions", "security"]
+    },
+    
+    {
+      "description": "Docker images - security focused",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["security", "patch"],
+      "automerge": false,
+      "labels": ["docker", "security"],
+      "reviewers": ["@devops-team"]
+    },
+    
+    {
+      "description": "Pre-commit hooks - auto-update",
+      "matchManagers": ["pre-commit"],
+      "automerge": true,
+      "matchUpdateTypes": ["patch", "minor"],
+      "stabilityDays": 1,
+      "labels": ["pre-commit", "automation"]
+    },
+    
+    {
+      "description": "Group security-related packages",
+      "matchPackageNames": [
+        "bandit",
+        "safety",
+        "pip-audit",
+        "semgrep",
+        "cryptography",
+        "requests"
+      ],
+      "groupName": "security packages",
+      "labels": ["security", "grouped-update"]
+    },
+    
+    {
+      "description": "Group testing packages",
+      "matchPackagePatterns": [
+        "pytest",
+        "coverage",
+        "factory-boy",
+        "freezegun",
+        "mock"
+      ],
+      "groupName": "testing packages",
+      "labels": ["testing", "grouped-update"]
+    },
+    
+    {
+      "description": "Group documentation packages",
+      "matchPackagePatterns": [
+        "sphinx",
+        "mkdocs",
+        "myst-parser"
+      ],
+      "groupName": "documentation packages",
+      "labels": ["documentation", "grouped-update"]
+    }
+  ],
+  
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"],
+    "labels": ["security", "vulnerability"],
+    "assignees": ["@security-team"],
+    "reviewers": ["@security-lead"],
+    "prPriority": 20,
+    "stabilityDays": 0
+  },
+  
+  "osvVulnerabilityAlerts": true,
+  "suppressNotifications": ["prIgnoreNotification"],
+  
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update Python version in Dockerfile",
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": [
+        "FROM python:(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)-(?<currentDigest>\\w+)\\s"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "python",
+      "currentValueTemplate": "{{currentValue}}"
+    },
+    
+    {
+      "customType": "regex",
+      "description": "Update Python version in GitHub Actions",
+      "fileMatch": ["^\\.github/workflows/.+\\.yml$"],
+      "matchStrings": [
+        "python-version: ['\"](?<currentValue>\\d+\\.\\d+)['\"]"
+      ],
+      "datasourceTemplate": "python-version",
+      "depNameTemplate": "python"
+    }
+  ],
+  
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["before 6am on sunday"],
+    "commitMessageAction": "Lock file maintenance",
+    "labels": ["maintenance", "lock-file"]
+  },
+  
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🤖 Renovate Dependency Dashboard",
+  "dependencyDashboardHeader": "This dashboard shows the status of all dependency updates managed by Renovate.",
+  "dependencyDashboardFooter": "For questions about dependency updates, contact the @security-team.",
+  
+  "configWarningReuseIssue": false,
+  "onboarding": false,
+  "requireConfig": "optional",
+  
+  "git": {
+    "ignoredAuthors": ["renovate[bot]@users.noreply.github.com"]
+  },
+  
+  "hostRules": [
+    {
+      "hostType": "pypi",
+      "concurrentRequestLimit": 5,
+      "timeout": 30000
+    },
+    {
+      "hostType": "github",
+      "concurrentRequestLimit": 10
+    }
+  ],
+  
+  "platformAutomerge": false,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
+  
+  "stabilityDays": 7,
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
+  
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/.git/**",
+    "**/tests/fixtures/**"
+  ],
+  
+  "regexManagers": [
+    {
+      "description": "Update action versions in documentation",
+      "fileMatch": ["^docs/.+\\.md$"],
+      "matchStrings": [
+        "uses: (?<depName>[\\w-]+/[\\w-]+)@(?<currentValue>v\\d+(?:\\.\\d+)*)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
+  ],
+  
+  "postUpdateOptions": [
+    "goModTidy",
+    "npmDedupe"
+  ],
+  
+  "rollbackPrs": true,
+  "recreateClosed": true,
+  "rebaseWhen": "conflicted"
+}

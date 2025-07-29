@@ -1,0 +1,181 @@
+# Dependabot configuration for automated dependency updates
+# https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically
+
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    target-branch: "develop"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps(dev)"
+      include: "scope"
+    reviewers:
+      - "security-team"
+      - "maintainers"
+    assignees:
+      - "lead-developer"
+    labels:
+      - "dependencies"
+      - "automated"
+    milestone: "Next Release"
+    rebase-strategy: "auto"
+    allow:
+      # Allow security updates for all packages
+      - dependency-type: "all"
+        update-type: "security"
+      # Allow minor and patch updates for production dependencies
+      - dependency-type: "direct:production"
+        update-type: "version-update:semver-minor"
+      - dependency-type: "direct:production"
+        update-type: "version-update:semver-patch"
+      # Allow all updates for development dependencies
+      - dependency-type: "direct:development"
+        update-type: "all"
+    ignore:
+      # Ignore major version updates for critical dependencies
+      - dependency-name: "django"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "pytest"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # Group security updates together
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "security"
+      # Group testing dependencies
+      testing-dependencies:
+        patterns:
+          - "pytest*"
+          - "coverage"
+          - "factory-boy"
+          - "freezegun"
+        update-types:
+          - "minor"
+          - "patch"
+      # Group linting and formatting tools
+      code-quality:
+        patterns:
+          - "black"
+          - "ruff"
+          - "mypy"
+          - "bandit"
+          - "safety"
+          - "pre-commit"
+        update-types:
+          - "minor"
+          - "patch"
+      # Group documentation tools
+      documentation:
+        patterns:
+          - "sphinx*"
+          - "mkdocs*"
+          - "myst-parser"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "10:00"
+      timezone: "UTC"
+    target-branch: "develop"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    reviewers:
+      - "devops-team"
+    assignees:
+      - "ci-maintainer"
+    labels:
+      - "github-actions"
+      - "ci"
+      - "automated"
+    groups:
+      # Group all GitHub Actions updates
+      github-actions:
+        patterns:
+          - "*"
+
+  # Docker dependencies
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "11:00"
+      timezone: "UTC"
+    target-branch: "develop"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+    reviewers:
+      - "devops-team"
+    assignees:
+      - "docker-maintainer"
+    labels:
+      - "docker"
+      - "infrastructure"
+      - "automated"
+    allow:
+      # Only allow patch and minor updates for Docker
+      - update-type: "version-update:semver-patch"
+      - update-type: "version-update:semver-minor"
+      - update-type: "security"
+
+  # NPM dependencies (for semantic-release and other Node.js tools)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "12:00"
+      timezone: "UTC"
+    target-branch: "develop"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "deps(npm)"
+      include: "scope"
+    reviewers:
+      - "frontend-team"
+    labels:
+      - "dependencies"
+      - "npm"
+      - "automated"
+    groups:
+      # Group semantic-release dependencies
+      semantic-release:
+        patterns:
+          - "semantic-release"
+          - "@semantic-release/*"
+          - "conventional-changelog*"
+        update-types:
+          - "minor"
+          - "patch"
+
+# Advanced configuration for security and compliance
+registries:
+  # Private registry configuration (if needed)
+  private-registry:
+    type: python-index
+    url: https://private-pypi.company.com/simple/
+    username: ${{ secrets.PRIVATE_REGISTRY_USERNAME }}
+    password: ${{ secrets.PRIVATE_REGISTRY_PASSWORD }}
+
+# Enable Dependabot alerts for security vulnerabilities
+# This is configured in the repository settings, not in this file
