@@ -1,0 +1,123 @@
+{
+  "bomFormat": "CycloneDX", 
+  "specVersion": "1.4",
+  "serialNumber": "urn:uuid:12345678-1234-5678-9012-123456789012",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-07-29T09:32:00Z",
+    "tools": [
+      {
+        "vendor": "CycloneDX",
+        "name": "cyclonedx-python",
+        "version": "3.11.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "bom-ref": "agentic-dev-orchestrator@0.1.0",
+      "name": "agentic-dev-orchestrator",
+      "version": "0.1.0",
+      "description": "A CLI and GitHub Action that unifies multi-agent development workflows",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "supplier": {
+        "name": "Terragon Labs",
+        "url": ["https://terragonlabs.com"]
+      },
+      "author": "Terragon Labs <noreply@terragonlabs.com>",
+      "purl": "pkg:pypi/agentic-dev-orchestrator@0.1.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pyyaml@6.0",
+      "name": "PyYAML",
+      "version": "6.0",
+      "description": "YAML parser and emitter for Python",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/pyyaml@6.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://pyyaml.org/"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "requests@2.28.0",
+      "name": "requests",
+      "version": "2.28.0", 
+      "description": "Python HTTP for Humans",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/requests@2.28.0",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://requests.readthedocs.io/"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "click@8.0.0",
+      "name": "click",
+      "version": "8.0.0",
+      "description": "Composable command line interface toolkit",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/click@8.0.0"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "bom-ref": "vuln-example",
+      "id": "CVE-2023-EXAMPLE",
+      "source": {
+        "name": "NVD",
+        "url": "https://nvd.nist.gov/"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "NVD",
+            "url": "https://nvd.nist.gov/"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "affects": [
+        {
+          "ref": "requests@2.28.0"
+        }
+      ],
+      "description": "Example vulnerability description for demonstration purposes"
+    }
+  ]
+}

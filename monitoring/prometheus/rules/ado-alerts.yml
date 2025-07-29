@@ -1,0 +1,255 @@
+# Prometheus alerting rules for ADO
+# Defines when to fire alerts based on metrics
+
+groups:
+  - name: ado.application
+    interval: 30s
+    rules:
+      # Application availability
+      - alert: ADOApplicationDown
+        expr: up{job="ado-application"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: application
+          team: platform
+        annotations:
+          summary: "ADO application is down"
+          description: "ADO application has been down for more than 1 minute"
+          runbook_url: "https://docs.ado.com/runbooks/application-down"
+
+      # High error rate
+      - alert: ADOHighErrorRate
+        expr: rate(ado_http_requests_total{status=~"5.."}[5m]) / rate(ado_http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: application
+          team: platform
+        annotations:
+          summary: "High error rate in ADO application"
+          description: "Error rate is {{ $value | humanizePercentage }} over the last 5 minutes"
+          runbook_url: "https://docs.ado.com/runbooks/high-error-rate"
+
+      # High response time
+      - alert: ADOHighResponseTime
+        expr: histogram_quantile(0.95, rate(ado_http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          component: application
+          team: platform
+        annotations:
+          summary: "High response time in ADO application"
+          description: "95th percentile response time is {{ $value }}s over the last 5 minutes"
+          runbook_url: "https://docs.ado.com/runbooks/high-response-time"
+
+      # Memory usage
+      - alert: ADOHighMemoryUsage
+        expr: (process_resident_memory_bytes{job="ado-application"} / 1024 / 1024 / 1024) > 2
+        for: 5m
+        labels:
+          severity: warning
+          component: application
+          team: platform
+        annotations:
+          summary: "High memory usage in ADO application"
+          description: "Memory usage is {{ $value | humanize }}GB"
+          runbook_url: "https://docs.ado.com/runbooks/high-memory-usage"
+
+      # CPU usage
+      - alert: ADOHighCPUUsage
+        expr: rate(process_cpu_seconds_total{job="ado-application"}[5m]) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          component: application
+          team: platform
+        annotations:
+          summary: "High CPU usage in ADO application"
+          description: "CPU usage is {{ $value | humanizePercentage }}"
+          runbook_url: "https://docs.ado.com/runbooks/high-cpu-usage"
+
+  - name: ado.agents
+    interval: 30s
+    rules:
+      # Agent execution failures
+      - alert: ADOAgentExecutionFailures
+        expr: increase(ado_agent_executions_total{status="failed"}[10m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+          component: agents
+          team: ai
+        annotations:
+          summary: "High agent execution failure rate"
+          description: "{{ $labels.agent_type }} agent has {{ $value }} failures in the last 10 minutes"
+          runbook_url: "https://docs.ado.com/runbooks/agent-failures"
+
+      # Agent queue backlog
+      - alert: ADOAgentQueueBacklog
+        expr: ado_agent_queue_size > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: agents
+          team: ai
+        annotations:
+          summary: "Large agent queue backlog"
+          description: "Agent queue has {{ $value }} pending tasks"
+          runbook_url: "https://docs.ado.com/runbooks/queue-backlog"
+
+      # Agent response time
+      - alert: ADOAgentSlowResponse
+        expr: histogram_quantile(0.95, rate(ado_agent_execution_duration_seconds_bucket[10m])) > 300
+        for: 5m
+        labels:
+          severity: warning
+          component: agents
+          team: ai
+        annotations:
+          summary: "Slow agent response time"
+          description: "95th percentile agent execution time is {{ $value }}s"
+          runbook_url: "https://docs.ado.com/runbooks/slow-agent-response"
+
+  - name: ado.infrastructure
+    interval: 60s
+    rules:
+      # Database connectivity
+      - alert: ADODatabaseDown
+        expr: up{job="postgres"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: database
+          team: platform
+        annotations:
+          summary: "ADO database is down"
+          description: "PostgreSQL database has been down for more than 1 minute"
+          runbook_url: "https://docs.ado.com/runbooks/database-down"
+
+      # Redis connectivity
+      - alert: ADORedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          component: cache
+          team: platform
+        annotations:
+          summary: "ADO Redis is down"
+          description: "Redis cache has been down for more than 1 minute"
+          runbook_url: "https://docs.ado.com/runbooks/redis-down"
+
+      # Disk space
+      - alert: ADOLowDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+          component: system
+          team: platform
+        annotations:
+          summary: "Low disk space"
+          description: "Disk space is {{ $value | humanizePercentage }} available"
+          runbook_url: "https://docs.ado.com/runbooks/low-disk-space"
+
+      # Container restarts
+      - alert: ADOContainerRestarts
+        expr: increase(kube_pod_container_status_restarts_total[1h]) > 3
+        for: 5m
+        labels:
+          severity: warning
+          component: container
+          team: platform
+        annotations:
+          summary: "Frequent container restarts"
+          description: "Container {{ $labels.container }} has restarted {{ $value }} times in the last hour"
+          runbook_url: "https://docs.ado.com/runbooks/container-restarts"
+
+  - name: ado.security
+    interval: 300s  # Check every 5 minutes
+    rules:
+      # Authentication failures
+      - alert: ADOHighAuthFailures
+        expr: increase(ado_auth_failures_total[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          component: security
+          team: security
+        annotations:
+          summary: "High authentication failure rate"
+          description: "{{ $value }} authentication failures in the last 5 minutes"
+          runbook_url: "https://docs.ado.com/runbooks/auth-failures"
+
+      # Suspicious API usage
+      - alert: ADOSuspiciousAPIUsage
+        expr: rate(ado_api_requests_total[5m]) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+          team: security
+        annotations:
+          summary: "Suspicious API usage detected"
+          description: "API request rate is {{ $value }} requests/second"
+          runbook_url: "https://docs.ado.com/runbooks/suspicious-api-usage"
+
+  - name: ado.business
+    interval: 300s
+    rules:
+      # Task completion rate
+      - alert: ADOLowTaskCompletionRate
+        expr: rate(ado_tasks_completed_total[1h]) / rate(ado_tasks_created_total[1h]) < 0.8
+        for: 15m
+        labels:
+          severity: warning
+          component: business
+          team: product
+        annotations:
+          summary: "Low task completion rate"
+          description: "Task completion rate is {{ $value | humanizePercentage }} over the last hour"
+          runbook_url: "https://docs.ado.com/runbooks/low-completion-rate"
+
+      # WSJF scoring anomalies
+      - alert: ADOWSJFScoringAnomalies
+        expr: stddev_over_time(ado_wsjf_score[24h]) > 50
+        for: 30m
+        labels:
+          severity: info
+          component: business
+          team: product
+        annotations:
+          summary: "WSJF scoring showing high variance"
+          description: "WSJF scores have high variance ({{ $value }}) over the last 24 hours"
+          runbook_url: "https://docs.ado.com/runbooks/wsjf-anomalies"
+
+  - name: ado.monitoring
+    interval: 60s
+    rules:
+      # Prometheus targets down
+      - alert: PrometheusTargetDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: warning
+          component: monitoring
+          team: platform
+        annotations:
+          summary: "Prometheus target down"
+          description: "{{ $labels.job }} target {{ $labels.instance }} has been down for more than 5 minutes"
+          runbook_url: "https://docs.ado.com/runbooks/prometheus-target-down"
+
+      # High cardinality metrics
+      - alert: PrometheusHighCardinality
+        expr: prometheus_tsdb_symbol_table_size_bytes > 16 * 1024 * 1024  # 16MB
+        for: 10m
+        labels:
+          severity: warning
+          component: monitoring
+          team: platform
+        annotations:
+          summary: "Prometheus high cardinality detected"
+          description: "Symbol table size is {{ $value | humanizeBytes }}"
+          runbook_url: "https://docs.ado.com/runbooks/high-cardinality"

@@ -1,0 +1,150 @@
+# Prometheus configuration for ADO monitoring
+# Scrapes metrics from various targets and services
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'ado-local'
+    replica: 'prometheus-01'
+
+# Rule files for alerting
+rule_files:
+  - "rules/*.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 5s
+    metrics_path: /metrics
+
+  # ADO Application metrics
+  - job_name: 'ado-application'
+    static_configs:
+      - targets: ['ado-app:8000']
+    scrape_interval: 10s
+    metrics_path: /metrics
+    scrape_timeout: 5s
+    honor_labels: true
+    params:
+      format: ['prometheus']
+
+  # Node exporter for system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+    metrics_path: /metrics
+
+  # cAdvisor for container metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 15s
+    metrics_path: /metrics
+
+  # PostgreSQL metrics (using postgres_exporter if available)
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Redis metrics (using redis_exporter if available)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Grafana metrics
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Loki metrics
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Jaeger metrics
+  - job_name: 'jaeger'
+    static_configs:
+      - targets: ['jaeger:14269']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # OpenTelemetry Collector metrics
+  - job_name: 'otelcol'
+    static_configs:
+      - targets: ['otelcol:8888']
+    scrape_interval: 15s
+    metrics_path: /metrics
+
+  # AlertManager metrics
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets: ['alertmanager:9093']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # GitHub Actions runner metrics (if self-hosted)
+  - job_name: 'github-runner'
+    static_configs:
+      - targets: ['github-runner:9100']
+    scrape_interval: 60s
+    metrics_path: /metrics
+    honor_labels: true
+
+  # Custom ADO agent metrics
+  - job_name: 'ado-agents'
+    static_configs:
+      - targets: ['ado-app:8001']
+    scrape_interval: 30s
+    metrics_path: /agent-metrics
+    params:
+      format: ['prometheus']
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: ado_agent_(.+)
+        target_label: agent_type
+        replacement: ${1}
+
+# Remote write configuration for long-term storage
+remote_write:
+  - url: "https://prometheus-remote-write.example.com/api/v1/write"
+    basic_auth:
+      username: "ado-prometheus"
+      password_file: "/etc/prometheus/remote-write-password"
+    queue_config:
+      max_samples_per_send: 1000
+      max_shards: 100
+      capacity: 10000
+
+# Storage configuration
+storage:
+  tsdb:
+    retention.time: 30d
+    retention.size: 10GB
+    wal-compression: true
+
+# Alerting configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+      timeout: 10s
+      api_version: v2
+
+# Feature flags
+feature_flags:
+  - promql-at-modifier
+  - promql-negative-offset
