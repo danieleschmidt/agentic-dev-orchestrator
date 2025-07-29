@@ -428,6 +428,40 @@ commands = sphinx-build -b html docs docs/_build/html
 """
 
 # =============================================================================
+# SEMANTIC RELEASE CONFIGURATION
+# =============================================================================
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+version_variables = [
+    "ado/__init__.py:__version__",
+]
+build_command = "python -m build"
+dist_path = "dist/"
+upload_to_vcs_release = true
+
+[tool.semantic_release.commit_parser_options]
+allowed_tags = ["build", "chore", "ci", "docs", "feat", "fix", "perf", "style", "refactor", "test"]
+minor_tags = ["feat"]
+patch_tags = ["fix", "perf"]
+
+[tool.semantic_release.remote.token]
+env = "GITHUB_TOKEN"
+
+[tool.semantic_release.changelog]
+template_dir = "templates"
+changelog_file = "CHANGELOG.md"
+exclude_commit_patterns = [
+    "^Merge pull request",
+    "^Merge branch",
+    "^Bump version",
+]
+
+[tool.semantic_release.branches.main]
+match = "main"
+prerelease = false
+
+# =============================================================================
 # SCRIPTS CONFIGURATION
 # =============================================================================
 

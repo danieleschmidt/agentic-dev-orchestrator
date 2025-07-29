@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🤝 Community Discussions
+    url: https://github.com/terragon-labs/agentic-dev-orchestrator/discussions
+    about: Ask questions, share ideas, and discuss ADO with the community
+  - name: 📖 Documentation
+    url: https://agentic-dev-orchestrator.readthedocs.io/
+    about: Browse the official documentation for guides and API reference
+  - name: 🔒 Security Vulnerabilities
+    url: https://github.com/terragon-labs/agentic-dev-orchestrator/security/advisories
+    about: Report security vulnerabilities privately through GitHub Security Advisories
+  - name: 💬 Discord Community
+    url: https://discord.gg/terragon-labs
+    about: Join our Discord server for real-time discussions and support
+  - name: 📧 General Inquiries
+    url: mailto:hello@terragonlabs.com
+    about: Contact us directly for partnerships, enterprise support, or general inquiries
