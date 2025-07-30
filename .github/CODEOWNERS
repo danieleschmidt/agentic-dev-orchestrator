@@ -1,0 +1,43 @@
+# Global owners
+* @terragon-labs/maintainers
+
+# Core application code
+/src/ @terragon-labs/core-team
+/ado/ @terragon-labs/core-team
+
+# Configuration files
+pyproject.toml @terragon-labs/maintainers
+Dockerfile @terragon-labs/devops-team
+docker-compose*.yml @terragon-labs/devops-team
+Makefile @terragon-labs/devops-team
+
+# CI/CD and automation
+/.github/ @terragon-labs/devops-team
+/.github/workflows/ @terragon-labs/devops-team @terragon-labs/security-team
+
+# Security files
+/SECURITY.md @terragon-labs/security-team
+/.github/workflows/security.yml @terragon-labs/security-team
+/.secrets.baseline @terragon-labs/security-team
+
+# Documentation
+/docs/ @terragon-labs/docs-team
+/README.md @terragon-labs/docs-team
+/*.md @terragon-labs/docs-team
+
+# Testing
+/tests/ @terragon-labs/core-team @terragon-labs/qa-team
+pytest.ini @terragon-labs/qa-team
+tox.ini @terragon-labs/qa-team
+
+# Dependencies and requirements
+requirements/ @terragon-labs/maintainers
+requirements*.txt @terragon-labs/maintainers
+requirements*.in @terragon-labs/maintainers
+
+# Monitoring and operations
+/monitoring/ @terragon-labs/devops-team @terragon-labs/sre-team
+/backlog/ @terragon-labs/product-team
+
+# Pre-commit configuration
+.pre-commit-config.yaml @terragon-labs/core-team
