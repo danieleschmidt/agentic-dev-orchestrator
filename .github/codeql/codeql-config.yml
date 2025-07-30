@@ -1,0 +1,29 @@
+name: "ADO CodeQL Config"
+
+disable-default-queries: false
+
+queries:
+  - uses: security-extended
+  - uses: security-and-quality
+
+paths-ignore:
+  - "tests/**"
+  - "docs/**"
+  - "scripts/**"
+  - "*.md"
+
+paths:
+  - "src/**"
+  - "ado/**"
+  - "pyproject.toml"
+  - "setup.py"
+
+query-filters:
+  - exclude:
+      id: py/unused-import
+  - exclude:
+      id: py/similar-function
+
+packs:
+  - codeql/python-queries:AlertSuppression.ql
+  - codeql/python-queries:Security.ql
