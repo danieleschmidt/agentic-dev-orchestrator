@@ -1,0 +1,244 @@
+{
+  "timestamp": "2025-08-01T02:38:38.727392",
+  "total_opportunities": 9,
+  "by_category": {
+    "performance": 1,
+    "documentation": 1,
+    "security": 1,
+    "technical_debt": 5,
+    "architecture": 1
+  },
+  "by_risk_level": {
+    "medium": 3,
+    "low": 6
+  },
+  "top_10_scores": [
+    45.72666666666667,
+    38.61500000000001,
+    33.2,
+    31.3,
+    31.3,
+    31.3,
+    31.3,
+    31.3,
+    30.275
+  ],
+  "total_estimated_effort": 38.0,
+  "high_impact_count": 0,
+  "opportunities": [
+    {
+      "id": "perf-001",
+      "title": "Optimize backlog processing algorithm",
+      "description": "Current O(n\u00b2) sorting can be optimized to O(n log n)",
+      "category": "performance",
+      "source": "performance_analysis",
+      "scores": {
+        "impact": 8,
+        "confidence": 9,
+        "ease": 6
+      },
+      "compositeScore": 45.72666666666667,
+      "estimatedEffort": 6.0,
+      "expectedImpact": {
+        "performance": "+40%",
+        "scalability": "+High"
+      },
+      "files_affected": [
+        "backlog_manager.py"
+      ],
+      "risk_level": "medium",
+      "discovered_at": "2025-08-01T02:38:38.726716",
+      "dependencies": []
+    },
+    {
+      "id": "doc-001",
+      "title": "Add comprehensive API documentation",
+      "description": "Generate automated API docs using Sphinx with type hints",
+      "category": "documentation",
+      "source": "documentation_analysis",
+      "scores": {
+        "impact": 6,
+        "confidence": 9,
+        "ease": 7
+      },
+      "compositeScore": 38.61500000000001,
+      "estimatedEffort": 8.0,
+      "expectedImpact": {
+        "developer_experience": "+40%",
+        "onboarding": "+60%"
+      },
+      "files_affected": [
+        "docs/",
+        "*.py"
+      ],
+      "risk_level": "low",
+      "discovered_at": "2025-08-01T02:38:38.727255",
+      "dependencies": []
+    },
+    {
+      "id": "sec-demo-001",
+      "title": "Update security scanning configuration",
+      "description": "Enhance bandit configuration with additional security rules",
+      "category": "security",
+      "source": "security_analysis",
+      "scores": {
+        "severity": 3,
+        "impact": 6,
+        "ease": 8
+      },
+      "compositeScore": 33.2,
+      "estimatedEffort": 2.0,
+      "expectedImpact": {
+        "security": "+15%"
+      },
+      "files_affected": [
+        ".pre-commit-config.yaml",
+        "pyproject.toml"
+      ],
+      "risk_level": "medium",
+      "discovered_at": "2025-08-01T02:38:38.726695",
+      "dependencies": []
+    },
+    {
+      "id": "debt-001",
+      "title": "Resolve technical debt in backlog_manager.py",
+      "description": "126:        \"\"\"Discover TODO/FIXME/HACK/BUG comments in codebase\"\"\"",
+      "category": "technical_debt",
+      "source": "git_grep",
+      "scores": {
+        "urgency": 5,
+        "impact": 6,
+        "ease": 7
+      },
+      "compositeScore": 31.3,
+      "estimatedEffort": 2.0,
+      "expectedImpact": {
+        "maintainability": "+15%"
+      },
+      "files_affected": [
+        "backlog_manager.py"
+      ],
+      "risk_level": "low",
+      "discovered_at": "2025-08-01T02:38:38.725543",
+      "dependencies": []
+    },
+    {
+      "id": "debt-002",
+      "title": "Resolve technical debt in backlog_manager.py",
+      "description": "129:            r'#\\s*TODO:?\\s*(.+)',",
+      "category": "technical_debt",
+      "source": "git_grep",
+      "scores": {
+        "urgency": 5,
+        "impact": 6,
+        "ease": 7
+      },
+      "compositeScore": 31.3,
+      "estimatedEffort": 2.0,
+      "expectedImpact": {
+        "maintainability": "+15%"
+      },
+      "files_affected": [
+        "backlog_manager.py"
+      ],
+      "risk_level": "low",
+      "discovered_at": "2025-08-01T02:38:38.725563",
+      "dependencies": []
+    },
+    {
+      "id": "debt-003",
+      "title": "Resolve technical debt in backlog_manager.py",
+      "description": "130:            r'#\\s*FIXME:?\\s*(.+)',",
+      "category": "technical_debt",
+      "source": "git_grep",
+      "scores": {
+        "urgency": 5,
+        "impact": 6,
+        "ease": 7
+      },
+      "compositeScore": 31.3,
+      "estimatedEffort": 2.0,
+      "expectedImpact": {
+        "maintainability": "+15%"
+      },
+      "files_affected": [
+        "backlog_manager.py"
+      ],
+      "risk_level": "low",
+      "discovered_at": "2025-08-01T02:38:38.725569",
+      "dependencies": []
+    },
+    {
+      "id": "debt-004",
+      "title": "Resolve technical debt in backlog_manager.py",
+      "description": "131:            r'#\\s*HACK:?\\s*(.+)',",
+      "category": "technical_debt",
+      "source": "git_grep",
+      "scores": {
+        "urgency": 5,
+        "impact": 6,
+        "ease": 7
+      },
+      "compositeScore": 31.3,
+      "estimatedEffort": 2.0,
+      "expectedImpact": {
+        "maintainability": "+15%"
+      },
+      "files_affected": [
+        "backlog_manager.py"
+      ],
+      "risk_level": "low",
+      "discovered_at": "2025-08-01T02:38:38.725573",
+      "dependencies": []
+    },
+    {
+      "id": "debt-005",
+      "title": "Resolve technical debt in backlog_manager.py",
+      "description": "132:            r'#\\s*BUG:?\\s*(.+)',",
+      "category": "technical_debt",
+      "source": "git_grep",
+      "scores": {
+        "urgency": 5,
+        "impact": 6,
+        "ease": 7
+      },
+      "compositeScore": 31.3,
+      "estimatedEffort": 2.0,
+      "expectedImpact": {
+        "maintainability": "+15%"
+      },
+      "files_affected": [
+        "backlog_manager.py"
+      ],
+      "risk_level": "low",
+      "discovered_at": "2025-08-01T02:38:38.725577",
+      "dependencies": []
+    },
+    {
+      "id": "arch-001",
+      "title": "Implement dependency injection pattern",
+      "description": "Replace direct instantiation with dependency injection for better testability",
+      "category": "architecture",
+      "source": "architectural_analysis",
+      "scores": {
+        "maintainability": 9,
+        "testability": 8,
+        "complexity": 7
+      },
+      "compositeScore": 30.275,
+      "estimatedEffort": 12.0,
+      "expectedImpact": {
+        "testability": "+50%",
+        "maintainability": "+30%"
+      },
+      "files_affected": [
+        "ado.py",
+        "autonomous_executor.py",
+        "backlog_manager.py"
+      ],
+      "risk_level": "medium",
+      "discovered_at": "2025-08-01T02:38:38.727244",
+      "dependencies": []
+    }
+  ]
+}
