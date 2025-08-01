@@ -14,7 +14,7 @@ The Agentic Development Orchestrator repository has been successfully enhanced w
 | Component | Status | Impact |
 |-----------|---------|---------|
 | **Value Discovery Engine** | ✅ Deployed | 9 opportunities discovered, 38 hours of value identified |
-| **GitHub Actions CI/CD** | ✅ Implemented | Multi-stage validation with security, performance, and quality gates |
+| **GitHub Actions CI/CD** | 📋 Ready for Setup | Comprehensive workflows documented in docs/workflows/ |
 | **Continuous Improvement** | ✅ Active | 7 metrics tracked, 6 showing improvement trends |
 | **Autonomous Workflows** | ✅ Integrated | Daily discovery cycles, automated issue creation |
 | **Quality Gates** | ✅ Enhanced | 20+ pre-commit hooks, comprehensive validation pipeline |
@@ -71,18 +71,18 @@ graph TB
 
 ### 2. GitHub Actions Integration
 
-**CI/CD Pipeline** (`.github/workflows/ci.yml`):
-- Multi-Python version testing (3.8-3.12)
-- Comprehensive security scanning (bandit, safety, pip-audit)
-- Performance benchmarking with regression detection
-- Docker container testing and security scanning
-- Autonomous value discovery on main branch pushes
+**CI/CD Pipeline** (`docs/workflows/GITHUB_ACTIONS_SETUP.md`):
+- Multi-Python version testing (3.8-3.12) - Ready for manual setup
+- Comprehensive security scanning (bandit, safety, pip-audit) - Ready for manual setup
+- Performance benchmarking with regression detection - Ready for manual setup
+- Docker container testing and security scanning - Ready for manual setup
+- Autonomous value discovery on main branch pushes - Ready for manual setup
 
-**Release Automation** (`.github/workflows/release.yml`):
-- Semantic versioning with conventional commits
-- Automated PyPI and Docker registry publishing
-- Post-release value discovery updates
-- Automated release announcements with metrics
+**Release Automation** (`docs/workflows/GITHUB_ACTIONS_SETUP.md`):
+- Semantic versioning with conventional commits - Ready for manual setup
+- Automated PyPI and Docker registry publishing - Ready for manual setup
+- Post-release value discovery updates - Ready for manual setup
+- Automated release announcements with metrics - Ready for manual setup
 
 ### 3. Continuous Improvement Engine
 
