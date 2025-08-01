@@ -1,0 +1,20 @@
+{
+  "execution_summary": {
+    "timestamp": "2025-08-01T05:47:07.298548",
+    "iterations_completed": 5,
+    "items_completed": 5,
+    "total_value_delivered": 631.1999999999999,
+    "average_value_per_item": 126.23999999999998,
+    "success_rate": 1.0,
+    "effort_accuracy": 2.5333333342203444e-08
+  },
+  "recommendations": [
+    "Refine effort estimation model based on recent execution data"
+  ],
+  "next_actions": [
+    "Continue continuous value discovery cycle",
+    "Monitor execution metrics for model improvement opportunities",
+    "Review and update scoring weights based on business priorities",
+    "Expand discovery sources based on repository evolution"
+  ]
+}
