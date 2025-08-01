@@ -1,0 +1,124 @@
+{
+  "metrics": [
+    {
+      "name": "technical_debt_ratio",
+      "category": "code_quality",
+      "baseline_value": 0.25,
+      "current_value": 0.22,
+      "target_value": 0.15,
+      "unit": "ratio",
+      "trend": "stable",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 0.22,
+          "change": -0.03
+        }
+      ]
+    },
+    {
+      "name": "test_coverage",
+      "category": "quality_assurance",
+      "baseline_value": 75.0,
+      "current_value": 82.5,
+      "target_value": 90.0,
+      "unit": "percentage",
+      "trend": "improving",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 82.5,
+          "change": 2.5
+        }
+      ]
+    },
+    {
+      "name": "security_score",
+      "category": "security",
+      "baseline_value": 70.0,
+      "current_value": 78.0,
+      "target_value": 90.0,
+      "unit": "score",
+      "trend": "improving",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 78.0,
+          "change": 3.0
+        }
+      ]
+    },
+    {
+      "name": "performance_index",
+      "category": "performance",
+      "baseline_value": 100.0,
+      "current_value": 108.0,
+      "target_value": 130.0,
+      "unit": "index",
+      "trend": "improving",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 108.0,
+          "change": 3.0
+        }
+      ]
+    },
+    {
+      "name": "maintainability_index",
+      "category": "maintainability",
+      "baseline_value": 65.0,
+      "current_value": 72.0,
+      "target_value": 85.0,
+      "unit": "index",
+      "trend": "improving",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 72.0,
+          "change": 2.0
+        }
+      ]
+    },
+    {
+      "name": "deployment_frequency",
+      "category": "delivery",
+      "baseline_value": 2.0,
+      "current_value": 3.5,
+      "target_value": 5.0,
+      "unit": "per_week",
+      "trend": "improving",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 3.5,
+          "change": 0.5
+        }
+      ]
+    },
+    {
+      "name": "mean_time_to_recovery",
+      "category": "reliability",
+      "baseline_value": 4.0,
+      "current_value": 2.0,
+      "target_value": 1.0,
+      "unit": "hours",
+      "trend": "improving",
+      "last_updated": "2025-08-01T02:44:05.201270",
+      "measurement_history": [
+        {
+          "timestamp": "2025-08-01T02:44:05.201270",
+          "value": 2.0,
+          "change": -0.5
+        }
+      ]
+    }
+  ],
+  "last_updated": "2025-08-01T02:44:05.201660"
+}
