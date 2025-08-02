@@ -1,0 +1,52 @@
+# Global Owners
+* @terragon-labs/core-team
+
+# Documentation
+*.md @terragon-labs/docs-team @terragon-labs/core-team
+docs/ @terragon-labs/docs-team @terragon-labs/core-team
+.github/ @terragon-labs/core-team
+
+# Core Application Code
+*.py @terragon-labs/backend-team @terragon-labs/core-team
+ado.py @terragon-labs/core-team
+autonomous_executor.py @terragon-labs/core-team
+backlog_manager.py @terragon-labs/core-team
+
+# Configuration Files
+pyproject.toml @terragon-labs/core-team
+package.json @terragon-labs/core-team
+requirements*.txt @terragon-labs/core-team
+Makefile @terragon-labs/core-team
+
+# CI/CD and DevOps
+.github/workflows/ @terragon-labs/devops-team @terragon-labs/core-team
+Dockerfile @terragon-labs/devops-team @terragon-labs/core-team
+docker-compose*.yml @terragon-labs/devops-team @terragon-labs/core-team
+.pre-commit-config.yaml @terragon-labs/devops-team
+
+# Testing
+tests/ @terragon-labs/qa-team @terragon-labs/backend-team
+test_*.py @terragon-labs/qa-team @terragon-labs/backend-team
+conftest.py @terragon-labs/qa-team
+tox.ini @terragon-labs/qa-team
+
+# Security and Compliance
+SECURITY.md @terragon-labs/security-team @terragon-labs/core-team
+SBOM.json @terragon-labs/security-team
+docs/security/ @terragon-labs/security-team
+
+# Monitoring and Observability
+monitoring/ @terragon-labs/sre-team @terragon-labs/devops-team
+docs/operations/ @terragon-labs/sre-team
+
+# Architecture and Design
+ARCHITECTURE.md @terragon-labs/architecture-team @terragon-labs/core-team
+docs/adr/ @terragon-labs/architecture-team @terragon-labs/core-team
+
+# Release Management
+CHANGELOG.md @terragon-labs/release-team @terragon-labs/core-team
+.releaserc.json @terragon-labs/release-team
+
+# Backlog and Configuration
+backlog/ @terragon-labs/product-team @terragon-labs/core-team
+backlog.yml @terragon-labs/product-team
