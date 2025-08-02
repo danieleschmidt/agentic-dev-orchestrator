@@ -1,0 +1,200 @@
+{
+  "project": {
+    "name": "agentic-dev-orchestrator",
+    "description": "A CLI and GitHub Action that unifies multi-agent development workflows",
+    "version": "0.1.0",
+    "license": "Apache-2.0",
+    "language": "Python",
+    "repository": "https://github.com/terragon-labs/agentic-dev-orchestrator"
+  },
+  "metrics": {
+    "code_quality": {
+      "test_coverage": {
+        "target": 80,
+        "current": null,
+        "trend": "stable",
+        "last_updated": null
+      },
+      "code_complexity": {
+        "target": "low",
+        "current": null,
+        "tools": ["radon", "mccabe"],
+        "last_updated": null
+      },
+      "technical_debt": {
+        "sonarqube_rating": null,
+        "code_smells": null,
+        "duplicated_lines": null,
+        "last_updated": null
+      },
+      "linting": {
+        "tool": "ruff",
+        "issues": null,
+        "last_scan": null
+      },
+      "type_coverage": {
+        "tool": "mypy",
+        "coverage_percentage": null,
+        "last_scan": null
+      }
+    },
+    "security": {
+      "vulnerability_scan": {
+        "tools": ["bandit", "safety", "semgrep"],
+        "critical_issues": null,
+        "high_issues": null,
+        "medium_issues": null,
+        "low_issues": null,
+        "last_scan": null
+      },
+      "dependency_vulnerabilities": {
+        "tools": ["pip-audit", "safety"],
+        "vulnerable_packages": null,
+        "last_scan": null
+      },
+      "secret_detection": {
+        "tools": ["trufflehog", "gitleaks"],
+        "secrets_found": false,
+        "last_scan": null
+      },
+      "container_security": {
+        "tools": ["trivy", "snyk"],
+        "vulnerabilities": null,
+        "last_scan": null
+      }
+    },
+    "performance": {
+      "build_time": {
+        "average_seconds": null,
+        "trend": "stable",
+        "last_measured": null
+      },
+      "test_execution_time": {
+        "average_seconds": null,
+        "trend": "stable",
+        "last_measured": null
+      },
+      "docker_image_size": {
+        "size_mb": null,
+        "compressed_size_mb": null,
+        "last_measured": null
+      },
+      "startup_time": {
+        "average_ms": null,
+        "last_measured": null
+      }
+    },
+    "development": {
+      "commit_frequency": {
+        "commits_per_week": null,
+        "contributors": null,
+        "last_calculated": null
+      },
+      "pr_metrics": {
+        "average_review_time_hours": null,
+        "average_pr_size_lines": null,
+        "pr_success_rate": null,
+        "last_calculated": null
+      },
+      "release_frequency": {
+        "releases_per_month": null,
+        "last_release": null,
+        "next_planned_release": null
+      }
+    },
+    "maintenance": {
+      "dependency_freshness": {
+        "outdated_packages": null,
+        "security_updates_needed": null,
+        "last_checked": null
+      },
+      "documentation_coverage": {
+        "percentage": null,
+        "missing_docstrings": null,
+        "last_calculated": null
+      },
+      "issue_resolution": {
+        "average_resolution_time_days": null,
+        "open_issues": null,
+        "critical_issues": null,
+        "last_calculated": null
+      }
+    },
+    "deployment": {
+      "deployment_frequency": {
+        "deployments_per_week": null,
+        "last_deployment": null,
+        "deployment_success_rate": null
+      },
+      "rollback_rate": {
+        "percentage": null,
+        "last_rollback": null
+      },
+      "environment_health": {
+        "production_uptime": null,
+        "staging_uptime": null,
+        "last_measured": null
+      }
+    }
+  },
+  "thresholds": {
+    "code_quality": {
+      "min_test_coverage": 80,
+      "max_complexity_score": 10,
+      "max_code_smells": 50
+    },
+    "security": {
+      "max_critical_vulnerabilities": 0,
+      "max_high_vulnerabilities": 2,
+      "max_dependency_age_days": 365
+    },
+    "performance": {
+      "max_build_time_minutes": 10,
+      "max_test_time_minutes": 5,
+      "max_docker_size_mb": 500
+    },
+    "development": {
+      "max_pr_review_time_hours": 48,
+      "max_pr_size_lines": 500,
+      "min_commits_per_week": 5
+    }
+  },
+  "automation": {
+    "enabled_checks": [
+      "code_quality",
+      "security_scanning",
+      "dependency_updates",
+      "performance_monitoring",
+      "automated_testing"
+    ],
+    "notification_channels": {
+      "slack": null,
+      "email": null,
+      "github_issues": true
+    },
+    "scheduled_reports": {
+      "weekly_summary": true,
+      "monthly_detailed": true,
+      "quarterly_review": true
+    }
+  },
+  "integrations": {
+    "ci_cd": {
+      "github_actions": true,
+      "codecov": true,
+      "sonarqube": false
+    },
+    "monitoring": {
+      "prometheus": true,
+      "grafana": false,
+      "datadog": false
+    },
+    "security": {
+      "snyk": false,
+      "whitesource": false,
+      "dependabot": true
+    }
+  },
+  "last_updated": null,
+  "schema_version": "1.0.0"
+}
