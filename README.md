@@ -98,6 +98,7 @@ v1.0.0: SaaS dashboard for managing workflows.
 ## 📖 Documentation
 
 - **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Manual Setup Required](MANUAL_SETUP_REQUIRED.md)** - ⚠️ GitHub Actions setup instructions
 - **[Architecture Overview](ARCHITECTURE.md)** - System design and components
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
 - **[Security Policy](SECURITY.md)** - Security considerations
