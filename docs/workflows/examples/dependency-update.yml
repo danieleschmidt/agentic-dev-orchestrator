@@ -1,0 +1,240 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Weekly on Monday at 9 AM UTC
+  workflow_dispatch:
+    inputs:
+      update_type:
+        description: 'Type of update'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+        - all
+
+jobs:
+  update-python-deps:
+    name: Update Python Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    
+    - name: Install pip-tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install pip-tools pip-audit
+    
+    - name: Update requirements files
+      run: |
+        # Backup current requirements
+        cp requirements.txt requirements.txt.bak
+        cp requirements-dev.txt requirements-dev.txt.bak
+        
+        # Update dependencies based on input
+        UPDATE_TYPE="${{ github.event.inputs.update_type || 'patch' }}"
+        
+        if [ "$UPDATE_TYPE" = "patch" ]; then
+          pip-compile --upgrade-package "*" --resolver=backtracking requirements.in
+          pip-compile --upgrade-package "*" --resolver=backtracking requirements-dev.in
+        elif [ "$UPDATE_TYPE" = "minor" ] || [ "$UPDATE_TYPE" = "major" ] || [ "$UPDATE_TYPE" = "all" ]; then
+          pip-compile --upgrade --resolver=backtracking requirements.in
+          pip-compile --upgrade --resolver=backtracking requirements-dev.in
+        fi
+    
+    - name: Install updated dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+    
+    - name: Run security audit
+      run: |
+        pip-audit --desc --format=json --output=audit-report.json || true
+        pip-audit --desc || echo "Security issues found, check audit report"
+    
+    - name: Run tests with new dependencies
+      run: |
+        pytest tests/ -v --tb=short
+        python -m mypy .
+        ruff check .
+    
+    - name: Check for dependency changes
+      id: changes
+      run: |
+        if ! diff -q requirements.txt requirements.txt.bak > /dev/null || ! diff -q requirements-dev.txt requirements-dev.txt.bak > /dev/null; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "## 📦 Dependency Changes" >> changes.md
+          echo "" >> changes.md
+          echo "### Production Dependencies" >> changes.md
+          diff -u requirements.txt.bak requirements.txt >> changes.md || true
+          echo "" >> changes.md
+          echo "### Development Dependencies" >> changes.md
+          diff -u requirements-dev.txt.bak requirements-dev.txt >> changes.md || true
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Pull Request
+      if: steps.changes.outputs.changes == 'true'
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "deps: update Python dependencies (${{ github.event.inputs.update_type || 'patch' }})"
+        title: "🔄 Update Python Dependencies (${{ github.event.inputs.update_type || 'patch' }})"
+        body-path: changes.md
+        branch: deps/python-${{ github.event.inputs.update_type || 'patch' }}-updates
+        delete-branch: true
+        labels: |
+          dependencies
+          automated
+          ${{ github.event.inputs.update_type || 'patch' }}
+        reviewers: |
+          ${{ github.actor }}
+        assignees: |
+          ${{ github.actor }}
+    
+    - name: Upload audit report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: dependency-audit-report
+        path: audit-report.json
+
+  update-github-actions:
+    name: Update GitHub Actions
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Update GitHub Actions
+      uses: devops-infra/action-update-action@v0.5.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        reviewer: ${{ github.actor }}
+        assignee: ${{ github.actor }}
+        labels: |
+          dependencies
+          github-actions
+          automated
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Dependency Review
+      uses: actions/dependency-review-action@v3
+      with:
+        fail-on-severity: moderate
+        allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC
+        deny-licenses: GPL-2.0, GPL-3.0, LGPL-2.0, LGPL-3.0
+    
+    - name: Comment on PR
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ **Dependency Review Failed**\n\nThis PR introduces dependencies with security vulnerabilities or incompatible licenses. Please review the dependency changes and address the issues before merging.'
+          })
+
+  security-advisories:
+    name: Check Security Advisories
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pip-audit
+    
+    - name: Check for known vulnerabilities
+      run: |
+        pip-audit --desc --format=json --output=vulnerabilities.json
+        
+        # Check if vulnerabilities were found
+        if [ -s vulnerabilities.json ]; then
+          echo "🚨 Security vulnerabilities found!"
+          pip-audit --desc
+          echo "create_issue=true" >> $GITHUB_ENV
+        else
+          echo "✅ No known vulnerabilities found"
+          echo "create_issue=false" >> $GITHUB_ENV
+        fi
+    
+    - name: Create security issue
+      if: env.create_issue == 'true' && github.event_name == 'schedule'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const vulnerabilities = JSON.parse(fs.readFileSync('vulnerabilities.json', 'utf8'));
+          
+          const body = `# 🚨 Security Vulnerabilities Detected
+          
+          Automated security scan found vulnerabilities in our dependencies:
+          
+          ## Summary
+          - **Scan Date**: ${new Date().toISOString()}
+          - **Vulnerabilities Found**: ${vulnerabilities.length || 'See audit output'}
+          
+          ## Action Required
+          - [ ] Review vulnerability details
+          - [ ] Update affected dependencies
+          - [ ] Test thoroughly after updates
+          - [ ] Deploy security fixes
+          
+          ## Details
+          \`\`\`json
+          ${JSON.stringify(vulnerabilities, null, 2)}
+          \`\`\`
+          
+          This issue was automatically created by the dependency update workflow.`;
+          
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `🚨 Security Vulnerabilities Detected - ${new Date().toDateString()}`,
+            body: body,
+            labels: ['security', 'dependencies', 'high-priority']
+          });
+    
+    - name: Upload vulnerability report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: vulnerability-report
+        path: vulnerabilities.json
