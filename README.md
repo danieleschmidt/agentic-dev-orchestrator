@@ -1,9 +1,9 @@
 # agentic-dev-orchestrator
 
-<!-- IMPORTANT: Replace 'your-github-username-or-org' with your actual GitHub details -->
-[![Build Status](https://img.shields.io/github/actions/workflow/status/your-github-username-or-org/agentic-dev-orchestrator/ci.yml?branch=main)](https://github.com/your-github-username-or-org/agentic-dev-orchestrator/actions)
-[![Coverage Status](https://img.shields.io/coveralls/github/your-github-username-or-org/agentic-dev-orchestrator)](https://coveralls.io/github/your-github-username-or-org/agentic-dev-orchestrator)
-[![License](https://img.shields.io/github/license/your-github-username-or-org/agentic-dev-orchestrator)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/danieleschmidt/agentic-dev-orchestrator/ci.yml?branch=main)](https://github.com/danieleschmidt/agentic-dev-orchestrator/actions)
+[![Coverage Status](https://img.shields.io/codecov/c/github/danieleschmidt/agentic-dev-orchestrator)](https://codecov.io/gh/danieleschmidt/agentic-dev-orchestrator)
+[![License](https://img.shields.io/github/license/danieleschmidt/agentic-dev-orchestrator)](LICENSE)
+[![PyPI Version](https://img.shields.io/pypi/v/agentic-dev-orchestrator)](https://pypi.org/project/agentic-dev-orchestrator/)
 [![Version](https://img.shields.io/badge/version-v0.1.0-blue)](https://semver.org)
 
 A CLI and GitHub Action that unifies multi-agent development workflows, integrating frameworks like AutoGen and CrewAI. It streamlines the coding process by automatically ranking tasks from a backlog using the Weighted Shortest Job First (WSJF) method and executing them through a sequence of specialized AI agents.
@@ -27,26 +27,51 @@ graph TD
 
 ⚡ Quick Start
 
-```bash
-# Install the orchestrator
-pip install agentic-dev-orchestrator
+### Installation
 
+**Via pip (recommended):**
+```bash
+pip install agentic-dev-orchestrator
+```
+
+**Via Docker:**
+```bash
+docker pull ghcr.io/danieleschmidt/agentic-dev-orchestrator:latest
+docker run --rm -v $(pwd):/workspace -w /workspace agentic-dev-orchestrator:latest ado --help
+```
+
+**From source:**
+```bash
+git clone https://github.com/danieleschmidt/agentic-dev-orchestrator.git
+cd agentic-dev-orchestrator
+pip install -e .
+```
+
+### Shell Completions (Optional)
+
+For better CLI experience, install shell completions:
+```bash
+# After installing from source
+./install-completions.sh
+
+# Or manually for your shell:
+# Bash: source completions/ado.bash
+# Zsh: copy completions/ado.zsh to your fpath
+# Fish: copy completions/ado.fish to ~/.config/fish/completions/
+```
+
+### Usage
+
+```bash
 # Initialize the project  
 ado init
 
-# Set your GitHub token
+# Set your environment variables
 export GITHUB_TOKEN='your_personal_access_token'
+export OPENAI_API_KEY='your_openai_api_key'
 
 # Run the orchestrator
 ado run
-```
-
-**Local Development:**
-```bash
-# Clone and install in development mode
-git clone <repo-url>
-cd agentic-dev-orchestrator
-pip install -e .
 ```
 🛠️ Configuration
 Backlog Schema backlog/issue-123.json
@@ -70,10 +95,20 @@ OPENAI_API_KEY	API key for the underlying LLM used by the agents.
 v0.1.0: Support for single-repository projects.
 v0.2.0 (Monorepo Support): The orchestrator will discover sub-projects by looking for ado.yml configuration files in subdirectories.
 v1.0.0: SaaS dashboard for managing workflows.
+## 📖 Documentation
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Manual Setup Required](MANUAL_SETUP_REQUIRED.md)** - ⚠️ GitHub Actions setup instructions
+- **[Architecture Overview](ARCHITECTURE.md)** - System design and components
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
+- **[Security Policy](SECURITY.md)** - Security considerations
+- **[Full Documentation](docs/)** - Complete documentation
+
 🤝 Contributing
-We welcome contributions! Please see our organization-wide CONTRIBUTING.md for guidelines and our CODE_OF_CONDUCT.md. A CHANGELOG.md is maintained for version history.
-See Also
-observer-coordinator-insights: Uses this orchestration layer for HR analytics.
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). A [CHANGELOG.md](CHANGELOG.md) is maintained for version history.
+
+## See Also
+- **[observer-coordinator-insights](https://github.com/danieleschmidt/observer-coordinator-insights)** - Uses this orchestration layer for HR analytics
 📝 License
 This project is licensed under the Apache-2.0 License.
 📚 References
