@@ -1,0 +1,62 @@
+# Include documentation
+include README.md
+include LICENSE
+include CHANGELOG.md
+include QUICKSTART.md
+include SECURITY.md
+include CONTRIBUTING.md
+include CODE_OF_CONDUCT.md
+include ARCHITECTURE.md
+include SDLC_ANALYSIS.md
+
+# Include configuration files
+include pyproject.toml
+include requirements.txt
+include requirements-dev.txt
+include tox.ini
+include Makefile
+include Dockerfile
+include docker-compose.yml
+include docker-compose.observability.yml
+include mkdocs.yml
+include backlog.yml
+include py.typed
+
+# Include shell completions
+include install-completions.sh
+recursive-include completions *.bash *.zsh *.fish
+
+# Include backlog samples
+recursive-include backlog *.json
+
+# Include documentation
+recursive-include docs *.md *.yml *.yaml *.json
+
+# Include monitoring configuration
+recursive-include monitoring *.yml *.yaml
+
+# Include scripts
+recursive-include scripts *.py
+
+# Include test files for development installations
+recursive-include tests *.py
+
+# Include stubs
+recursive-include stubs *.pyi
+
+# Exclude build artifacts and temporary files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude *.orig
+global-exclude *.rej
+global-exclude .git*
+global-exclude .DS_Store
+global-exclude *.log
+global-exclude .coverage
+global-exclude htmlcov/*
+global-exclude .pytest_cache/*
+global-exclude .mypy_cache/*
+global-exclude .tox/*
+global-exclude build/*
+global-exclude dist/*
+global-exclude *.egg-info/*

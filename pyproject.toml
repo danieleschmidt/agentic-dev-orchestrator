@@ -162,6 +162,7 @@ include = ["ado*", "backlog_manager*", "autonomous_executor*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yml", "*.yaml", "*.json", "*.md", "*.txt"]
+"completions" = ["*.bash", "*.zsh", "*.fish"]
 
 # =============================================================================
 # DEVELOPMENT TOOLS CONFIGURATION
