@@ -1,7 +1,7 @@
 {
   "item_id": "json-sample-task",
   "title": "Add user authentication to API",
-  "escalated_at": "2025-07-26T12:28:20.685067",
+  "escalated_at": "2025-08-04T04:00:48.596023",
   "reason": "high_risk_or_ambiguous",
   "requires_human_approval": true,
   "item_details": {

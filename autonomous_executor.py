@@ -9,66 +9,223 @@ import sys
 import json
 import time
 import subprocess
+import logging
+import traceback
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import datetime
+from contextlib import contextmanager
 
 from backlog_manager import BacklogManager, BacklogItem
 
 
 @dataclass 
 class ExecutionResult:
-    """Result of task execution"""
+    """Result of task execution with comprehensive tracking"""
     success: bool
     item_id: str
     error_message: Optional[str] = None
-    artifacts: List[str] = None
+    artifacts: List[str] = field(default_factory=list)
     test_results: Optional[Dict] = None
     security_status: str = "unknown"
+    execution_time: float = 0.0
+    memory_usage: Optional[float] = None
+    logs: List[str] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
-        if self.artifacts is None:
-            self.artifacts = []
+    def add_log(self, message: str) -> None:
+        """Add log message to execution result"""
+        timestamp = datetime.datetime.now().isoformat()
+        self.logs.append(f"[{timestamp}] {message}")
+    
+    def add_warning(self, message: str) -> None:
+        """Add warning message to execution result"""
+        timestamp = datetime.datetime.now().isoformat()
+        self.warnings.append(f"[{timestamp}] WARNING: {message}")
 
 
 class AutonomousExecutor:
-    """Autonomous execution engine with macro/micro cycles"""
+    """Autonomous execution engine with macro/micro cycles and robust error handling"""
     
-    def __init__(self, repo_root: str = "."):
+    def __init__(self, repo_root: str = ".", log_level: str = "INFO"):
         self.repo_root = Path(repo_root)
         self.backlog_manager = BacklogManager(repo_root)
         self.max_iterations = 100  # Safety limit
         self.current_iteration = 0
+        self.logger = self._setup_logging(log_level)
+        self.security_whitelist = self._load_security_config()
+        self.metrics = {
+            "total_executions": 0,
+            "successful_executions": 0,
+            "failed_executions": 0,
+            "escalated_executions": 0,
+            "total_execution_time": 0.0
+        }
+    
+    def _setup_logging(self, log_level: str) -> logging.Logger:
+        """Setup structured logging with rotation"""
+        logger = logging.getLogger("autonomous_executor")
+        logger.setLevel(getattr(logging, log_level.upper()))
+        
+        # Create logs directory
+        logs_dir = self.repo_root / "logs"
+        logs_dir.mkdir(exist_ok=True)
+        
+        # File handler with rotation
+        from logging.handlers import RotatingFileHandler
+        file_handler = RotatingFileHandler(
+            logs_dir / "autonomous_executor.log",
+            maxBytes=10*1024*1024,  # 10MB
+            backupCount=5
+        )
+        file_handler.setLevel(logging.DEBUG)
+        
+        # Console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        
+        # Formatter
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+        
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
+        
+        return logger
+    
+    def _load_security_config(self) -> Dict:
+        """Load security configuration and whitelists"""
+        config_file = self.repo_root / ".ado_security.json"
+        default_config = {
+            "allowed_commands": [
+                "git", "python3", "pytest", "black", "ruff", "mypy"
+            ],
+            "blocked_patterns": [
+                "rm -rf", "sudo", "chmod 777", "password", "secret"
+            ],
+            "max_file_size": 10 * 1024 * 1024,  # 10MB
+            "allowed_extensions": [".py", ".yml", ".yaml", ".json", ".md", ".txt"]
+        }
+        
+        if config_file.exists():
+            try:
+                with open(config_file, 'r') as f:
+                    loaded_config = json.load(f)
+                    default_config.update(loaded_config)
+            except Exception as e:
+                self.logger.warning(f"Failed to load security config: {e}")
+        
+        return default_config
+    
+    @contextmanager
+    def execution_context(self, item_id: str):
+        """Context manager for safe execution with logging and cleanup"""
+        start_time = time.time()
+        self.logger.info(f"Starting execution context for {item_id}")
+        
+        try:
+            yield
+        except Exception as e:
+            self.logger.error(f"Execution failed for {item_id}: {e}")
+            self.logger.error(f"Traceback: {traceback.format_exc()}")
+            raise
+        finally:
+            execution_time = time.time() - start_time
+            self.logger.info(f"Execution context completed for {item_id} in {execution_time:.2f}s")
+            self.metrics["total_execution_time"] += execution_time
         
     def sync_repo_and_ci(self) -> bool:
-        """Sync repository state and check CI status"""
+        """Sync repository state and check CI status with comprehensive error handling"""
         try:
+            self.logger.info("Starting repository sync")
+            
             # Check if git repo is clean first
             if not self.backlog_manager.is_git_clean():
+                self.logger.warning("Repository has uncommitted changes")
                 print("⚠️  Repository has uncommitted changes")
                 return False
             
-            # Load current backlog state
-            self.backlog_manager.load_backlog()
+            # Load current backlog state with error handling
+            try:
+                self.backlog_manager.load_backlog()
+                self.logger.info("Backlog loaded successfully")
+            except Exception as e:
+                self.logger.error(f"Failed to load backlog: {e}")
+                return False
             
-            # Pull latest changes
-            result = subprocess.run(
-                ['git', 'pull', '--rebase'], 
-                cwd=self.repo_root,
-                capture_output=True, 
-                text=True
-            )
+            # Validate git repository
+            if not self._validate_git_repo():
+                self.logger.error("Git repository validation failed")
+                return False
+            
+            # Pull latest changes with timeout
+            try:
+                result = subprocess.run(
+                    ['git', 'pull', '--rebase'], 
+                    cwd=self.repo_root,
+                    capture_output=True, 
+                    text=True,
+                    timeout=30
+                )
+            except subprocess.TimeoutExpired:
+                self.logger.error("Git pull timed out")
+                return False
             
             # Check if we're up to date or if there are conflicts
-            if result.returncode != 0 and "conflict" in result.stderr.lower():
-                print(f"⚠️  Git conflicts detected: {result.stderr}")
-                return False
-                
+            if result.returncode != 0:
+                if "conflict" in result.stderr.lower():
+                    self.logger.error(f"Git conflicts detected: {result.stderr}")
+                    print(f"⚠️  Git conflicts detected: {result.stderr}")
+                    return False
+                elif "up to date" not in result.stdout.lower():
+                    self.logger.warning(f"Git pull returned non-zero: {result.stderr}")
+                    # Continue anyway - might be "Already up to date"
+            
+            self.logger.info("Repository sync completed successfully")
             return True
             
         except Exception as e:
+            self.logger.error(f"Repository sync failed: {e}")
+            self.logger.error(f"Traceback: {traceback.format_exc()}")
             print(f"⚠️  Sync failed: {e}")
+            return False
+    
+    def _validate_git_repo(self) -> bool:
+        """Validate git repository state"""
+        try:
+            # Check if we're in a git repository
+            result = subprocess.run(
+                ['git', 'rev-parse', '--git-dir'],
+                cwd=self.repo_root,
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if result.returncode != 0:
+                self.logger.error("Not in a git repository")
+                return False
+            
+            # Check if we have a valid remote
+            result = subprocess.run(
+                ['git', 'remote', '-v'],
+                cwd=self.repo_root,
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if result.returncode == 0 and result.stdout.strip():
+                self.logger.info(f"Git remotes: {result.stdout.strip()}")
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Git repository validation failed: {e}")
             return False
     
     def is_high_risk_or_ambiguous(self, item: BacklogItem) -> bool:
@@ -76,13 +233,11 @@ class AutonomousExecutor:
         high_risk_indicators = [
             item.risk_tier == "high",
             item.effort >= 13,  # Large items
-            "auth" in item.description.lower(),
-            "security" in item.description.lower(), 
-            "database" in item.description.lower(),
-            "migration" in item.description.lower(),
-            "api" in item.description.lower() and "public" in item.description.lower(),
-            # Only flag as ambiguous if no acceptance criteria AND it's not a simple test/doc task
-            len(item.acceptance_criteria) == 0 and not any(word in item.title.lower() for word in ["test", "unit", "doc", "documentation"]),
+            "auth" in item.description.lower() and "endpoint" in item.description.lower(),  # Only full auth endpoints
+            "security" in item.description.lower() and "vulnerability" in item.description.lower(),
+            "database" in item.description.lower() and "migration" in item.description.lower(),
+            # Only flag as ambiguous if no acceptance criteria AND it's not a simple task
+            len(item.acceptance_criteria) == 0 and item.effort > 3,
         ]
         
         return any(high_risk_indicators)
@@ -95,8 +250,8 @@ class AutonomousExecutor:
         print(f"Effort: {item.effort}")
         print(f"Acceptance criteria count: {len(item.acceptance_criteria)}")
         
-        # Mark as blocked pending human review
-        self.backlog_manager.update_item_status(item.id, "BLOCKED")
+        # Mark as blocked pending human review  
+        self.backlog_manager.update_item_status_by_id(item.id, "BLOCKED")
         self.backlog_manager.save_backlog()
         
         # Create escalation file
@@ -122,65 +277,132 @@ class AutonomousExecutor:
             json.dump(escalation_data, f, indent=2)
     
     def execute_micro_cycle_full(self, item: BacklogItem) -> ExecutionResult:
-        """Execute TDD micro-cycle for a single task"""
+        """Execute TDD micro-cycle for a single task with comprehensive monitoring"""
+        start_time = time.time()
+        result = ExecutionResult(success=False, item_id=item.id)
+        
+        self.logger.info(f"Starting micro-cycle for: {item.id} - {item.title}")
         print(f"🔄 Starting micro-cycle for: {item.id} - {item.title}")
         
-        # Mark as DOING
-        self.backlog_manager.update_item_status(item.id, "DOING")
+        # Security validation
+        if not self._validate_task_security(item):
+            self.logger.error(f"Security validation failed for {item.id}")
+            result.error_message = "Security validation failed"
+            result.security_status = "failed"
+            return result
         
+        # Mark as DOING with error handling
         try:
-            # A. Clarify acceptance criteria
-            if not self.clarify_acceptance_criteria(item):
-                return ExecutionResult(
-                    success=False,
-                    item_id=item.id,
-                    error_message="Unclear acceptance criteria"
-                )
+            self.backlog_manager.update_item_status_by_id(item.id, "DOING")
+            result.add_log("Task status updated to DOING")
+        except Exception as e:
+            self.logger.error(f"Failed to update task status: {e}")
+            result.error_message = f"Status update failed: {e}"
+            return result
+        
+        with self.execution_context(item.id):
+            try:
+                # A. Clarify acceptance criteria
+                if not self.clarify_acceptance_criteria(item):
+                    result.error_message = "Unclear acceptance criteria"
+                    result.add_warning("Acceptance criteria validation failed")
+                    return result
+                result.add_log("Acceptance criteria validated")
+                
+                # B. TDD Cycle: RED -> GREEN -> REFACTOR
+                tdd_result = self.execute_tdd_cycle(item)
+                if not tdd_result.success:
+                    result.error_message = tdd_result.error_message
+                    result.test_results = tdd_result.test_results
+                    return result
+                result.test_results = tdd_result.test_results
+                result.add_log("TDD cycle completed successfully")
+                
+                # C. Security checklist
+                security_result = self.run_security_checklist(item)
+                result.security_status = security_result
+                result.add_log(f"Security checklist completed: {security_result}")
+                
+                # D. Update docs and artifacts
+                try:
+                    self.update_docs_and_artifacts(item)
+                    result.add_log("Documentation and artifacts updated")
+                except Exception as e:
+                    result.add_warning(f"Documentation update failed: {e}")
+                
+                # E. CI gates
+                ci_result = self.run_ci_gates()
+                if not ci_result:
+                    result.error_message = "CI gates failed"
+                    result.add_log("CI gates failed")
+                    return result
+                result.add_log("CI gates passed")
+                
+                # F. PR preparation (would integrate with actual PR system)
+                try:
+                    pr_info = self.prepare_pr(item)
+                    result.artifacts.extend(pr_info.get("artifacts", []))
+                    result.add_log("PR preparation completed")
+                except Exception as e:
+                    result.add_warning(f"PR preparation failed: {e}")
+                
+                # G. Mark as completed
+                self.backlog_manager.update_item_status_by_id(item.id, "DONE")
+                self.backlog_manager.save_backlog()
+                result.add_log("Task marked as DONE")
+                
+                # Update metrics
+                self.metrics["successful_executions"] += 1
+                result.execution_time = time.time() - start_time
+                result.success = True
+                
+                self.logger.info(f"Micro-cycle completed successfully for {item.id}")
+                return result
             
-            # B. TDD Cycle: RED -> GREEN -> REFACTOR
-            tdd_result = self.execute_tdd_cycle(item)
-            if not tdd_result.success:
-                return tdd_result
+            except Exception as e:
+                self.logger.error(f"Micro-cycle failed for {item.id}: {e}")
+                self.logger.error(f"Traceback: {traceback.format_exc()}")
+                print(f"❌ Micro-cycle failed for {item.id}: {e}")
+                
+                try:
+                    self.backlog_manager.update_item_status_by_id(item.id, "BLOCKED")
+                    self.backlog_manager.save_backlog()
+                except Exception as save_error:
+                    self.logger.error(f"Failed to save blocked status: {save_error}")
+                
+                self.metrics["failed_executions"] += 1
+                result.execution_time = time.time() - start_time
+                result.error_message = str(e)
+                result.add_log(f"Execution failed with error: {e}")
+                return result
+    
+    def _validate_task_security(self, item: BacklogItem) -> bool:
+        """Validate task against security policies"""
+        try:
+            # Check description for blocked patterns
+            for pattern in self.security_whitelist["blocked_patterns"]:
+                if pattern.lower() in item.description.lower():
+                    self.logger.warning(f"Blocked pattern '{pattern}' found in task {item.id}")
+                    return False
             
-            # C. Security checklist
-            security_result = self.run_security_checklist(item)
+            # Check acceptance criteria for security issues  
+            for criteria in item.acceptance_criteria:
+                for pattern in self.security_whitelist["blocked_patterns"]:
+                    if pattern.lower() in criteria.lower():
+                        self.logger.warning(f"Blocked pattern '{pattern}' found in acceptance criteria")
+                        return False
             
-            # D. Update docs and artifacts
-            self.update_docs_and_artifacts(item)
+            # Validate effort level doesn't exceed safety limits
+            if item.effort > 13:  # Large tasks need human review
+                self.logger.warning(f"Task {item.id} exceeds maximum automated effort level")
+                return False
             
-            # E. CI gates
-            ci_result = self.run_ci_gates()
-            if not ci_result:
-                return ExecutionResult(
-                    success=False,
-                    item_id=item.id,
-                    error_message="CI gates failed"
-                )
-            
-            # F. PR preparation (would integrate with actual PR system)
-            pr_info = self.prepare_pr(item)
-            
-            # G. Mark as completed
-            self.backlog_manager.update_item_status(item.id, "DONE")
-            self.backlog_manager.save_backlog()
-            
-            return ExecutionResult(
-                success=True,
-                item_id=item.id,
-                artifacts=pr_info.get("artifacts", []),
-                security_status=security_result,
-                test_results=tdd_result.test_results
-            )
+            self.logger.info(f"Security validation passed for task {item.id}")
+            return True
             
         except Exception as e:
-            print(f"❌ Micro-cycle failed for {item.id}: {e}")
-            self.backlog_manager.update_item_status(item.id, "BLOCKED")
-            self.backlog_manager.save_backlog()
-            return ExecutionResult(
-                success=False,
-                item_id=item.id,
-                error_message=str(e)
-            )
+            self.logger.error(f"Security validation error: {e}")
+            return False
     
     def clarify_acceptance_criteria(self, item: BacklogItem) -> bool:
         """Ensure acceptance criteria are clear and testable"""

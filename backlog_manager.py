@@ -375,6 +375,14 @@ class BacklogManager:
         item.status = new_status
         return True
     
+    def get_prioritized_items(self) -> List[BacklogItem]:
+        """Alias for get_prioritized_backlog for test compatibility"""
+        return self.get_prioritized_backlog()
+    
+    def _discover_from_code(self) -> List[BacklogItem]:
+        """Alias for discover_from_code_comments for test compatibility"""
+        return self.discover_from_code_comments()
+    
     def is_git_clean(self) -> bool:
         """Check if git working directory is clean"""
         try:

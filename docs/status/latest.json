@@ -1,12 +1,15 @@
 {
-  "timestamp": "2025-07-27T07:47:54.054153",
+  "timestamp": "2025-08-04T04:01:21.370325",
   "backlog_size_by_status": {
+    "BLOCKED": 1,
+    "DONE": 2,
+    "READY": 1,
     "NEW": 1,
-    "DONE": 2
+    "DOING": 1
   },
   "completed_ids": [],
-  "total_items": 3,
-  "ready_items": 0,
+  "total_items": 6,
+  "ready_items": 1,
   "wsjf_snapshot": {
     "top_3_ready": []
   }

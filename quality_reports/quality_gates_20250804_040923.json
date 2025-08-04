@@ -1,0 +1,88 @@
+{
+  "timestamp": 1754280563.126547,
+  "overall_passed": false,
+  "overall_score": 58.75,
+  "gates_passed": 2,
+  "gates_total": 4,
+  "execution_time": 1.9035980701446533,
+  "results": [
+    {
+      "gate": "test_coverage",
+      "passed": false,
+      "score": 50.0,
+      "threshold": 70.0,
+      "execution_time": 0.4803338050842285,
+      "details": {
+        "no_coverage_data": true
+      },
+      "error": null
+    },
+    {
+      "gate": "code_quality",
+      "passed": true,
+      "score": 85.0,
+      "threshold": 80.0,
+      "execution_time": 0.10834097862243652,
+      "details": {
+        "checks": [
+          {
+            "tool": "black",
+            "score": 70,
+            "formatted": false
+          },
+          {
+            "tool": "mypy",
+            "score": 100,
+            "error_count": 0
+          }
+        ],
+        "average_score": 85.0,
+        "checks_run": 2
+      },
+      "error": null
+    },
+    {
+      "gate": "security",
+      "passed": false,
+      "score": 0,
+      "threshold": 75.0,
+      "execution_time": 0.17767667770385742,
+      "details": {
+        "score": 0,
+        "total_findings": 12,
+        "critical_findings": 3,
+        "high_findings": 1,
+        "medium_findings": 8,
+        "low_findings": 0,
+        "scan_duration": 0.1639082431793213,
+        "scanned_files": 173
+      },
+      "error": null
+    },
+    {
+      "gate": "performance",
+      "passed": true,
+      "score": 100.0,
+      "threshold": 70.0,
+      "execution_time": 1.1372466087341309,
+      "details": {
+        "benchmarks": [
+          {
+            "test": "cli_responsiveness",
+            "response_time": 0.17764043807983398,
+            "score": 100
+          },
+          {
+            "test": "async_performance",
+            "execution_time": 0.9593541622161865,
+            "throughput": 4369.066666666667,
+            "score": 100
+          }
+        ],
+        "average_score": 100.0,
+        "benchmarks_run": 2
+      },
+      "error": null
+    }
+  ]
+}
