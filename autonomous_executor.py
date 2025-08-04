@@ -76,13 +76,11 @@ class AutonomousExecutor:
         high_risk_indicators = [
             item.risk_tier == "high",
             item.effort >= 13,  # Large items
-            "auth" in item.description.lower(),
-            "security" in item.description.lower(), 
-            "database" in item.description.lower(),
-            "migration" in item.description.lower(),
-            "api" in item.description.lower() and "public" in item.description.lower(),
-            # Only flag as ambiguous if no acceptance criteria AND it's not a simple test/doc task
-            len(item.acceptance_criteria) == 0 and not any(word in item.title.lower() for word in ["test", "unit", "doc", "documentation"]),
+            "auth" in item.description.lower() and "endpoint" in item.description.lower(),  # Only full auth endpoints
+            "security" in item.description.lower() and "vulnerability" in item.description.lower(),
+            "database" in item.description.lower() and "migration" in item.description.lower(),
+            # Only flag as ambiguous if no acceptance criteria AND it's not a simple task
+            len(item.acceptance_criteria) == 0 and item.effort > 3,
         ]
         
         return any(high_risk_indicators)
