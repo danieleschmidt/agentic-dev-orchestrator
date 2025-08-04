@@ -470,14 +470,4 @@ prerelease = false
 write_to = "_version.py"
 version_scheme = "post-release"
 
-# Development scripts for common tasks
-[project.scripts]
-# Main CLI
-ado = "ado:main"
-
-# Development helpers (when installed in dev mode)
-ado-test = "scripts.dev_scripts:run_tests"
-ado-lint = "scripts.dev_scripts:run_lint"
-ado-format = "scripts.dev_scripts:run_format"
-ado-docs = "scripts.dev_scripts:build_docs"
-ado-clean = "scripts.dev_scripts:clean_artifacts"
+# Development scripts for common tasks - merged into main [project.scripts] section above
