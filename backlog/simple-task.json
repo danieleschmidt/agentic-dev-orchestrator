@@ -1,0 +1,14 @@
+{
+  "title": "Add welcome message to CLI",
+  "wsjf": {
+    "user_business_value": 3,
+    "time_criticality": 2,
+    "risk_reduction_opportunity_enablement": 1,
+    "job_size": 1
+  },
+  "description": "Add a friendly welcome message when users run the ado command",
+  "acceptance_criteria": [
+    "Display welcome message on first run",
+    "Message includes basic usage instructions"
+  ]
+}

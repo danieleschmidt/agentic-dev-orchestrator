@@ -1,7 +1,7 @@
 version: '1.0'
 metadata:
-  created_at: '2025-08-04T04:00:26.910477Z'
-  last_updated: '2025-08-04T04:00:26.910493Z'
+  created_at: '2025-08-04T04:01:05.828184Z'
+  last_updated: '2025-08-04T04:01:05.828187Z'
   scoring_method: wsjf
   aging_multiplier_max: 2.0
 items:
@@ -20,7 +20,7 @@ items:
   value: 8
   time_criticality: 5
   risk_reduction: 8
-  status: READY
+  status: BLOCKED
   risk_tier: low
   created_at: '2025-07-26T12:28:30.098769Z'
   links: []
@@ -101,6 +101,23 @@ items:
   links:
   - file://./backlog.yml
   wsjf_score: 3.0
+  aging_multiplier: 1.0
+- id: json-simple-task
+  title: Add welcome message to CLI
+  type: feature
+  description: Add a friendly welcome message when users run the ado command
+  acceptance_criteria:
+  - Display welcome message on first run
+  - Message includes basic usage instructions
+  effort: 1
+  value: 3
+  time_criticality: 2
+  risk_reduction: 1
+  status: READY
+  risk_tier: low
+  created_at: '2025-08-04T04:01:05.809831Z'
+  links: []
+  wsjf_score: null
   aging_multiplier: 1.0
 scoring_weights:
   value: 1.0
