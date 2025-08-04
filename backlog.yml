@@ -1,7 +1,7 @@
 version: '1.0'
 metadata:
-  created_at: '2025-08-04T04:01:05.828184Z'
-  last_updated: '2025-08-04T04:01:05.828187Z'
+  created_at: '2025-08-04T04:01:21.363633Z'
+  last_updated: '2025-08-04T04:01:21.363648Z'
   scoring_method: wsjf
   aging_multiplier_max: 2.0
 items:
@@ -113,11 +113,11 @@ items:
   value: 3
   time_criticality: 2
   risk_reduction: 1
-  status: READY
+  status: DOING
   risk_tier: low
   created_at: '2025-08-04T04:01:05.809831Z'
   links: []
-  wsjf_score: null
+  wsjf_score: 6.0
   aging_multiplier: 1.0
 scoring_weights:
   value: 1.0
