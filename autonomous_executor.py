@@ -95,8 +95,8 @@ class AutonomousExecutor:
         print(f"Effort: {item.effort}")
         print(f"Acceptance criteria count: {len(item.acceptance_criteria)}")
         
-        # Mark as blocked pending human review
-        self.backlog_manager.update_item_status(item.id, "BLOCKED")
+        # Mark as blocked pending human review  
+        self.backlog_manager.update_item_status_by_id(item.id, "BLOCKED")
         self.backlog_manager.save_backlog()
         
         # Create escalation file
@@ -126,7 +126,7 @@ class AutonomousExecutor:
         print(f"🔄 Starting micro-cycle for: {item.id} - {item.title}")
         
         # Mark as DOING
-        self.backlog_manager.update_item_status(item.id, "DOING")
+        self.backlog_manager.update_item_status_by_id(item.id, "DOING")
         
         try:
             # A. Clarify acceptance criteria
@@ -161,7 +161,7 @@ class AutonomousExecutor:
             pr_info = self.prepare_pr(item)
             
             # G. Mark as completed
-            self.backlog_manager.update_item_status(item.id, "DONE")
+            self.backlog_manager.update_item_status_by_id(item.id, "DONE")
             self.backlog_manager.save_backlog()
             
             return ExecutionResult(
@@ -174,7 +174,7 @@ class AutonomousExecutor:
             
         except Exception as e:
             print(f"❌ Micro-cycle failed for {item.id}: {e}")
-            self.backlog_manager.update_item_status(item.id, "BLOCKED")
+            self.backlog_manager.update_item_status_by_id(item.id, "BLOCKED")
             self.backlog_manager.save_backlog()
             return ExecutionResult(
                 success=False,

@@ -1,7 +1,7 @@
 version: '1.0'
 metadata:
-  created_at: '2025-07-27T07:47:54.049923Z'
-  last_updated: '2025-07-27T07:47:54.049985Z'
+  created_at: '2025-08-04T03:58:43.214169Z'
+  last_updated: '2025-08-04T03:58:43.214171Z'
   scoring_method: wsjf
   aging_multiplier_max: 2.0
 items:
@@ -20,7 +20,7 @@ items:
   value: 8
   time_criticality: 5
   risk_reduction: 8
-  status: NEW
+  status: READY
   risk_tier: low
   created_at: '2025-07-26T12:28:30.098769Z'
   links: []
@@ -66,6 +66,24 @@ items:
   created_at: '2025-07-26T12:29:23.374866Z'
   links: []
   wsjf_score: 5.0
+  aging_multiplier: 1.0
+- id: code-1986
+  title: 'Address code comment: Fix this bug\nfile.py:10:# TODO: Fix this bug\n"'
+  type: tech_debt
+  description: 'Found in ./test_backlog_manager.py: Fix this bug\nfile.py:10:# TODO:
+    Fix this bug\n"'
+  acceptance_criteria:
+  - Resolve comment in ./test_backlog_manager.py
+  effort: 2
+  value: 2
+  time_criticality: 1
+  risk_reduction: 3
+  status: READY
+  risk_tier: low
+  created_at: '2025-08-04T03:58:43.214095Z'
+  links:
+  - file://./test_backlog_manager.py
+  wsjf_score: null
   aging_multiplier: 1.0
 scoring_weights:
   value: 1.0
