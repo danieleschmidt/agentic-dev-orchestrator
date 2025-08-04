@@ -1,7 +1,7 @@
 version: '1.0'
 metadata:
-  created_at: '2025-08-04T04:01:21.363633Z'
-  last_updated: '2025-08-04T04:01:21.363648Z'
+  created_at: '2025-08-04T04:09:22.974886Z'
+  last_updated: '2025-08-04T04:09:22.974893Z'
   scoring_method: wsjf
   aging_multiplier_max: 2.0
 items:
@@ -118,6 +118,40 @@ items:
   created_at: '2025-08-04T04:01:05.809831Z'
   links: []
   wsjf_score: 6.0
+  aging_multiplier: 1.0
+- id: code-3431
+  title: 'Address code comment: Fix this bug\n"'
+  type: tech_debt
+  description: 'Found in ./completions.log: Fix this bug\n"'
+  acceptance_criteria:
+  - Resolve comment in ./completions.log
+  effort: 2
+  value: 2
+  time_criticality: 1
+  risk_reduction: 3
+  status: NEW
+  risk_tier: low
+  created_at: '2025-08-04T04:07:20.762250Z'
+  links:
+  - file://./completions.log
+  wsjf_score: null
+  aging_multiplier: 1.0
+- id: code-5963
+  title: 'Address code comment: Fix this bug\n"'
+  type: tech_debt
+  description: 'Found in ./logs/autonomous_executor.log: Fix this bug\n"'
+  acceptance_criteria:
+  - Resolve comment in ./logs/autonomous_executor.log
+  effort: 2
+  value: 2
+  time_criticality: 1
+  risk_reduction: 3
+  status: NEW
+  risk_tier: low
+  created_at: '2025-08-04T04:07:20.762260Z'
+  links:
+  - file://./logs/autonomous_executor.log
+  wsjf_score: null
   aging_multiplier: 1.0
 scoring_weights:
   value: 1.0
