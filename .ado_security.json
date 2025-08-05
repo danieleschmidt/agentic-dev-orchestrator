@@ -1,0 +1,32 @@
+{
+  "allowed_commands": [
+    "git",
+    "python3",
+    "pytest",
+    "black",
+    "ruff",
+    "mypy"
+  ],
+  "blocked_patterns": [
+    "rm -rf",
+    "sudo",
+    "chmod 777",
+    "password",
+    "secret",
+    "api_key"
+  ],
+  "max_file_size": 10485760,
+  "allowed_extensions": [
+    ".py",
+    ".yml",
+    ".yaml",
+    ".json",
+    ".md",
+    ".txt"
+  ],
+  "quantum_security": {
+    "enable_threat_detection": true,
+    "entropy_threshold": 0.7,
+    "coherence_validation": true
+  }
+}
