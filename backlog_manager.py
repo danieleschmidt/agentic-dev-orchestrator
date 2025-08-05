@@ -4,7 +4,6 @@ Autonomous Backlog Management System
 Implements WSJF scoring, continuous discovery, and execution orchestration
 """
 
-import yaml
 import json
 import re
 import os
@@ -40,20 +39,41 @@ class BacklogManager:
     
     def __init__(self, repo_root: str = "."):
         self.repo_root = Path(repo_root)
-        self.backlog_file = self.repo_root / "backlog.yml"
+        self.backlog_file = self.repo_root / "backlog.json"
         self.backlog_dir = self.repo_root / "backlog"
         self.status_dir = self.repo_root / "docs" / "status"
         self.items: List[BacklogItem] = []
         self.config = {}
         
     def load_backlog(self) -> None:
-        """Load backlog from YAML file"""
+        """Load backlog from JSON file"""
         if not self.backlog_file.exists():
             self.items = []
             return
-            
-        with open(self.backlog_file, 'r') as f:
-            data = yaml.safe_load(f)
+        
+        # Try JSON first, fallback to simple format
+        try:
+            with open(self.backlog_file, 'r') as f:
+                data = json.load(f)
+        except json.JSONDecodeError:
+            # Create default structure
+            data = {
+                'version': '1.0',
+                'metadata': {
+                    'created_at': datetime.datetime.now().isoformat() + 'Z',
+                    'last_updated': datetime.datetime.now().isoformat() + 'Z',
+                    'scoring_method': 'wsjf',
+                    'aging_multiplier_max': 2.0,
+                },
+                'items': [],
+                'scoring_weights': {
+                    'value': 1.0,
+                    'time_criticality': 1.0,
+                    'risk_reduction': 1.0,
+                    'effort_divisor': 1.0,
+                    'aging_factor': 0.1
+                }
+            }
             
         self.config = {
             'aging_multiplier_max': data.get('metadata', {}).get('aging_multiplier_max', 2.0),
@@ -66,7 +86,7 @@ class BacklogManager:
             self.items.append(item)
     
     def save_backlog(self) -> None:
-        """Save backlog to YAML file"""
+        """Save backlog to JSON file"""
         data = {
             'version': '1.0',
             'metadata': {
@@ -86,7 +106,7 @@ class BacklogManager:
         }
         
         with open(self.backlog_file, 'w') as f:
-            yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+            json.dump(data, f, indent=2)
     
     def discover_from_json_files(self) -> List[BacklogItem]:
         """Discover backlog items from backlog/*.json files"""
