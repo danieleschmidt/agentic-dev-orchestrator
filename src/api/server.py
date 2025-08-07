@@ -26,6 +26,7 @@ from autonomous_executor import AutonomousExecutor
 from src.database.connection import get_connection
 from src.repositories.backlog_repository import BacklogRepository
 from src.cache.cache_manager import get_cache_manager
+from src.sentiment.analyzer import SentimentAnalyzer
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +52,7 @@ class ADOAPIServer:
         self.connection = get_connection(str(self.repo_root))
         self.repository = BacklogRepository(self.connection)
         self.cache = get_cache_manager(str(self.repo_root / ".ado" / "cache"))
+        self.sentiment_analyzer = SentimentAnalyzer()
         
         # Setup routes
         self._setup_routes()
@@ -352,6 +354,73 @@ class ADOAPIServer:
                 
             except Exception as e:
                 logger.error(f"Failed to clear cache: {e}")
+                return jsonify({'error': str(e)}), 500
+        
+        # Sentiment Analysis Endpoints
+        @self.app.route('/api/v1/sentiment/analyze', methods=['POST'])
+        def analyze_sentiment():
+            """Analyze sentiment of text"""
+            try:
+                data = request.get_json()
+                if not data or 'text' not in data:
+                    return jsonify({'error': 'Text required'}), 400
+                
+                text = data['text']
+                metadata = data.get('metadata', {})
+                
+                result = self.sentiment_analyzer.analyze(text, metadata)
+                
+                return jsonify(result.to_dict())
+                
+            except Exception as e:
+                logger.error(f"Failed to analyze sentiment: {e}")
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/v1/sentiment/batch', methods=['POST'])
+        def analyze_sentiment_batch():
+            """Analyze sentiment of multiple texts"""
+            try:
+                data = request.get_json()
+                if not data or 'texts' not in data:
+                    return jsonify({'error': 'Texts array required'}), 400
+                
+                texts = data['texts']
+                if not isinstance(texts, list):
+                    return jsonify({'error': 'Texts must be an array'}), 400
+                
+                results = self.sentiment_analyzer.analyze_batch(texts)
+                
+                return jsonify({
+                    'results': [result.to_dict() for result in results],
+                    'total': len(results),
+                    'timestamp': datetime.now().isoformat()
+                })
+                
+            except Exception as e:
+                logger.error(f"Failed to analyze batch sentiment: {e}")
+                return jsonify({'error': str(e)}), 500
+        
+        @self.app.route('/api/v1/sentiment/backlog/<item_id>', methods=['POST'])
+        def analyze_backlog_sentiment(item_id: str):
+            """Analyze sentiment of backlog item"""
+            try:
+                item = self.repository.load(item_id)
+                if not item:
+                    return jsonify({'error': 'Item not found'}), 404
+                
+                # Analyze sentiment of title and description
+                title_result = self.sentiment_analyzer.analyze(item.title, {'field': 'title'})
+                desc_result = self.sentiment_analyzer.analyze(item.description, {'field': 'description'})
+                
+                return jsonify({
+                    'item_id': item_id,
+                    'title_sentiment': title_result.to_dict(),
+                    'description_sentiment': desc_result.to_dict(),
+                    'timestamp': datetime.now().isoformat()
+                })
+                
+            except Exception as e:
+                logger.error(f"Failed to analyze backlog sentiment: {e}")
                 return jsonify({'error': str(e)}), 500
     
     def _setup_error_handlers(self):

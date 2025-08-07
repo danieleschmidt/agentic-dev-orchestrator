@@ -10,6 +10,7 @@ from pathlib import Path
 
 from backlog_manager import BacklogManager
 from autonomous_executor import AutonomousExecutor
+from src.sentiment.analyzer import SentimentAnalyzer
 
 
 def cmd_init():
@@ -106,11 +107,13 @@ def cmd_help():
     print("=========================================")
     print()
     print("Commands:")
-    print("  init      Initialize ADO in current directory")
-    print("  run       Execute autonomous backlog processing")
-    print("  status    Show current backlog status")
-    print("  discover  Discover new backlog items from code")
-    print("  help      Show this help message")
+    print("  init              Initialize ADO in current directory")
+    print("  run               Execute autonomous backlog processing")
+    print("  status            Show current backlog status")
+    print("  discover          Discover new backlog items from code")
+    print("  sentiment         Analyze sentiment of text or files")
+    print("  sentiment-backlog Analyze sentiment of all backlog items")
+    print("  help              Show this help message")
     print()
     print("Environment Variables:")
     print("  GITHUB_TOKEN    - GitHub Personal Access Token")
@@ -120,6 +123,93 @@ def cmd_help():
     print("  backlog.yml     - Main backlog configuration")
     print("  backlog/*.json  - Individual backlog items")
     print("  docs/status/    - Execution reports and metrics")
+
+
+def cmd_sentiment():
+    """Analyze sentiment of text or files"""
+    if len(sys.argv) < 3:
+        print("Usage: python ado.py sentiment <text|--file path>")
+        print("Examples:")
+        print("  python ado.py sentiment 'This is great!'")
+        print("  python ado.py sentiment --file README.md")
+        return
+    
+    analyzer = SentimentAnalyzer()
+    
+    if sys.argv[2] == '--file' and len(sys.argv) > 3:
+        # Analyze file content
+        file_path = Path(sys.argv[3])
+        if not file_path.exists():
+            print(f"❌ File not found: {file_path}")
+            return
+        
+        try:
+            content = file_path.read_text(encoding='utf-8')
+            result = analyzer.analyze(content, {'source': str(file_path)})
+            
+            print(f"\n📄 Sentiment Analysis: {file_path}")
+            print(f"📊 Sentiment: {result.label.value.upper()}")
+            print(f"🎯 Confidence: {result.confidence:.2%}")
+            print(f"📈 Scores:")
+            print(f"  Positive: {result.scores.positive:.3f}")
+            print(f"  Negative: {result.scores.negative:.3f}")
+            print(f"  Neutral:  {result.scores.neutral:.3f}")
+            print(f"  Compound: {result.scores.compound:.3f}")
+            
+        except Exception as e:
+            print(f"❌ Error reading file: {e}")
+    else:
+        # Analyze text directly
+        text = ' '.join(sys.argv[2:])
+        result = analyzer.analyze(text)
+        
+        print(f"\n💭 Sentiment Analysis")
+        print(f"📝 Text: '{text}'")
+        print(f"📊 Sentiment: {result.label.value.upper()}")
+        print(f"🎯 Confidence: {result.confidence:.2%}")
+        print(f"📈 Scores:")
+        print(f"  Positive: {result.scores.positive:.3f}")
+        print(f"  Negative: {result.scores.negative:.3f}")
+        print(f"  Neutral:  {result.scores.neutral:.3f}")
+        print(f"  Compound: {result.scores.compound:.3f}")
+
+
+def cmd_sentiment_backlog():
+    """Analyze sentiment of backlog items"""
+    print("🔍 Analyzing sentiment of backlog items...")
+    
+    manager = BacklogManager()
+    manager.load_backlog()
+    
+    analyzer = SentimentAnalyzer()
+    
+    if not manager.backlog:
+        print("📭 No backlog items found")
+        return
+    
+    print(f"\n📊 Sentiment Analysis Report ({len(manager.backlog)} items)")
+    print("=" * 60)
+    
+    sentiment_summary = {'positive': 0, 'negative': 0, 'neutral': 0}
+    
+    for item in manager.backlog:
+        # Analyze title and description
+        title_result = analyzer.analyze(item.title)
+        desc_result = analyzer.analyze(item.description)
+        
+        # Use description sentiment as primary, title as secondary
+        primary_sentiment = desc_result.label.value
+        sentiment_summary[primary_sentiment] += 1
+        
+        print(f"\n🎫 {item.id}: {item.title}")
+        print(f"   Title Sentiment: {title_result.label.value} ({title_result.confidence:.1%})")
+        print(f"   Description Sentiment: {desc_result.label.value} ({desc_result.confidence:.1%})")
+        print(f"   Overall: {primary_sentiment.upper()}")
+    
+    print(f"\n📈 Summary:")
+    print(f"  Positive: {sentiment_summary['positive']} items")
+    print(f"  Negative: {sentiment_summary['negative']} items")
+    print(f"  Neutral:  {sentiment_summary['neutral']} items")
 
 
 def main():
@@ -135,6 +225,8 @@ def main():
         'run': cmd_run, 
         'status': cmd_status,
         'discover': cmd_discover,
+        'sentiment': cmd_sentiment,
+        'sentiment-backlog': cmd_sentiment_backlog,
         'help': cmd_help,
         '--help': cmd_help,
         '-h': cmd_help,
