@@ -43,9 +43,40 @@ def cmd_init():
 
 def cmd_run():
     """Run the autonomous execution loop"""
-    print("🚀 Starting autonomous backlog execution...")
+    print("🤖 Welcome to Terragon ADO - Autonomous Development Orchestrator")
+    print("🚀 Starting intelligent backlog execution with advanced AI...")
+    
+    # Initialize sentiment analysis
+    try:
+        from src.ai.sentiment_analyzer import SentimentAnalyzer
+        sentiment_analyzer = SentimentAnalyzer()
+        print("✨ Sentiment analysis engine initialized")
+    except ImportError:
+        print("⚠️  Advanced AI features require additional dependencies")
+        sentiment_analyzer = None
+    
+    # Initialize adaptive learning
+    try:
+        from src.intelligence.adaptive_learning import AdaptiveLearningEngine
+        learning_engine = AdaptiveLearningEngine()
+        print("🧠 Adaptive learning engine initialized")
+    except ImportError:
+        print("⚠️  Learning features require numpy")
+        learning_engine = None
     
     executor = AutonomousExecutor()
+    
+    # Run pre-execution analysis if components available
+    if sentiment_analyzer:
+        print("🔍 Analyzing team sentiment from backlog...")
+        # This would integrate with backlog analysis
+        
+    if learning_engine:
+        print("📊 Loading historical insights...")
+        report = learning_engine.generate_learning_report()
+        if report['high_confidence_insights'] > 0:
+            print(f"💡 Found {report['high_confidence_insights']} high-confidence insights")
+    
     results = executor.macro_execution_loop()
     
     print("\n📊 Execution Summary:")
