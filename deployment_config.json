@@ -1,0 +1,14 @@
+{
+  "project_name": "agentic-dev-orchestrator",
+  "version": "0.2.0",
+  "environment": "staging",
+  "repo_root": ".",
+  "build_command": "python -m build",
+  "test_command": "python -m pytest tests/ -v",
+  "security_scan_command": "python src/security/enhanced_scanner.py scan",
+  "health_check_endpoint": "http://localhost:5000/health",
+  "health_check_timeout": 30,
+  "rollback_enabled": true,
+  "backup_count": 3,
+  "deployment_timeout": 600
+}
