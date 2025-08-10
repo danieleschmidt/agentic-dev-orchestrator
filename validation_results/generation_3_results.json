@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-08-10T07:45:10.523947",
+  "generation": 3,
+  "tests": {
+    "adaptive_cache": {
+      "success": true,
+      "details": "Adaptive cache test: success\n"
+    },
+    "distributed_executor": {
+      "success": true,
+      "details": "Distributed executor initialized successfully\n"
+    },
+    "async_executor": {
+      "success": false,
+      "details": "  File \"<string>\", line 1\n    from src.performance.async_executor import AsyncExecutor; import asyncio; async def test(): executor = AsyncExecutor(); await executor.start(); print('Async executor test successful'); asyncio.run(test())\n                                                                              ^^^^^\nSyntaxError: invalid syntax\n"
+    },
+    "performance_metrics": {
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAttributeError: 'MetricsCollector' object has no attribute 'collect_system_metrics'\n"
+    },
+    "resource_pool": {
+      "success": true,
+      "details": "Resource pool created with max_size=10\n"
+    },
+    "load_balancing": {
+      "success": true,
+      "details": "Load balancer initialized\n"
+    },
+    "backlog_performance": {
+      "success": true,
+      "details": "Processing time: 0.55s"
+    },
+    "concurrent_requests": {
+      "success": true,
+      "details": "Concurrent requests test completed in 0.00s\n"
+    },
+    "memory_optimization": {
+      "success": true,
+      "details": "Memory optimization test: 0.00MB freed\n"
+    },
+    "auto_scaling": {
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAttributeError: 'DistributedExecutor' object has no attribute '_auto_scale_workers'\n"
+    }
+  },
+  "overall_success": true,
+  "performance_benchmarks": {
+    "backlog_processing_time": 0.553166389465332
+  },
+  "total_tests": 10,
+  "passed_tests": 7,
+  "success_rate": 0.7
+}

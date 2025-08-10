@@ -565,8 +565,8 @@ class AutonomousExecutor:
             "artifacts": ["backlog.yml", "completions.log"]
         }
     
-    def macro_execution_loop(self) -> Dict:
-        """Main autonomous execution loop"""
+    def macro_execution_loop(self, max_items: Optional[int] = None) -> Dict:
+        """Main autonomous execution loop with item limit support"""
         print("🚀 Starting autonomous backlog execution...")
         
         results = {
@@ -574,14 +574,17 @@ class AutonomousExecutor:
             "completed_items": [],
             "blocked_items": [],
             "escalated_items": [],
-            "errors": []
+            "errors": [],
+            "max_items": max_items or self.max_iterations
         }
         
         self.current_iteration = 0
+        processed_items = 0
+        effective_max_items = max_items or self.max_iterations
         
-        while self.current_iteration < self.max_iterations:
+        while self.current_iteration < self.max_iterations and processed_items < effective_max_items:
             self.current_iteration += 1
-            print(f"\n--- Iteration {self.current_iteration} ---")
+            print(f"\n--- Iteration {self.current_iteration} ({processed_items + 1}/{effective_max_items}) ---")
             
             # Sync repository
             if not self.sync_repo_and_ci():
@@ -611,10 +614,12 @@ class AutonomousExecutor:
             if self.is_high_risk_or_ambiguous(task):
                 self.escalate_for_human(task)
                 results["escalated_items"].append(task.id)
+                processed_items += 1
                 continue
             
             # Execute micro-cycle
             execution_result = self.execute_micro_cycle_full(task)
+            processed_items += 1
             
             if execution_result.success:
                 print(f"✅ Completed: {task.id}")

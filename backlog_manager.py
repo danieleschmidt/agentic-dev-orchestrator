@@ -39,56 +39,89 @@ class BacklogManager:
     
     def __init__(self, repo_root: str = "."):
         self.repo_root = Path(repo_root)
-        self.backlog_file = self.repo_root / "backlog.json"
+        self.backlog_file = self.repo_root / "backlog.yml"
         self.backlog_dir = self.repo_root / "backlog"
         self.status_dir = self.repo_root / "docs" / "status"
         self.items: List[BacklogItem] = []
-        self.config = {}
+        self.config = {"name": "ADO Backlog", "version": "1.0"}
         
     def load_backlog(self) -> None:
-        """Load backlog from JSON file"""
-        if not self.backlog_file.exists():
-            self.items = []
-            return
-        
-        # Try JSON first, fallback to simple format
-        try:
-            with open(self.backlog_file, 'r') as f:
-                data = json.load(f)
-        except json.JSONDecodeError:
-            # Create default structure
-            data = {
-                'version': '1.0',
-                'metadata': {
-                    'created_at': datetime.datetime.now().isoformat() + 'Z',
-                    'last_updated': datetime.datetime.now().isoformat() + 'Z',
-                    'scoring_method': 'wsjf',
-                    'aging_multiplier_max': 2.0,
-                },
-                'items': [],
-                'scoring_weights': {
-                    'value': 1.0,
-                    'time_criticality': 1.0,
-                    'risk_reduction': 1.0,
-                    'effort_divisor': 1.0,
-                    'aging_factor': 0.1
-                }
+        """Load backlog from YAML/JSON file and discover items from directory"""
+        # First, load configuration from main backlog file
+        if self.backlog_file.exists():
+            # Try YAML first, fallback to JSON
+            try:
+                import yaml
+                with open(self.backlog_file, 'r') as f:
+                    data = yaml.safe_load(f) or {}
+            except (ImportError, yaml.YAMLError):
+                try:
+                    with open(self.backlog_file, 'r') as f:
+                        data = json.load(f)
+                except json.JSONDecodeError:
+                    data = {}
+        else:
+            data = {}
+            
+        # Set up config with defaults
+        data = data or {
+            'version': '1.0',
+            'name': 'ADO Backlog',
+            'metadata': {
+                'created_at': datetime.datetime.now().isoformat() + 'Z',
+                'last_updated': datetime.datetime.now().isoformat() + 'Z',
+                'scoring_method': 'wsjf',
+                'aging_multiplier_max': 2.0,
+            },
+            'items': [],
+            'scoring_weights': {
+                'value': 1.0,
+                'time_criticality': 1.0,
+                'risk_reduction': 1.0,
+                'effort_divisor': 1.0,
+                'aging_factor': 0.1
             }
+        }
             
         self.config = {
+            'name': data.get('name', 'ADO Backlog'),
+            'version': data.get('version', '1.0'),
             'aging_multiplier_max': data.get('metadata', {}).get('aging_multiplier_max', 2.0),
             'scoring_weights': data.get('scoring_weights', {}),
         }
         
         self.items = []
-        for item_data in data.get('items', []):
-            item = BacklogItem(**item_data)
-            self.items.append(item)
+        
+        # Load items from main backlog file
+        items_data = data.get('items', []) or data.get('backlog', [])
+        for item_data in items_data:
+            if isinstance(item_data, dict) and all(key in item_data for key in ['id', 'title', 'type', 'description']):
+                # Ensure all required fields exist with defaults
+                item_data.setdefault('acceptance_criteria', [])
+                item_data.setdefault('effort', 5)
+                item_data.setdefault('value', 5)
+                item_data.setdefault('time_criticality', 3)
+                item_data.setdefault('risk_reduction', 3)
+                item_data.setdefault('status', 'NEW')
+                item_data.setdefault('risk_tier', 'low')
+                item_data.setdefault('created_at', '2025-01-27T00:00:00Z')
+                item_data.setdefault('links', [])
+                item_data.setdefault('wsjf_score', None)
+                item_data.setdefault('aging_multiplier', 1.0)
+                
+                item = BacklogItem(**item_data)
+                self.items.append(item)
+        
+        # Also discover items from JSON files in backlog directory
+        discovered_items = self.discover_from_json_files()
+        self.merge_and_dedupe_items(discovered_items)
     
     def save_backlog(self) -> None:
-        """Save backlog to JSON file"""
+        """Save backlog to YAML file"""
+        import yaml
+        
         data = {
-            'version': '1.0',
+            **self.config,
             'metadata': {
                 'created_at': datetime.datetime.now().isoformat() + 'Z',
                 'last_updated': datetime.datetime.now().isoformat() + 'Z',
@@ -106,7 +139,7 @@ class BacklogManager:
         }
         
         with open(self.backlog_file, 'w') as f:
-            json.dump(data, f, indent=2)
+            yaml.dump(data, f, indent=2)
     
     def discover_from_json_files(self) -> List[BacklogItem]:
         """Discover backlog items from backlog/*.json files"""
@@ -118,25 +151,43 @@ class BacklogManager:
             try:
                 with open(json_file, 'r') as f:
                     data = json.load(f)
+                
+                # Check if it's already in the correct format
+                if all(key in data for key in ['id', 'title', 'type', 'description']):
+                    # Ensure all required fields exist with defaults
+                    data.setdefault('acceptance_criteria', [])
+                    data.setdefault('effort', 5)
+                    data.setdefault('value', 5)
+                    data.setdefault('time_criticality', 3)
+                    data.setdefault('risk_reduction', 3)
+                    data.setdefault('status', 'NEW')
+                    data.setdefault('risk_tier', 'low')
+                    data.setdefault('created_at', datetime.datetime.now().isoformat() + 'Z')
+                    data.setdefault('links', [])
+                    data.setdefault('wsjf_score', None)
+                    data.setdefault('aging_multiplier', 1.0)
                     
-                # Convert from README schema to normalized schema
-                wsjf_data = data.get('wsjf', {})
-                item = BacklogItem(
-                    id=f"json-{json_file.stem}",
-                    title=data.get('title', ''),
-                    type='feature',
-                    description=data.get('description', ''),
-                    acceptance_criteria=data.get('acceptance_criteria', []),
-                    effort=wsjf_data.get('job_size', 5),
-                    value=wsjf_data.get('user_business_value', 5),
-                    time_criticality=wsjf_data.get('time_criticality', 3),
-                    risk_reduction=wsjf_data.get('risk_reduction_opportunity_enablement', 3),
-                    status='NEW',
-                    risk_tier='low',
-                    created_at=datetime.datetime.now().isoformat() + 'Z',
-                    links=[]
-                )
-                items.append(item)
+                    item = BacklogItem(**data)
+                    items.append(item)
+                else:
+                    # Convert from README schema to normalized schema
+                    wsjf_data = data.get('wsjf', {})
+                    item = BacklogItem(
+                        id=f"json-{json_file.stem}",
+                        title=data.get('title', ''),
+                        type='feature',
+                        description=data.get('description', ''),
+                        acceptance_criteria=data.get('acceptance_criteria', []),
+                        effort=wsjf_data.get('job_size', 5),
+                        value=wsjf_data.get('user_business_value', 5),
+                        time_criticality=wsjf_data.get('time_criticality', 3),
+                        risk_reduction=wsjf_data.get('risk_reduction_opportunity_enablement', 3),
+                        status='NEW',
+                        risk_tier='low',
+                        created_at=datetime.datetime.now().isoformat() + 'Z',
+                        links=[]
+                    )
+                    items.append(item)
             except Exception as e:
                 print(f"Error parsing {json_file}: {e}")
                 
@@ -284,8 +335,25 @@ class BacklogManager:
         # Discover from JSON files
         new_items.extend(self.discover_from_json_files())
         
-        # Discover from code comments
-        new_items.extend(self.discover_from_code_comments())
+        # Discover from code comments (use _discover_from_code for test compatibility)
+        code_items_data = self._discover_from_code()
+        for item_data in code_items_data:
+            if isinstance(item_data, dict):
+                # Ensure all required fields exist with defaults
+                item_data.setdefault('acceptance_criteria', [])
+                item_data.setdefault('effort', 5)
+                item_data.setdefault('value', 5)
+                item_data.setdefault('time_criticality', 3)
+                item_data.setdefault('risk_reduction', 3)
+                item_data.setdefault('status', 'NEW')
+                item_data.setdefault('risk_tier', 'low')
+                item_data.setdefault('created_at', datetime.datetime.now().isoformat() + 'Z')
+                item_data.setdefault('links', [])
+                item_data.setdefault('wsjf_score', None)
+                item_data.setdefault('aging_multiplier', 1.0)
+                
+                item = BacklogItem(**item_data)
+                new_items.append(item)
         
         # Merge with existing items
         initial_count = len(self.items)
@@ -399,9 +467,23 @@ class BacklogManager:
         """Alias for get_prioritized_backlog for test compatibility"""
         return self.get_prioritized_backlog()
     
-    def _discover_from_code(self) -> List[BacklogItem]:
-        """Alias for discover_from_code_comments for test compatibility"""
-        return self.discover_from_code_comments()
+    def get_ready_items(self) -> List[BacklogItem]:
+        """Get all items with READY status"""
+        return [item for item in self.items if item.status == 'READY']
+    
+    @staticmethod
+    def _calculate_wsjf_score(user_business_value: int, time_criticality: int, 
+                             risk_reduction: int, job_size: int) -> float:
+        """Calculate WSJF score from components"""
+        if job_size == 0:
+            return float('inf')
+        cost_of_delay = user_business_value + time_criticality + risk_reduction
+        return cost_of_delay / job_size
+    
+    def _discover_from_code(self) -> List[Dict]:
+        """Discover items from code and return as dicts for test compatibility"""
+        items = self.discover_from_code_comments()
+        return [asdict(item) for item in items]
     
     def is_git_clean(self) -> bool:
         """Check if git working directory is clean"""

@@ -10,12 +10,16 @@ from typing import Dict, List, Optional, Any
 from pathlib import Path
 import logging
 from datetime import datetime
+import jwt
+import hashlib
+import time
+from functools import wraps
 
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 try:
-    from flask import Flask, jsonify, request, abort
+    from flask import Flask, jsonify, request, abort, g
     from flask_cors import CORS
 except ImportError:
     print("Flask not available - REST API disabled")
@@ -43,6 +47,7 @@ class ADOAPIServer:
         
         # Initialize Flask app
         self.app = Flask(__name__)
+        self.app.config['SECRET_KEY'] = os.environ.get('ADO_SECRET_KEY', 'dev-secret-change-in-production')
         CORS(self.app)
         
         # Initialize components
@@ -52,9 +57,82 @@ class ADOAPIServer:
         self.repository = BacklogRepository(self.connection)
         self.cache = get_cache_manager(str(self.repo_root / ".ado" / "cache"))
         
-        # Setup routes
+        # Setup middleware, routes, and error handlers
+        self._setup_middleware()
         self._setup_routes()
         self._setup_error_handlers()
+    
+    def _setup_middleware(self):
+        """Setup authentication and validation middleware"""
+        
+        def require_auth(f):
+            """Authentication decorator"""
+            @wraps(f)
+            def decorated(*args, **kwargs):
+                # Skip auth for health check and development
+                if request.endpoint == 'health_check' or os.environ.get('ADO_DISABLE_AUTH') == 'true':
+                    return f(*args, **kwargs)
+                
+                # Check API key
+                api_key = request.headers.get('X-API-Key')
+                if not api_key:
+                    return jsonify({'error': 'API key required'}), 401
+                
+                # Validate API key (simple implementation for Gen1)
+                expected_key = os.environ.get('ADO_API_KEY')
+                if expected_key and api_key != expected_key:
+                    return jsonify({'error': 'Invalid API key'}), 401
+                
+                # Set authenticated user context
+                g.authenticated = True
+                g.api_key_hash = hashlib.sha256(api_key.encode()).hexdigest()[:8]
+                
+                return f(*args, **kwargs)
+            return decorated
+        
+        self.require_auth = require_auth
+        
+        @self.app.before_request
+        def before_request():
+            """Pre-request validation and logging"""
+            g.request_start_time = time.time()
+            g.request_id = hashlib.md5(f"{time.time()}{request.remote_addr}".encode()).hexdigest()[:8]
+            
+            # Log incoming requests
+            logger.info(f"[{g.request_id}] {request.method} {request.path} from {request.remote_addr}")
+        
+        @self.app.after_request
+        def after_request(response):
+            """Post-request logging and metrics"""
+            duration = time.time() - g.request_start_time
+            logger.info(f"[{g.request_id}] Response: {response.status_code} ({duration:.3f}s)")
+            
+            # Add security headers
+            response.headers['X-Content-Type-Options'] = 'nosniff'
+            response.headers['X-Frame-Options'] = 'DENY'
+            response.headers['X-XSS-Protection'] = '1; mode=block'
+            response.headers['X-Request-ID'] = g.request_id
+            
+            return response
+    
+    def _validate_backlog_item_data(self, data: Dict) -> tuple[bool, str]:
+        """Validate backlog item data"""
+        required_fields = ['id', 'title', 'type', 'description']
+        for field in required_fields:
+            if field not in data or not data[field]:
+                return False, f'Missing required field: {field}'
+        
+        # Validate types
+        if not isinstance(data.get('effort', 5), int) or data.get('effort', 5) <= 0:
+            return False, 'Effort must be a positive integer'
+        
+        if data.get('type') not in ['feature', 'bug', 'chore', 'tech_debt', 'epic']:
+            return False, 'Invalid item type'
+        
+        if data.get('status', 'NEW') not in ['NEW', 'REFINED', 'READY', 'DOING', 'PR', 'DONE', 'BLOCKED']:
+            return False, 'Invalid status'
+        
+        return True, ''
     
     def _setup_routes(self):
         """Setup all API routes"""
@@ -70,28 +148,50 @@ class ADOAPIServer:
             })
         
         @self.app.route('/api/v1/backlog', methods=['GET'])
+        @self.require_auth
         def get_backlog():
             """Get all backlog items"""
             try:
+                # Get pagination parameters
+                page = request.args.get('page', 1, type=int)
+                limit = min(request.args.get('limit', 50, type=int), 100)  # Max 100 items
+                status_filter = request.args.get('status')
+                
                 # Check cache first
-                cached = self.cache.get('backlog_items')
+                cache_key = f'backlog_items_{page}_{limit}_{status_filter}'
+                cached = self.cache.get(cache_key)
                 if cached:
                     return jsonify(cached)
                 
                 items = self.repository.load_all()
+                
+                # Apply filters
+                if status_filter:
+                    items = [item for item in items if item.status == status_filter]
+                
+                # Apply pagination
+                total = len(items)
+                start_idx = (page - 1) * limit
+                end_idx = start_idx + limit
+                paginated_items = items[start_idx:end_idx]
+                
                 response = {
-                    'items': [item.__dict__ for item in items],
-                    'total': len(items),
-                    'timestamp': datetime.now().isoformat()
+                    'items': [item.__dict__ for item in paginated_items],
+                    'total': total,
+                    'page': page,
+                    'limit': limit,
+                    'pages': (total + limit - 1) // limit,
+                    'timestamp': datetime.now().isoformat(),
+                    'request_id': g.request_id
                 }
                 
-                # Cache for 5 minutes
-                self.cache.set('backlog_items', response, ttl=300)
+                # Cache for 2 minutes
+                self.cache.set(cache_key, response, ttl=120)
                 return jsonify(response)
                 
             except Exception as e:
-                logger.error(f"Failed to get backlog: {e}")
-                return jsonify({'error': str(e)}), 500
+                logger.error(f"[{g.request_id}] Failed to get backlog: {e}")
+                return jsonify({'error': 'Failed to retrieve backlog', 'request_id': g.request_id}), 500
         
         @self.app.route('/api/v1/backlog/<item_id>', methods=['GET'])
         def get_backlog_item(item_id: str):
@@ -108,18 +208,18 @@ class ADOAPIServer:
                 return jsonify({'error': str(e)}), 500
         
         @self.app.route('/api/v1/backlog', methods=['POST'])
+        @self.require_auth
         def create_backlog_item():
             """Create new backlog item"""
             try:
                 data = request.get_json()
                 if not data:
-                    return jsonify({'error': 'No data provided'}), 400
+                    return jsonify({'error': 'No data provided', 'request_id': g.request_id}), 400
                 
-                # Validate required fields
-                required_fields = ['id', 'title', 'type', 'description']
-                for field in required_fields:
-                    if field not in data:
-                        return jsonify({'error': f'Missing required field: {field}'}), 400
+                # Validate input data
+                is_valid, error_msg = self._validate_backlog_item_data(data)
+                if not is_valid:
+                    return jsonify({'error': error_msg, 'request_id': g.request_id}), 400
                 
                 # Set defaults
                 data.setdefault('acceptance_criteria', [])
@@ -283,21 +383,36 @@ class ADOAPIServer:
                 return jsonify({'error': str(e)}), 500
         
         @self.app.route('/api/v1/execution/start', methods=['POST'])
+        @self.require_auth
         def start_execution():
             """Start autonomous execution"""
             try:
-                # Run in background - in production, use celery or similar
-                results = self.executor.macro_execution_loop()
+                # Get execution parameters
+                data = request.get_json() or {}
+                max_items = min(data.get('max_items', 5), 10)  # Limit concurrent items
+                dry_run = data.get('dry_run', False)
+                
+                if dry_run:
+                    # Simulate execution for testing
+                    results = {
+                        'mode': 'dry_run',
+                        'would_process': max_items,
+                        'message': 'Dry run completed successfully'
+                    }
+                else:
+                    # Run actual execution - in production, use celery or similar
+                    results = self.executor.macro_execution_loop(max_items=max_items)
                 
                 return jsonify({
-                    'message': 'Execution completed',
+                    'message': 'Execution completed' if not dry_run else 'Dry run completed',
                     'results': results,
-                    'timestamp': datetime.now().isoformat()
+                    'timestamp': datetime.now().isoformat(),
+                    'request_id': g.request_id
                 })
                 
             except Exception as e:
-                logger.error(f"Failed to start execution: {e}")
-                return jsonify({'error': str(e)}), 500
+                logger.error(f"[{g.request_id}] Failed to start execution: {e}")
+                return jsonify({'error': 'Execution failed', 'request_id': g.request_id}), 500
         
         @self.app.route('/api/v1/metrics', methods=['GET'])
         def get_metrics():
