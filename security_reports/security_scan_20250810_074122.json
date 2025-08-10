@@ -1,27 +1,27 @@
 {
-  "timestamp": "2025-08-10T07:44:21.482389",
-  "total_findings": 165,
+  "timestamp": "2025-08-10T07:41:22.512251",
+  "total_findings": 163,
   "severity_distribution": {
     "critical": 0,
     "high": 19,
-    "medium": 146,
+    "medium": 144,
     "low": 0,
     "info": 0
   },
   "scan_type_distribution": {
     "dependency_check": 0,
-    "static_analysis": 144,
+    "static_analysis": 142,
     "license_check": 0,
     "container_scan": 1,
     "configuration_check": 1,
     "secret_scan": 19
   },
-  "risk_score": 717,
+  "risk_score": 709,
   "scan_results": [
     {
       "scan_type": "ScanType.DEPENDENCY_CHECK",
-      "timestamp": "2025-08-10T07:44:10.832162",
-      "duration_seconds": 0.01037,
+      "timestamp": "2025-08-10T07:41:13.350445",
+      "duration_seconds": 0.006683,
       "findings": [],
       "total_files_scanned": 4,
       "scan_successful": true,
@@ -30,8 +30,8 @@
     },
     {
       "scan_type": "ScanType.STATIC_ANALYSIS",
-      "timestamp": "2025-08-10T07:44:10.831510",
-      "duration_seconds": 7.835837,
+      "timestamp": "2025-08-10T07:41:13.349873",
+      "duration_seconds": 6.942055,
       "findings": [
         {
           "id": "static_hardcoded_secret_ff2b813d",
@@ -46,7 +46,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.212554"
+          "timestamp": "2025-08-10T07:41:13.710912"
         },
         {
           "id": "static_shell_true_2d9a80dc",
@@ -61,7 +61,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.231816"
+          "timestamp": "2025-08-10T07:41:13.722199"
         },
         {
           "id": "static_shell_true_295c05d9",
@@ -76,7 +76,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.231976"
+          "timestamp": "2025-08-10T07:41:13.722301"
         },
         {
           "id": "static_shell_true_d6d590cb",
@@ -91,37 +91,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.233228"
-        },
-        {
-          "id": "static_shell_true_2121815d",
-          "title": "Potential security issue: shell_true",
-          "description": "shell=True in subprocess is risky",
-          "severity": "SeverityLevel.MEDIUM",
-          "scan_type": "ScanType.STATIC_ANALYSIS",
-          "file_path": "run_gen2_validation.py",
-          "line_number": 22,
-          "rule_id": null,
-          "cwe_id": null,
-          "cvss_score": null,
-          "remediation": null,
-          "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.235724"
-        },
-        {
-          "id": "static_shell_true_253f6038",
-          "title": "Potential security issue: shell_true",
-          "description": "shell=True in subprocess is risky",
-          "severity": "SeverityLevel.MEDIUM",
-          "scan_type": "ScanType.STATIC_ANALYSIS",
-          "file_path": "run_gen2_validation.py",
-          "line_number": 26,
-          "rule_id": null,
-          "cwe_id": null,
-          "cvss_score": null,
-          "remediation": null,
-          "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.235811"
+          "timestamp": "2025-08-10T07:41:13.722834"
         },
         {
           "id": "static_shell_true_f31b3be1",
@@ -136,7 +106,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.259257"
+          "timestamp": "2025-08-10T07:41:13.744685"
         },
         {
           "id": "static_shell_true_00b9c850",
@@ -151,7 +121,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.271158"
+          "timestamp": "2025-08-10T07:41:13.751224"
         },
         {
           "id": "static_shell_true_1b1fc9f8",
@@ -166,7 +136,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.282028"
+          "timestamp": "2025-08-10T07:41:13.758564"
         },
         {
           "id": "static_shell_true_ffa19872",
@@ -181,7 +151,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.296671"
+          "timestamp": "2025-08-10T07:41:13.769357"
         },
         {
           "id": "static_hardcoded_secret_adbc33b3",
@@ -196,7 +166,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.311370"
+          "timestamp": "2025-08-10T07:41:13.785171"
         },
         {
           "id": "static_shell_true_f3b7f3ba",
@@ -211,7 +181,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.311631"
+          "timestamp": "2025-08-10T07:41:13.785489"
         },
         {
           "id": "static_shell_true_a2398abf",
@@ -226,7 +196,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.311696"
+          "timestamp": "2025-08-10T07:41:13.785559"
         },
         {
           "id": "static_eval_usage_1f7c02ae",
@@ -241,7 +211,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.311758"
+          "timestamp": "2025-08-10T07:41:13.785642"
         },
         {
           "id": "static_shell_true_d8f15346",
@@ -256,7 +226,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.311848"
+          "timestamp": "2025-08-10T07:41:13.785752"
         },
         {
           "id": "static_eval_usage_a7bce508",
@@ -271,7 +241,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.406730"
+          "timestamp": "2025-08-10T07:41:13.875340"
         },
         {
           "id": "static_exec_usage_63ebcc34",
@@ -286,7 +256,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.406828"
+          "timestamp": "2025-08-10T07:41:13.875432"
         },
         {
           "id": "static_shell_true_8447317c",
@@ -301,7 +271,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.406908"
+          "timestamp": "2025-08-10T07:41:13.875503"
         },
         {
           "id": "static_sql_injection_d14fd240",
@@ -316,7 +286,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.407045"
+          "timestamp": "2025-08-10T07:41:13.875602"
         },
         {
           "id": "static_shell_true_7ff0dc31",
@@ -331,7 +301,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.411292"
+          "timestamp": "2025-08-10T07:41:13.879844"
         },
         {
           "id": "static_eval_usage_e6b17887",
@@ -346,7 +316,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.414863"
+          "timestamp": "2025-08-10T07:41:13.882923"
         },
         {
           "id": "static_hardcoded_secret_d3abc8f1",
@@ -361,7 +331,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.438221"
+          "timestamp": "2025-08-10T07:41:13.901559"
         },
         {
           "id": "static_hardcoded_secret_bdaf06cb",
@@ -376,7 +346,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.438305"
+          "timestamp": "2025-08-10T07:41:13.901638"
         },
         {
           "id": "static_shell_true_8fdf23d4",
@@ -391,7 +361,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.438606"
+          "timestamp": "2025-08-10T07:41:13.901917"
         },
         {
           "id": "static_eval_usage_124c1c6a",
@@ -406,7 +376,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.438694"
+          "timestamp": "2025-08-10T07:41:13.901991"
         },
         {
           "id": "static_shell_true_635c9b9a",
@@ -421,7 +391,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.438921"
+          "timestamp": "2025-08-10T07:41:13.902220"
         },
         {
           "id": "static_eval_usage_d1306d49",
@@ -436,7 +406,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.439148"
+          "timestamp": "2025-08-10T07:41:13.902348"
         },
         {
           "id": "static_eval_usage_e47be0a9",
@@ -451,7 +421,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.467262"
+          "timestamp": "2025-08-10T07:41:13.928278"
         },
         {
           "id": "static_exec_usage_e47be0a9",
@@ -466,7 +436,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.467354"
+          "timestamp": "2025-08-10T07:41:13.928363"
         },
         {
           "id": "static_eval_usage_67c0080b",
@@ -481,7 +451,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.495716"
+          "timestamp": "2025-08-10T07:41:13.953785"
         },
         {
           "id": "static_eval_usage_184069f7",
@@ -496,7 +466,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.496126"
+          "timestamp": "2025-08-10T07:41:13.953934"
         },
         {
           "id": "static_eval_usage_b5101b31",
@@ -511,7 +481,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.496687"
+          "timestamp": "2025-08-10T07:41:13.954509"
         },
         {
           "id": "static_eval_usage_ca8ba1c9",
@@ -526,7 +496,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.496876"
+          "timestamp": "2025-08-10T07:41:13.954716"
         },
         {
           "id": "static_eval_usage_384e0a0d",
@@ -541,7 +511,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.496999"
+          "timestamp": "2025-08-10T07:41:13.954841"
         },
         {
           "id": "static_eval_usage_4e2f0fd5",
@@ -556,7 +526,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.497401"
+          "timestamp": "2025-08-10T07:41:13.955276"
         },
         {
           "id": "static_exec_usage_2ccbb32c",
@@ -571,7 +541,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.509612"
+          "timestamp": "2025-08-10T07:41:13.964155"
         },
         {
           "id": "static_exec_usage_d72f47b9",
@@ -586,7 +556,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.526769"
+          "timestamp": "2025-08-10T07:41:13.976717"
         },
         {
           "id": "static_exec_usage_965ede2b",
@@ -601,7 +571,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.529832"
+          "timestamp": "2025-08-10T07:41:13.977841"
         },
         {
           "id": "static_eval_usage_7b5349df",
@@ -616,7 +586,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.531660"
+          "timestamp": "2025-08-10T07:41:13.978641"
         },
         {
           "id": "static_exec_usage_d4f3c935",
@@ -631,7 +601,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.534423"
+          "timestamp": "2025-08-10T07:41:13.981709"
         },
         {
           "id": "static_sql_injection_5cc2cf65",
@@ -646,7 +616,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:11.729921"
+          "timestamp": "2025-08-10T07:41:14.136986"
         },
         {
           "id": "static_shell_true_6c660846",
@@ -661,7 +631,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.015674"
+          "timestamp": "2025-08-10T07:41:14.395998"
         },
         {
           "id": "static_shell_true_9dd1f345",
@@ -676,7 +646,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.017655"
+          "timestamp": "2025-08-10T07:41:14.397389"
         },
         {
           "id": "static_hardcoded_secret_18678e0a",
@@ -691,7 +661,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.126835"
+          "timestamp": "2025-08-10T07:41:14.488145"
         },
         {
           "id": "static_exec_usage_d993d364",
@@ -706,7 +676,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.191689"
+          "timestamp": "2025-08-10T07:41:14.548205"
         },
         {
           "id": "static_exec_usage_05f70661",
@@ -721,7 +691,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.192142"
+          "timestamp": "2025-08-10T07:41:14.548611"
         },
         {
           "id": "static_eval_usage_015016bc",
@@ -736,7 +706,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.431205"
+          "timestamp": "2025-08-10T07:41:14.767197"
         },
         {
           "id": "static_eval_usage_6511b449",
@@ -751,7 +721,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.515810"
+          "timestamp": "2025-08-10T07:41:14.838596"
         },
         {
           "id": "static_eval_usage_db522818",
@@ -766,7 +736,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.516210"
+          "timestamp": "2025-08-10T07:41:14.838895"
         },
         {
           "id": "static_exec_usage_d3138302",
@@ -781,7 +751,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.674427"
+          "timestamp": "2025-08-10T07:41:14.969072"
         },
         {
           "id": "static_exec_usage_75f8f5cd",
@@ -796,7 +766,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.690082"
+          "timestamp": "2025-08-10T07:41:14.983198"
         },
         {
           "id": "static_eval_usage_56e88c3f",
@@ -811,7 +781,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:12.761350"
+          "timestamp": "2025-08-10T07:41:15.041922"
         },
         {
           "id": "static_hardcoded_secret_e40d2bf0",
@@ -826,7 +796,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.333564"
+          "timestamp": "2025-08-10T07:41:15.509241"
         },
         {
           "id": "static_hardcoded_secret_f0dfce81",
@@ -841,7 +811,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.333747"
+          "timestamp": "2025-08-10T07:41:15.509332"
         },
         {
           "id": "static_hardcoded_secret_63d3152a",
@@ -856,7 +826,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.406882"
+          "timestamp": "2025-08-10T07:41:15.566037"
         },
         {
           "id": "static_hardcoded_secret_dee9117b",
@@ -871,7 +841,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.407783"
+          "timestamp": "2025-08-10T07:41:15.566386"
         },
         {
           "id": "static_shell_true_c6d4cef8",
@@ -886,7 +856,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.441548"
+          "timestamp": "2025-08-10T07:41:15.593148"
         },
         {
           "id": "static_shell_true_78b9507a",
@@ -901,7 +871,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.441938"
+          "timestamp": "2025-08-10T07:41:15.593521"
         },
         {
           "id": "static_shell_true_40d603d9",
@@ -916,7 +886,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.447758"
+          "timestamp": "2025-08-10T07:41:15.598788"
         },
         {
           "id": "static_shell_true_67b3c3ca",
@@ -931,7 +901,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.447888"
+          "timestamp": "2025-08-10T07:41:15.598900"
         },
         {
           "id": "static_shell_true_108be16a",
@@ -946,7 +916,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.448027"
+          "timestamp": "2025-08-10T07:41:15.599010"
         },
         {
           "id": "static_shell_true_e4587626",
@@ -961,7 +931,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.448156"
+          "timestamp": "2025-08-10T07:41:15.599164"
         },
         {
           "id": "static_shell_true_9ea2409d",
@@ -976,7 +946,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.498416"
+          "timestamp": "2025-08-10T07:41:15.649857"
         },
         {
           "id": "static_exec_usage_1db197ab",
@@ -991,7 +961,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.676154"
+          "timestamp": "2025-08-10T07:41:15.813359"
         },
         {
           "id": "static_eval_usage_0604b02f",
@@ -1006,7 +976,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.720849"
+          "timestamp": "2025-08-10T07:41:15.853291"
         },
         {
           "id": "static_hardcoded_secret_80314f67",
@@ -1021,7 +991,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.768922"
+          "timestamp": "2025-08-10T07:41:15.897050"
         },
         {
           "id": "static_exec_usage_553bb0c1",
@@ -1036,7 +1006,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.797601"
+          "timestamp": "2025-08-10T07:41:15.912427"
         },
         {
           "id": "static_eval_usage_5bc8af85",
@@ -1051,7 +1021,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.878803"
+          "timestamp": "2025-08-10T07:41:15.972194"
         },
         {
           "id": "static_hardcoded_secret_fcc50573",
@@ -1066,7 +1036,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.880651"
+          "timestamp": "2025-08-10T07:41:15.973841"
         },
         {
           "id": "static_exec_usage_2d3bba45",
@@ -1081,7 +1051,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:13.882279"
+          "timestamp": "2025-08-10T07:41:15.975403"
         },
         {
           "id": "static_exec_usage_c75fe53c",
@@ -1096,7 +1066,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.090863"
+          "timestamp": "2025-08-10T07:41:16.165628"
         },
         {
           "id": "static_eval_usage_76264337",
@@ -1111,7 +1081,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.107479"
+          "timestamp": "2025-08-10T07:41:16.180169"
         },
         {
           "id": "static_exec_usage_76264337",
@@ -1126,7 +1096,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.107588"
+          "timestamp": "2025-08-10T07:41:16.180256"
         },
         {
           "id": "static_shell_true_0f72975a",
@@ -1141,7 +1111,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.164934"
+          "timestamp": "2025-08-10T07:41:16.233139"
         },
         {
           "id": "static_hardcoded_secret_63c4e290",
@@ -1156,7 +1126,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.222422"
+          "timestamp": "2025-08-10T07:41:16.287226"
         },
         {
           "id": "static_hardcoded_secret_157321ed",
@@ -1171,7 +1141,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.222801"
+          "timestamp": "2025-08-10T07:41:16.287825"
         },
         {
           "id": "static_hardcoded_secret_8ecad206",
@@ -1186,7 +1156,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.222994"
+          "timestamp": "2025-08-10T07:41:16.288070"
         },
         {
           "id": "static_sql_injection_34ab6b59",
@@ -1201,7 +1171,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.313826"
+          "timestamp": "2025-08-10T07:41:16.373070"
         },
         {
           "id": "static_hardcoded_secret_182731a0",
@@ -1216,7 +1186,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.351176"
+          "timestamp": "2025-08-10T07:41:16.413326"
         },
         {
           "id": "static_exec_usage_26f6687a",
@@ -1231,7 +1201,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.355524"
+          "timestamp": "2025-08-10T07:41:16.417413"
         },
         {
           "id": "static_exec_usage_e39044fa",
@@ -1246,7 +1216,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.355918"
+          "timestamp": "2025-08-10T07:41:16.417801"
         },
         {
           "id": "static_hardcoded_secret_e270a583",
@@ -1261,7 +1231,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.890586"
+          "timestamp": "2025-08-10T07:41:16.927378"
         },
         {
           "id": "static_hardcoded_secret_dee614d1",
@@ -1276,7 +1246,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.965680"
+          "timestamp": "2025-08-10T07:41:17.001791"
         },
         {
           "id": "static_hardcoded_secret_cfa850da",
@@ -1291,7 +1261,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.965837"
+          "timestamp": "2025-08-10T07:41:17.001917"
         },
         {
           "id": "static_sql_injection_ac503c8b",
@@ -1306,7 +1276,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.966019"
+          "timestamp": "2025-08-10T07:41:17.002150"
         },
         {
           "id": "static_sql_injection_85ec5d1d",
@@ -1321,7 +1291,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:14.966180"
+          "timestamp": "2025-08-10T07:41:17.002288"
         },
         {
           "id": "static_exec_usage_1ca04785",
@@ -1336,7 +1306,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.145166"
+          "timestamp": "2025-08-10T07:41:17.175404"
         },
         {
           "id": "static_exec_usage_50789a03",
@@ -1351,7 +1321,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.145376"
+          "timestamp": "2025-08-10T07:41:17.175616"
         },
         {
           "id": "static_eval_usage_ac7c1d23",
@@ -1366,7 +1336,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.333103"
+          "timestamp": "2025-08-10T07:41:17.346433"
         },
         {
           "id": "static_eval_usage_d62e5629",
@@ -1381,7 +1351,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.856811"
+          "timestamp": "2025-08-10T07:41:17.839604"
         },
         {
           "id": "static_exec_usage_db9809b2",
@@ -1396,7 +1366,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.857097"
+          "timestamp": "2025-08-10T07:41:17.839807"
         },
         {
           "id": "static_exec_usage_90c5f9d6",
@@ -1411,7 +1381,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.904321"
+          "timestamp": "2025-08-10T07:41:17.884094"
         },
         {
           "id": "static_exec_usage_1e3c37f3",
@@ -1426,7 +1396,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:15.991912"
+          "timestamp": "2025-08-10T07:41:17.960493"
         },
         {
           "id": "static_eval_usage_af77a40d",
@@ -1441,7 +1411,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.137237"
+          "timestamp": "2025-08-10T07:41:18.092161"
         },
         {
           "id": "static_exec_usage_eb81cc77",
@@ -1456,7 +1426,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.137450"
+          "timestamp": "2025-08-10T07:41:18.092369"
         },
         {
           "id": "static_exec_usage_9c04cb5a",
@@ -1471,7 +1441,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.184016"
+          "timestamp": "2025-08-10T07:41:18.135909"
         },
         {
           "id": "static_eval_usage_53cf91d6",
@@ -1486,7 +1456,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.248132"
+          "timestamp": "2025-08-10T07:41:18.192188"
         },
         {
           "id": "static_eval_usage_1d707b12",
@@ -1501,7 +1471,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.249555"
+          "timestamp": "2025-08-10T07:41:18.193504"
         },
         {
           "id": "static_eval_usage_2de3c8f0",
@@ -1516,7 +1486,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.798423"
+          "timestamp": "2025-08-10T07:41:18.652169"
         },
         {
           "id": "static_exec_usage_ff35f010",
@@ -1531,7 +1501,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:16.890188"
+          "timestamp": "2025-08-10T07:41:18.741495"
         },
         {
           "id": "static_eval_usage_613f98cf",
@@ -1546,7 +1516,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.528975"
+          "timestamp": "2025-08-10T07:41:19.325145"
         },
         {
           "id": "static_eval_usage_8c62eaba",
@@ -1561,7 +1531,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.603671"
+          "timestamp": "2025-08-10T07:41:19.392699"
         },
         {
           "id": "static_eval_usage_a08a0400",
@@ -1576,7 +1546,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.603843"
+          "timestamp": "2025-08-10T07:41:19.392876"
         },
         {
           "id": "static_eval_usage_9bbd2e47",
@@ -1591,7 +1561,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.605358"
+          "timestamp": "2025-08-10T07:41:19.394371"
         },
         {
           "id": "static_exec_usage_9bbd2e47",
@@ -1606,7 +1576,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.605437"
+          "timestamp": "2025-08-10T07:41:19.394452"
         },
         {
           "id": "static_exec_usage_b54d4dd2",
@@ -1621,7 +1591,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.648272"
+          "timestamp": "2025-08-10T07:41:19.431879"
         },
         {
           "id": "static_exec_usage_4a5eb123",
@@ -1636,7 +1606,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.656371"
+          "timestamp": "2025-08-10T07:41:19.439747"
         },
         {
           "id": "static_eval_usage_1ebd4f8b",
@@ -1651,7 +1621,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.708793"
+          "timestamp": "2025-08-10T07:41:19.499645"
         },
         {
           "id": "static_eval_usage_c5669c6e",
@@ -1666,7 +1636,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.714198"
+          "timestamp": "2025-08-10T07:41:19.505048"
         },
         {
           "id": "static_eval_usage_98992e3e",
@@ -1681,7 +1651,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.714670"
+          "timestamp": "2025-08-10T07:41:19.505621"
         },
         {
           "id": "static_hardcoded_secret_eaa19ebb",
@@ -1696,7 +1666,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.902540"
+          "timestamp": "2025-08-10T07:41:19.665963"
         },
         {
           "id": "static_hardcoded_secret_23e6970e",
@@ -1711,7 +1681,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.902695"
+          "timestamp": "2025-08-10T07:41:19.666100"
         },
         {
           "id": "static_eval_usage_0b1c632b",
@@ -1726,7 +1696,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.917704"
+          "timestamp": "2025-08-10T07:41:19.680474"
         },
         {
           "id": "static_eval_usage_7f9e2a3e",
@@ -1741,7 +1711,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.939484"
+          "timestamp": "2025-08-10T07:41:19.701779"
         },
         {
           "id": "static_exec_usage_7f9e2a3e",
@@ -1756,7 +1726,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.939582"
+          "timestamp": "2025-08-10T07:41:19.701863"
         },
         {
           "id": "static_eval_usage_28076285",
@@ -1771,7 +1741,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:17.940151"
+          "timestamp": "2025-08-10T07:41:19.702350"
         },
         {
           "id": "static_hardcoded_secret_3b1e093a",
@@ -1786,7 +1756,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.000421"
+          "timestamp": "2025-08-10T07:41:19.748120"
         },
         {
           "id": "static_hardcoded_secret_4b3f9eef",
@@ -1801,7 +1771,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.000531"
+          "timestamp": "2025-08-10T07:41:19.748218"
         },
         {
           "id": "static_hardcoded_secret_c9fe7a82",
@@ -1816,7 +1786,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.071230"
+          "timestamp": "2025-08-10T07:41:19.812155"
         },
         {
           "id": "static_hardcoded_secret_3f49ac4e",
@@ -1831,7 +1801,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.071368"
+          "timestamp": "2025-08-10T07:41:19.812248"
         },
         {
           "id": "static_hardcoded_secret_7bc7ca40",
@@ -1846,7 +1816,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.132490"
+          "timestamp": "2025-08-10T07:41:19.855790"
         },
         {
           "id": "static_eval_usage_6e9a3f75",
@@ -1861,7 +1831,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.133756"
+          "timestamp": "2025-08-10T07:41:19.856705"
         },
         {
           "id": "static_sql_injection_0f4a5e89",
@@ -1876,7 +1846,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.302565"
+          "timestamp": "2025-08-10T07:41:19.972174"
         },
         {
           "id": "static_sql_injection_b212801f",
@@ -1891,7 +1861,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.302913"
+          "timestamp": "2025-08-10T07:41:19.972473"
         },
         {
           "id": "static_eval_usage_36f23639",
@@ -1906,7 +1876,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.369437"
+          "timestamp": "2025-08-10T07:41:20.025131"
         },
         {
           "id": "static_eval_usage_46596ccd",
@@ -1921,7 +1891,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.369538"
+          "timestamp": "2025-08-10T07:41:20.025252"
         },
         {
           "id": "static_eval_usage_80db8021",
@@ -1936,7 +1906,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.372186"
+          "timestamp": "2025-08-10T07:41:20.027724"
         },
         {
           "id": "static_exec_usage_2cba721e",
@@ -1951,7 +1921,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.381556"
+          "timestamp": "2025-08-10T07:41:20.031956"
         },
         {
           "id": "static_eval_usage_47ee5d02",
@@ -1966,7 +1936,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.382828"
+          "timestamp": "2025-08-10T07:41:20.032418"
         },
         {
           "id": "static_hardcoded_secret_52762430",
@@ -1981,7 +1951,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.392379"
+          "timestamp": "2025-08-10T07:41:20.036792"
         },
         {
           "id": "static_eval_usage_2fd713cb",
@@ -1996,7 +1966,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.395819"
+          "timestamp": "2025-08-10T07:41:20.039782"
         },
         {
           "id": "static_eval_usage_d37c5553",
@@ -2011,7 +1981,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.395921"
+          "timestamp": "2025-08-10T07:41:20.039881"
         },
         {
           "id": "static_exec_usage_e6bd9c91",
@@ -2026,7 +1996,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.441075"
+          "timestamp": "2025-08-10T07:41:20.086769"
         },
         {
           "id": "static_hardcoded_secret_9f89071b",
@@ -2041,7 +2011,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.488260"
+          "timestamp": "2025-08-10T07:41:20.134541"
         },
         {
           "id": "static_hardcoded_secret_4f68efdd",
@@ -2056,7 +2026,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.488962"
+          "timestamp": "2025-08-10T07:41:20.135337"
         },
         {
           "id": "static_hardcoded_secret_a56e3362",
@@ -2071,7 +2041,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.489361"
+          "timestamp": "2025-08-10T07:41:20.135695"
         },
         {
           "id": "static_hardcoded_secret_270fd144",
@@ -2086,7 +2056,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.489633"
+          "timestamp": "2025-08-10T07:41:20.135956"
         },
         {
           "id": "static_hardcoded_secret_3b7beb92",
@@ -2101,7 +2071,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.489862"
+          "timestamp": "2025-08-10T07:41:20.136216"
         },
         {
           "id": "static_hardcoded_secret_4ded4867",
@@ -2116,7 +2086,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.490072"
+          "timestamp": "2025-08-10T07:41:20.136400"
         },
         {
           "id": "static_hardcoded_secret_90dba4d7",
@@ -2131,7 +2101,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.490251"
+          "timestamp": "2025-08-10T07:41:20.136551"
         },
         {
           "id": "static_eval_usage_4cf4945b",
@@ -2146,7 +2116,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.522440"
+          "timestamp": "2025-08-10T07:41:20.166943"
         },
         {
           "id": "static_eval_usage_37e4552f",
@@ -2161,7 +2131,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.522552"
+          "timestamp": "2025-08-10T07:41:20.167136"
         },
         {
           "id": "static_eval_usage_8b96a9d5",
@@ -2176,7 +2146,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.522660"
+          "timestamp": "2025-08-10T07:41:20.167241"
         },
         {
           "id": "static_eval_usage_819f967c",
@@ -2191,18 +2161,18 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.7,
-          "timestamp": "2025-08-10T07:44:18.522753"
+          "timestamp": "2025-08-10T07:41:20.167328"
         }
       ],
-      "total_files_scanned": 1694,
+      "total_files_scanned": 1692,
       "scan_successful": true,
       "error_message": null,
       "metadata": {}
     },
     {
       "scan_type": "ScanType.LICENSE_CHECK",
-      "timestamp": "2025-08-10T07:44:18.668232",
-      "duration_seconds": 0.004884,
+      "timestamp": "2025-08-10T07:41:20.292720",
+      "duration_seconds": 0.002575,
       "findings": [],
       "total_files_scanned": 1,
       "scan_successful": true,
@@ -2211,8 +2181,8 @@
     },
     {
       "scan_type": "ScanType.CONTAINER_SCAN",
-      "timestamp": "2025-08-10T07:44:18.673196",
-      "duration_seconds": 0.763388,
+      "timestamp": "2025-08-10T07:41:20.295368",
+      "duration_seconds": 0.826677,
       "findings": [
         {
           "id": "docker_privileged_mode_e2cc8b30",
@@ -2227,7 +2197,7 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.9,
-          "timestamp": "2025-08-10T07:44:19.433907"
+          "timestamp": "2025-08-10T07:41:21.118985"
         }
       ],
       "total_files_scanned": 5,
@@ -2237,8 +2207,8 @@
     },
     {
       "scan_type": "ScanType.CONFIGURATION_CHECK",
-      "timestamp": "2025-08-10T07:44:10.842628",
-      "duration_seconds": 8.883792,
+      "timestamp": "2025-08-10T07:41:13.357198",
+      "duration_seconds": 7.769079,
       "findings": [
         {
           "id": "config_debug_true_d231542a",
@@ -2253,64 +2223,19 @@
           "cvss_score": null,
           "remediation": null,
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:19.614867"
+          "timestamp": "2025-08-10T07:41:21.051472"
         }
       ],
-      "total_files_scanned": 158,
+      "total_files_scanned": 155,
       "scan_successful": true,
       "error_message": null,
       "metadata": {}
     },
     {
       "scan_type": "ScanType.SECRET_SCAN",
-      "timestamp": "2025-08-10T07:44:10.833527",
-      "duration_seconds": 10.646784,
+      "timestamp": "2025-08-10T07:41:13.352277",
+      "duration_seconds": 9.158095,
       "findings": [
-        {
-          "id": "secret_aws_secret_key_b2f1f692",
-          "title": "Potential aws secret key detected",
-          "description": "Potential aws secret key found in ado.py",
-          "severity": "SeverityLevel.HIGH",
-          "scan_type": "ScanType.SECRET_SCAN",
-          "file_path": "ado.py",
-          "line_number": 137,
-          "rule_id": null,
-          "cwe_id": null,
-          "cvss_score": null,
-          "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
-          "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:20.469796"
-        },
-        {
-          "id": "secret_aws_secret_key_3105ecf5",
-          "title": "Potential aws secret key detected",
-          "description": "Potential aws secret key found in test_comprehensive_integration.py",
-          "severity": "SeverityLevel.HIGH",
-          "scan_type": "ScanType.SECRET_SCAN",
-          "file_path": "tests/test_comprehensive_integration.py",
-          "line_number": 308,
-          "rule_id": null,
-          "cwe_id": null,
-          "cvss_score": null,
-          "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
-          "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:20.722866"
-        },
-        {
-          "id": "secret_password_in_url_3db56b5f",
-          "title": "Potential password in url detected",
-          "description": "Potential password in url found in test_comprehensive_integration.py",
-          "severity": "SeverityLevel.HIGH",
-          "scan_type": "ScanType.SECRET_SCAN",
-          "file_path": "tests/test_comprehensive_integration.py",
-          "line_number": 309,
-          "rule_id": null,
-          "cwe_id": null,
-          "cvss_score": null,
-          "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
-          "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:20.723156"
-        },
         {
           "id": "secret_aws_secret_key_d906f9e0",
           "title": "Potential aws secret key detected",
@@ -2324,7 +2249,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.100381"
+          "timestamp": "2025-08-10T07:41:21.857937"
         },
         {
           "id": "secret_aws_secret_key_f393648a",
@@ -2339,7 +2264,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.158207"
+          "timestamp": "2025-08-10T07:41:21.901676"
         },
         {
           "id": "secret_aws_secret_key_cc92ad27",
@@ -2354,7 +2279,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.158346"
+          "timestamp": "2025-08-10T07:41:21.901796"
         },
         {
           "id": "secret_aws_secret_key_ec263d84",
@@ -2369,7 +2294,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.158489"
+          "timestamp": "2025-08-10T07:41:21.901919"
         },
         {
           "id": "secret_aws_secret_key_c5250731",
@@ -2384,7 +2309,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.158659"
+          "timestamp": "2025-08-10T07:41:21.902171"
         },
         {
           "id": "secret_aws_secret_key_c2af04f7",
@@ -2399,7 +2324,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.158759"
+          "timestamp": "2025-08-10T07:41:21.902287"
         },
         {
           "id": "secret_aws_secret_key_553a3eac",
@@ -2414,7 +2339,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.158889"
+          "timestamp": "2025-08-10T07:41:21.902402"
         },
         {
           "id": "secret_password_in_url_f89d7740",
@@ -2429,7 +2354,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.231610"
+          "timestamp": "2025-08-10T07:41:21.970484"
         },
         {
           "id": "secret_password_in_url_53c2fe4a",
@@ -2444,7 +2369,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.232123"
+          "timestamp": "2025-08-10T07:41:21.970978"
         },
         {
           "id": "secret_password_in_url_32b4255a",
@@ -2459,7 +2384,52 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.232447"
+          "timestamp": "2025-08-10T07:41:21.971383"
+        },
+        {
+          "id": "secret_aws_secret_key_b2f1f692",
+          "title": "Potential aws secret key detected",
+          "description": "Potential aws secret key found in ado.py",
+          "severity": "SeverityLevel.HIGH",
+          "scan_type": "ScanType.SECRET_SCAN",
+          "file_path": "ado.py",
+          "line_number": 137,
+          "rule_id": null,
+          "cwe_id": null,
+          "cvss_score": null,
+          "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
+          "confidence": 0.8,
+          "timestamp": "2025-08-10T07:41:22.000828"
+        },
+        {
+          "id": "secret_aws_secret_key_3105ecf5",
+          "title": "Potential aws secret key detected",
+          "description": "Potential aws secret key found in test_comprehensive_integration.py",
+          "severity": "SeverityLevel.HIGH",
+          "scan_type": "ScanType.SECRET_SCAN",
+          "file_path": "tests/test_comprehensive_integration.py",
+          "line_number": 308,
+          "rule_id": null,
+          "cwe_id": null,
+          "cvss_score": null,
+          "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
+          "confidence": 0.8,
+          "timestamp": "2025-08-10T07:41:22.185142"
+        },
+        {
+          "id": "secret_password_in_url_3db56b5f",
+          "title": "Potential password in url detected",
+          "description": "Potential password in url found in test_comprehensive_integration.py",
+          "severity": "SeverityLevel.HIGH",
+          "scan_type": "ScanType.SECRET_SCAN",
+          "file_path": "tests/test_comprehensive_integration.py",
+          "line_number": 309,
+          "rule_id": null,
+          "cwe_id": null,
+          "cvss_score": null,
+          "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
+          "confidence": 0.8,
+          "timestamp": "2025-08-10T07:41:22.185271"
         },
         {
           "id": "secret_aws_secret_key_4e8285ef",
@@ -2474,7 +2444,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.344305"
+          "timestamp": "2025-08-10T07:41:22.391783"
         },
         {
           "id": "secret_aws_secret_key_478e8eb1",
@@ -2489,7 +2459,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.344436"
+          "timestamp": "2025-08-10T07:41:22.391898"
         },
         {
           "id": "secret_aws_secret_key_18453920",
@@ -2504,7 +2474,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.344531"
+          "timestamp": "2025-08-10T07:41:22.391990"
         },
         {
           "id": "secret_password_in_url_93d58d19",
@@ -2519,7 +2489,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.397671"
+          "timestamp": "2025-08-10T07:41:22.439800"
         },
         {
           "id": "secret_password_in_url_e56627b3",
@@ -2534,7 +2504,7 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.397972"
+          "timestamp": "2025-08-10T07:41:22.440080"
         },
         {
           "id": "secret_aws_secret_key_1686adbc",
@@ -2549,61 +2519,16 @@
           "cvss_score": null,
           "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
           "confidence": 0.8,
-          "timestamp": "2025-08-10T07:44:21.401333"
+          "timestamp": "2025-08-10T07:41:22.442780"
         }
       ],
-      "total_files_scanned": 306,
+      "total_files_scanned": 301,
       "scan_successful": true,
       "error_message": null,
       "metadata": {}
     }
   ],
   "top_findings": [
-    {
-      "id": "secret_aws_secret_key_b2f1f692",
-      "title": "Potential aws secret key detected",
-      "description": "Potential aws secret key found in ado.py",
-      "severity": "SeverityLevel.HIGH",
-      "scan_type": "ScanType.SECRET_SCAN",
-      "file_path": "ado.py",
-      "line_number": 137,
-      "rule_id": null,
-      "cwe_id": null,
-      "cvss_score": null,
-      "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
-      "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:20.469796"
-    },
-    {
-      "id": "secret_aws_secret_key_3105ecf5",
-      "title": "Potential aws secret key detected",
-      "description": "Potential aws secret key found in test_comprehensive_integration.py",
-      "severity": "SeverityLevel.HIGH",
-      "scan_type": "ScanType.SECRET_SCAN",
-      "file_path": "tests/test_comprehensive_integration.py",
-      "line_number": 308,
-      "rule_id": null,
-      "cwe_id": null,
-      "cvss_score": null,
-      "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
-      "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:20.722866"
-    },
-    {
-      "id": "secret_password_in_url_3db56b5f",
-      "title": "Potential password in url detected",
-      "description": "Potential password in url found in test_comprehensive_integration.py",
-      "severity": "SeverityLevel.HIGH",
-      "scan_type": "ScanType.SECRET_SCAN",
-      "file_path": "tests/test_comprehensive_integration.py",
-      "line_number": 309,
-      "rule_id": null,
-      "cwe_id": null,
-      "cvss_score": null,
-      "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
-      "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:20.723156"
-    },
     {
       "id": "secret_aws_secret_key_d906f9e0",
       "title": "Potential aws secret key detected",
@@ -2617,7 +2542,7 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.100381"
+      "timestamp": "2025-08-10T07:41:21.857937"
     },
     {
       "id": "secret_aws_secret_key_f393648a",
@@ -2632,7 +2557,7 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.158207"
+      "timestamp": "2025-08-10T07:41:21.901676"
     },
     {
       "id": "secret_aws_secret_key_cc92ad27",
@@ -2647,7 +2572,7 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.158346"
+      "timestamp": "2025-08-10T07:41:21.901796"
     },
     {
       "id": "secret_aws_secret_key_ec263d84",
@@ -2662,7 +2587,7 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.158489"
+      "timestamp": "2025-08-10T07:41:21.901919"
     },
     {
       "id": "secret_aws_secret_key_c5250731",
@@ -2677,7 +2602,7 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.158659"
+      "timestamp": "2025-08-10T07:41:21.902171"
     },
     {
       "id": "secret_aws_secret_key_c2af04f7",
@@ -2692,7 +2617,7 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.158759"
+      "timestamp": "2025-08-10T07:41:21.902287"
     },
     {
       "id": "secret_aws_secret_key_553a3eac",
@@ -2707,14 +2632,59 @@
       "cvss_score": null,
       "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
       "confidence": 0.8,
-      "timestamp": "2025-08-10T07:44:21.158889"
+      "timestamp": "2025-08-10T07:41:21.902402"
+    },
+    {
+      "id": "secret_password_in_url_f89d7740",
+      "title": "Potential password in url detected",
+      "description": "Potential password in url found in docker-compose.yml",
+      "severity": "SeverityLevel.HIGH",
+      "scan_type": "ScanType.SECRET_SCAN",
+      "file_path": "docker-compose.yml",
+      "line_number": 62,
+      "rule_id": null,
+      "cwe_id": null,
+      "cvss_score": null,
+      "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
+      "confidence": 0.8,
+      "timestamp": "2025-08-10T07:41:21.970484"
+    },
+    {
+      "id": "secret_password_in_url_53c2fe4a",
+      "title": "Potential password in url detected",
+      "description": "Potential password in url found in docker-compose.yml",
+      "severity": "SeverityLevel.HIGH",
+      "scan_type": "ScanType.SECRET_SCAN",
+      "file_path": "docker-compose.yml",
+      "line_number": 103,
+      "rule_id": null,
+      "cwe_id": null,
+      "cvss_score": null,
+      "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
+      "confidence": 0.8,
+      "timestamp": "2025-08-10T07:41:21.970978"
+    },
+    {
+      "id": "secret_password_in_url_32b4255a",
+      "title": "Potential password in url detected",
+      "description": "Potential password in url found in docker-compose.yml",
+      "severity": "SeverityLevel.HIGH",
+      "scan_type": "ScanType.SECRET_SCAN",
+      "file_path": "docker-compose.yml",
+      "line_number": 132,
+      "rule_id": null,
+      "cwe_id": null,
+      "cvss_score": null,
+      "remediation": "Remove hardcoded secrets and use environment variables or secure vault",
+      "confidence": 0.8,
+      "timestamp": "2025-08-10T07:41:21.971383"
     }
   ],
   "recommendations": [
     "Implement static code analysis in development workflow",
-    "Implement secret management using environment variables or secure vaults",
     "Add pre-commit hooks to prevent secret commits",
-    "Follow Docker security best practices",
-    "Use minimal base images and non-root users"
+    "Use minimal base images and non-root users",
+    "Implement secret management using environment variables or secure vaults",
+    "Follow Docker security best practices"
   ]
 }

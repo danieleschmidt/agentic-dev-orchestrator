@@ -44,7 +44,7 @@ def cmd_init():
 def cmd_run():
     """Run the autonomous execution loop"""
     print("🤖 Welcome to Terragon ADO - Autonomous Development Orchestrator")
-    print("🚀 Starting intelligent backlog execution with advanced AI...")
+    print("🚀 Starting autonomous backlog execution")
     
     # Initialize sentiment analysis
     try:
