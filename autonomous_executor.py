@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Autonomous Execution Engine
+Autonomous Execution Engine v4.0
 Implements the macro execution loop and micro-cycle for autonomous backlog processing
+Enhanced with progressive generation and comprehensive error handling
 """
 
 import os
@@ -18,6 +19,14 @@ import datetime
 from contextlib import contextmanager
 
 from backlog_manager import BacklogManager, BacklogItem
+
+# Enhanced error handling and validation
+try:
+    from src.resilience.error_recovery_system import resilient_operation, ErrorSeverity, error_recovery
+    from src.security.input_validator import validate_input, validator
+    ENHANCED_FEATURES = True
+except ImportError:
+    ENHANCED_FEATURES = False
 
 
 @dataclass 
