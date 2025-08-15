@@ -316,18 +316,93 @@
         "pyproject.toml"
       ],
       "tests_passed": true
+    },
+    {
+      "timestamp": "2025-08-15T02:31:54.716492",
+      "item_id": "dep-cryptography",
+      "title": "Update dependency: cryptography",
+      "category": "security",
+      "predicted_hours": 1.0,
+      "actual_hours": 3.944444444444445e-08,
+      "predicted_score": 126.24,
+      "success": true,
+      "files_changed": [
+        "requirements.txt",
+        "pyproject.toml"
+      ],
+      "tests_passed": true
+    },
+    {
+      "timestamp": "2025-08-15T02:31:58.885485",
+      "item_id": "dep-cryptography",
+      "title": "Update dependency: cryptography",
+      "category": "security",
+      "predicted_hours": 1.0,
+      "actual_hours": 4.6944444444444443e-08,
+      "predicted_score": 126.24,
+      "success": true,
+      "files_changed": [
+        "requirements.txt",
+        "pyproject.toml"
+      ],
+      "tests_passed": true
+    },
+    {
+      "timestamp": "2025-08-15T02:32:03.063580",
+      "item_id": "dep-cryptography",
+      "title": "Update dependency: cryptography",
+      "category": "security",
+      "predicted_hours": 1.0,
+      "actual_hours": 3.916666666666667e-08,
+      "predicted_score": 126.24,
+      "success": true,
+      "files_changed": [
+        "requirements.txt",
+        "pyproject.toml"
+      ],
+      "tests_passed": true
+    },
+    {
+      "timestamp": "2025-08-15T02:32:07.142033",
+      "item_id": "dep-cryptography",
+      "title": "Update dependency: cryptography",
+      "category": "security",
+      "predicted_hours": 1.0,
+      "actual_hours": 2.2222222222222224e-08,
+      "predicted_score": 126.24,
+      "success": true,
+      "files_changed": [
+        "requirements.txt",
+        "pyproject.toml"
+      ],
+      "tests_passed": true
+    },
+    {
+      "timestamp": "2025-08-15T02:32:11.292966",
+      "item_id": "dep-cryptography",
+      "title": "Update dependency: cryptography",
+      "category": "security",
+      "predicted_hours": 1.0,
+      "actual_hours": 2.277777777777778e-08,
+      "predicted_score": 126.24,
+      "success": true,
+      "files_changed": [
+        "requirements.txt",
+        "pyproject.toml"
+      ],
+      "tests_passed": true
     }
   ],
   "summary": {
-    "total_items_executed": 5,
-    "successful_executions": 5,
-    "total_value_delivered": 631.1999999999999,
-    "total_execution_time": 1.2666666666666666e-07,
-    "average_accuracy": 2.5333333342203444e-08,
-    "last_updated": "2025-08-01T05:47:06.297283"
+    "total_items_executed": 10,
+    "successful_executions": 10,
+    "total_value_delivered": 1262.3999999999999,
+    "total_execution_time": 2.9722222222222224e-07,
+    "average_accuracy": 2.9722222227857032e-08,
+    "last_updated": "2025-08-15T02:32:11.293016"
   },
   "learning_metrics": {
-    "effort_estimation_accuracy": 2.5333333342203444e-08,
+    "effort_estimation_accuracy": 2.9722222227857032e-08,
     "value_prediction_accuracy": 0.0,
     "success_rate": 1.0
   }

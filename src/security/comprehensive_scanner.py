@@ -497,11 +497,13 @@ class ComprehensiveSecurityScanner:
     
     def __init__(self, config_path: Optional[str] = None):
         self.config = self._load_config(config_path)
-        self.scanners = self._initialize_scanners()
         self.scan_history: List[ScanResult] = []
         
         # Setup logging
         self.logger = logging.getLogger("security_scanner")
+        
+        # Initialize scanners after logger is set up
+        self.scanners = self._initialize_scanners()
         
         # Metrics
         self.metrics = {
