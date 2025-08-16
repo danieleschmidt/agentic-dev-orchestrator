@@ -1,4 +1,5 @@
 {
+  "id": "pip-installable",
   "title": "Create setup.py for pip installability", 
   "description": "Make ADO installable via 'pip install agentic-dev-orchestrator' as mentioned in README",
   "wsjf": {

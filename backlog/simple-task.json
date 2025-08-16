@@ -1,4 +1,5 @@
 {
+  "id": "simple-task",
   "title": "Add welcome message to CLI",
   "wsjf": {
     "user_business_value": 3,

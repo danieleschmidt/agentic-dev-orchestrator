@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-08-16 19:16:50",
+  "timestamp": "2025-08-16 19:12:58",
   "total_tests": 8,
-  "passed_tests": 8,
-  "failed_tests": 0,
-  "quality_score": 100.0,
+  "passed_tests": 7,
+  "failed_tests": 1,
+  "quality_score": 87.5,
   "test_results": {
     "Code Functionality": true,
     "Security Validation": true,
@@ -12,6 +12,6 @@
     "Configuration Validation": true,
     "Dependency Security": true,
     "Error Handling Coverage": true,
-    "Deployment Readiness": true
+    "Deployment Readiness": false
   }
 }
