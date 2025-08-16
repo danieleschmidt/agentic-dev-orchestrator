@@ -1,4 +1,5 @@
 {
+  "id": "test-coverage",
   "title": "Add comprehensive unit tests",
   "description": "Create pytest-based test suite for backlog_manager.py and autonomous_executor.py with >80% coverage",
   "wsjf": {

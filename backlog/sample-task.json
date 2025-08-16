@@ -1,4 +1,5 @@
 {
+  "id": "sample-task",
   "title": "Add user authentication to API",
   "description": "Implement JWT-based authentication for the API endpoints to secure user access",
   "wsjf": {
