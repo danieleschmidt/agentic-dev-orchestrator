@@ -57,20 +57,20 @@ def validate_generation_1():
     
     # Test 1: Unit Tests Pass
     success, output = run_command(
-        "source .venv/bin/activate && python -m pytest tests/unit/ -v --tb=short",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -m pytest tests/unit/ -v --tb=short",
         "Unit tests execution"
     )
     results["tests"]["unit_tests"] = {"success": success, "details": output}
     
     # Test 2: Core CLI Functionality
     success, output = run_command(
-        "source .venv/bin/activate && python ado.py --help",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 ado.py --help",
         "CLI help command"
     )
     results["tests"]["cli_help"] = {"success": success, "details": output}
     
     success, output = run_command(
-        "source .venv/bin/activate && python ado.py status",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 ado.py status",
         "CLI status command"
     )
     results["tests"]["cli_status"] = {"success": success, "details": output}
@@ -79,7 +79,7 @@ def validate_generation_1():
     # Start API server in background
     run_command("pkill -f 'python src/api/server.py' 2>/dev/null || true", "Clean existing API servers")
     
-    server_cmd = "source .venv/bin/activate && ADO_DISABLE_AUTH=true python src/api/server.py --host 127.0.0.1 --port 8082"
+    server_cmd = "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key ADO_DISABLE_AUTH=true python3 src/api/server.py --host 127.0.0.1 --port 8082"
     server_process = subprocess.Popen(
         server_cmd, shell=True, executable="/bin/bash",
         stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -111,21 +111,21 @@ def validate_generation_1():
     
     # Test 4: Health Monitoring
     success, output = run_command(
-        "source .venv/bin/activate && python src/monitoring/health_monitor.py report",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 src/monitoring/health_monitor.py report",
         "Health monitoring report"
     )
     results["tests"]["health_monitoring"] = {"success": success, "details": output}
     
     # Test 5: Backlog Management
     success, output = run_command(
-        "source .venv/bin/activate && python backlog_manager.py status",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 backlog_manager.py status",
         "Backlog management"
     )
     results["tests"]["backlog_management"] = {"success": success, "details": output}
     
     # Test 6: Data Layer Functionality
     success, output = run_command(
-        "source .venv/bin/activate && python -m pytest tests/unit/test_data_layer.py -v",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -m pytest tests/unit/test_data_layer.py -v",
         "Data layer tests"
     )
     results["tests"]["data_layer"] = {"success": success, "details": output}

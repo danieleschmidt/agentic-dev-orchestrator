@@ -58,35 +58,35 @@ def validate_generation_2():
     
     # Test 1: Security Scanner
     success, output = run_command(
-        "source .venv/bin/activate && python src/security/enhanced_scanner.py scan",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 src/security/enhanced_scanner.py scan",
         "Comprehensive security scan"
     )
     results["tests"]["security_scan"] = {"success": success, "details": output}
     
     # Test 2: Structured Logging
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.logging.structured_logger import get_logger; logger = get_logger('test'); logger.info('Test message'); print('Structured logging test completed')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.logging.structured_logger import get_logger; logger = get_logger('test'); logger.info('Test message'); print('Structured logging test completed')\"",
         "Structured logging system"
     )
     results["tests"]["structured_logging"] = {"success": success, "details": output}
     
     # Test 3: Circuit Breaker
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.resilience.circuit_breaker_enhanced import EnhancedCircuitBreaker; cb = EnhancedCircuitBreaker('test'); print('Circuit breaker initialized')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.resilience.circuit_breaker_enhanced import EnhancedCircuitBreaker; cb = EnhancedCircuitBreaker('test'); print('Circuit breaker initialized')\"",
         "Circuit breaker functionality"
     )
     results["tests"]["circuit_breaker"] = {"success": success, "details": output}
     
     # Test 4: Health Monitor with Alerts
     success, output = run_command(
-        "source .venv/bin/activate && python src/monitoring/health_monitor.py alerts",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 src/monitoring/health_monitor.py alerts",
         "Health monitoring with alerts"
     )
     results["tests"]["health_monitoring_alerts"] = {"success": success, "details": output}
     
     # Test 5: Performance Logging
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.logging.structured_logger import get_logger; import time; logger = get_logger('perf_test'); start = time.time(); time.sleep(0.1); duration = time.time() - start; logger.performance('test_operation', duration); print('Performance logging test completed')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.logging.structured_logger import get_logger; import time; logger = get_logger('perf_test'); start = time.time(); time.sleep(0.1); duration = time.time() - start; logger.performance('test_operation', duration); print('Performance logging test completed')\"",
         "Performance monitoring and logging"
     )
     results["tests"]["performance_logging"] = {"success": success, "details": output}
@@ -100,7 +100,7 @@ def validate_generation_2():
     
     # Test 7: Retry Logic
     success, output = run_command(
-        "source .venv/bin/activate && python src/resilience/retry_with_backoff.py demo",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 src/resilience/retry_with_backoff.py demo",
         "Retry with backoff functionality"
     )
     results["tests"]["retry_logic"] = {"success": success, "details": output}

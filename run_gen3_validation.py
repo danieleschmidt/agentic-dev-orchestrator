@@ -60,42 +60,42 @@ def validate_generation_3():
     
     # Test 1: Adaptive Caching System
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.adaptive_cache import AdaptiveCache; cache = AdaptiveCache(); cache.put('test_key', 'test_value'); result = cache.get('test_key'); print('Adaptive cache test:', 'success' if result == 'test_value' else 'failed')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.adaptive_cache import AdaptiveCache; cache = AdaptiveCache(); cache.put('test_key', 'test_value'); result = cache.get('test_key'); print('Adaptive cache test:', 'success' if result == 'test_value' else 'failed')\"",
         "Adaptive caching system"
     )
     results["tests"]["adaptive_cache"] = {"success": success, "details": output}
     
     # Test 2: Distributed Executor
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.distributed_executor import DistributedExecutor; executor = DistributedExecutor(); print('Distributed executor initialized successfully')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.distributed_executor import DistributedExecutor; executor = DistributedExecutor(); print('Distributed executor initialized successfully')\"",
         "Distributed executor initialization"
     )
     results["tests"]["distributed_executor"] = {"success": success, "details": output}
     
     # Test 3: Async Task Processing
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.async_executor import AsyncExecutor; import asyncio; async def test(): executor = AsyncExecutor(); await executor.start(); print('Async executor test successful'); asyncio.run(test())\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.async_executor import AsyncExecutor; import asyncio; async def test(): executor = AsyncExecutor(); await executor.start(); print('Async executor test successful'); asyncio.run(test())\"",
         "Asynchronous task processing"
     )
     results["tests"]["async_executor"] = {"success": success, "details": output}
     
     # Test 4: Performance Metrics Collection
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.metrics_collector import MetricsCollector; collector = MetricsCollector(); metrics = collector.collect_system_metrics(); print('Performance metrics collected:', len(metrics), 'metrics')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.metrics_collector import MetricsCollector; collector = MetricsCollector(); metrics = collector.collect_system_metrics(); print('Performance metrics collected:', len(metrics), 'metrics')\"",
         "Performance metrics collection"
     )
     results["tests"]["performance_metrics"] = {"success": success, "details": output}
     
     # Test 5: Resource Pool Management
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.resource_pool import ResourcePool; pool = ResourcePool('test_pool', max_size=10); print('Resource pool created with max_size=10')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.resource_pool import ResourcePool; pool = ResourcePool('test_pool', max_size=10); print('Resource pool created with max_size=10')\"",
         "Resource pool management"
     )
     results["tests"]["resource_pool"] = {"success": success, "details": output}
     
     # Test 6: Load Balancing
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.distributed_executor import LoadBalancer; lb = LoadBalancer(); print('Load balancer initialized')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.distributed_executor import LoadBalancer; lb = LoadBalancer(); print('Load balancer initialized')\"",
         "Load balancing functionality"
     )
     results["tests"]["load_balancing"] = {"success": success, "details": output}
@@ -103,7 +103,7 @@ def validate_generation_3():
     # Test 7: Performance Benchmarks - Backlog Processing Speed
     start_time = time.time()
     success, output = run_command(
-        "source .venv/bin/activate && python ado.py status",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 ado.py status",
         "Backlog processing performance benchmark"
     )
     processing_time = time.time() - start_time
@@ -112,21 +112,21 @@ def validate_generation_3():
     
     # Test 8: Concurrent API Request Handling
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"import concurrent.futures; import requests; import time; start = time.time(); futures = []; exec_time = time.time() - start; print(f'Concurrent requests test completed in {exec_time:.2f}s')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"import concurrent.futures; import requests; import time; start = time.time(); futures = []; exec_time = time.time() - start; print(f'Concurrent requests test completed in {exec_time:.2f}s')\"",
         "Concurrent request handling simulation"
     )
     results["tests"]["concurrent_requests"] = {"success": success, "details": output}
     
     # Test 9: Memory Usage Optimization
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"import psutil; import gc; before = psutil.Process().memory_info().rss; gc.collect(); after = psutil.Process().memory_info().rss; print(f'Memory optimization test: {(before-after)/1024/1024:.2f}MB freed')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"import psutil; import gc; before = psutil.Process().memory_info().rss; gc.collect(); after = psutil.Process().memory_info().rss; print(f'Memory optimization test: {(before-after)/1024/1024:.2f}MB freed')\"",
         "Memory usage optimization"
     )
     results["tests"]["memory_optimization"] = {"success": success, "details": output}
     
     # Test 10: Auto-scaling Simulation
     success, output = run_command(
-        "source .venv/bin/activate && python -c \"from src.performance.distributed_executor import DistributedExecutor; executor = DistributedExecutor(); executor._auto_scale_workers(); print('Auto-scaling simulation completed')\"",
+        "GITHUB_TOKEN=mock_token OPENAI_API_KEY=mock_key python3 -c \"from src.performance.distributed_executor import DistributedExecutor; executor = DistributedExecutor(); executor._auto_scale_workers(); print('Auto-scaling simulation completed')\"",
         "Auto-scaling functionality"
     )
     results["tests"]["auto_scaling"] = {"success": success, "details": output}

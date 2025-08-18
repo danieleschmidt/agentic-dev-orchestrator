@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-10T07:44:10.677156",
+  "timestamp": "2025-08-18T03:24:23.911960",
   "generation": 2,
   "tests": {
     "security_scan": {
       "success": true,
-      "details": "\ud83d\udd0d Running comprehensive security scan...\n\ud83d\udcca Scan complete. Results saved to: security_reports/security_scan_20250810_074421.json\n\n\ud83d\udcc8 Security Summary:\n  Total findings: 165\n  Risk score: 717\n  High: 19\n  Medium: 146\n2025-08-10 07:44:10,842 - enhanced_security_scanner - INFO - Completed dependency_check scan\n2025-08-10 07:44:18,668 - enhanced_security_scanner - INFO - Completed static_analysis scan\n2025-08-10 07:44:18,673 - enhanced_security_scanner - INFO - Completed license_check scan\n2025-08-10 07:44:19,436 - enhanced_security_scanner - INFO - Completed container_scan scan\n2025-08-10 07:44:19,727 - enhanced_security_scanner - INFO - Completed configuration_check scan\n2025-08-10 07:44:21,480 - enhanced_security_scanner - INFO - Completed secret_scan scan\n"
+      "details": "\ud83d\udd0d Running comprehensive security scan...\n\ud83d\udcca Scan complete. Results saved to: security_reports/security_scan_20250818_032426.json\n\n\ud83d\udcc8 Security Summary:\n  Total findings: 54\n  Risk score: 267\n  High: 17\n  Medium: 37\n2025-08-18 03:24:24,027 - enhanced_security_scanner - INFO - Completed dependency_check scan\n2025-08-18 03:24:24,571 - enhanced_security_scanner - INFO - Completed static_analysis scan\n2025-08-18 03:24:24,576 - enhanced_security_scanner - INFO - Completed license_check scan\n2025-08-18 03:24:24,734 - enhanced_security_scanner - INFO - Completed container_scan scan\n2025-08-18 03:24:24,993 - enhanced_security_scanner - INFO - Completed configuration_check scan\n2025-08-18 03:24:26,249 - enhanced_security_scanner - INFO - Completed secret_scan scan\n"
     },
     "structured_logging": {
       "success": true,
-      "details": "{\"timestamp\": \"2025-08-10T07:44:21.597000\", \"level\": \"INFO\", \"logger\": \"test\", \"message\": \"Test message\", \"thread_id\": 140252260216960, \"process_id\": 3189}\nStructured logging test completed\n"
+      "details": "{\"timestamp\": \"2025-08-18T03:24:26.357604\", \"level\": \"INFO\", \"logger\": \"test\", \"message\": \"Test message\", \"thread_id\": 140613027786880, \"process_id\": 2702}\nStructured logging test completed\n"
     },
     "circuit_breaker": {
       "success": true,
@@ -20,7 +20,7 @@
     },
     "performance_logging": {
       "success": true,
-      "details": "{\"timestamp\": \"2025-08-10T07:44:23.485673\", \"level\": \"INFO\", \"logger\": \"perf_test\", \"message\": \"Performance: test_operation\", \"thread_id\": 139861663322240, \"process_id\": 3194, \"operation\": \"test_operation\", \"duration_ms\": 100.2812385559082, \"performance_event\": true}\nPerformance logging test completed\n"
+      "details": "{\"timestamp\": \"2025-08-18T03:24:28.280708\", \"level\": \"INFO\", \"logger\": \"perf_test\", \"message\": \"Performance: test_operation\", \"thread_id\": 140311553953920, \"process_id\": 2710, \"operation\": \"test_operation\", \"duration_ms\": 100.24595260620117, \"performance_event\": true}\nPerformance logging test completed\n"
     },
     "security_report": {
       "success": true,
@@ -28,11 +28,11 @@
     },
     "retry_logic": {
       "success": true,
-      "details": "Running retry mechanism demos...\nDemo 1 result: Success!\nDemo 2 result: Query result for: SELECT * FROM users\n2025-08-10 07:44:23,581 - advanced_retry - WARNING - Attempt 1/3 failed: Database connection lost. Retrying in 0.54s\n2025-08-10 07:44:24,126 - advanced_retry - WARNING - Attempt 2/3 failed: Database connection lost. Retrying in 1.10s\n"
+      "details": "Running retry mechanism demos...\nDemo 1 failed: Function flaky_function failed after 3 attempts\nDemo 2 result: Query result for: SELECT * FROM users\n2025-08-18 03:24:28,364 - advanced_retry - WARNING - Attempt 1/3 failed: Random connection error. Retrying in 0.10s\n2025-08-18 03:24:28,467 - advanced_retry - WARNING - Attempt 2/3 failed: Random connection error. Retrying in 0.21s\n2025-08-18 03:24:28,675 - advanced_retry - WARNING - Attempt 3/3 failed: Random connection error\n2025-08-18 03:24:28,675 - advanced_retry - WARNING - Attempt 1/3 failed: Database connection lost. Retrying in 0.51s\n"
     },
     "log_files": {
       "success": true,
-      "details": "Found 13 log files"
+      "details": "Found 9 log files"
     }
   },
   "overall_success": true,
