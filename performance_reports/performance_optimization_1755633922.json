@@ -1,0 +1,39 @@
+{
+  "timestamp": 1755633922.6296906,
+  "optimizations": [
+    "Optimized garbage collection thresholds",
+    "Enabled Python optimization mode",
+    "Created optimized cache directories: ['cache', 'temp', '.ado_cache']"
+  ],
+  "benchmarks": {
+    "adaptive_caching": {
+      "status": "failed",
+      "error": "AdaptiveCache.__init__() got an unexpected keyword argument 'max_size'"
+    },
+    "backlog_processing": {
+      "status": "success",
+      "load_time": 0.0014753341674804688,
+      "report_time": 4.029273986816406e-05,
+      "total_items": 4,
+      "ready_items": 0
+    },
+    "memory_optimization": {
+      "optimizations": [
+        "Garbage collected 0 objects"
+      ],
+      "memory_info": {
+        "gc_counts": [
+          0,
+          0,
+          0
+        ],
+        "gc_threshold": [
+          700,
+          10,
+          10
+        ]
+      }
+    }
+  },
+  "overall_score": 69.93937492370605
+}

@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-18T03:24:44.331324",
+  "timestamp": "2025-08-19T20:03:54.989391",
   "generation": 3,
   "tests": {
     "adaptive_cache": {
-      "success": true,
-      "details": "Adaptive cache test: success\n"
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/root/repo/src/performance/__init__.py\", line 3, in <module>\n    from .distributed_executor import DistributedExecutor, TaskDefinition, TaskResult, LoadBalancer\n  File \"/root/repo/src/performance/distributed_executor.py\", line 20, in <module>\n    import psutil\nModuleNotFoundError: No module named 'psutil'\n"
     },
     "distributed_executor": {
-      "success": true,
-      "details": "Distributed executor initialized successfully\n"
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/root/repo/src/performance/__init__.py\", line 3, in <module>\n    from .distributed_executor import DistributedExecutor, TaskDefinition, TaskResult, LoadBalancer\n  File \"/root/repo/src/performance/distributed_executor.py\", line 20, in <module>\n    import psutil\nModuleNotFoundError: No module named 'psutil'\n"
     },
     "async_executor": {
       "success": false,
@@ -16,38 +16,38 @@
     },
     "performance_metrics": {
       "success": false,
-      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAttributeError: 'MetricsCollector' object has no attribute 'collect_system_metrics'\n"
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/root/repo/src/performance/__init__.py\", line 3, in <module>\n    from .distributed_executor import DistributedExecutor, TaskDefinition, TaskResult, LoadBalancer\n  File \"/root/repo/src/performance/distributed_executor.py\", line 20, in <module>\n    import psutil\nModuleNotFoundError: No module named 'psutil'\n"
     },
     "resource_pool": {
-      "success": true,
-      "details": "Resource pool created with max_size=10\n"
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/root/repo/src/performance/__init__.py\", line 3, in <module>\n    from .distributed_executor import DistributedExecutor, TaskDefinition, TaskResult, LoadBalancer\n  File \"/root/repo/src/performance/distributed_executor.py\", line 20, in <module>\n    import psutil\nModuleNotFoundError: No module named 'psutil'\n"
     },
     "load_balancing": {
-      "success": true,
-      "details": "Load balancer initialized\n"
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/root/repo/src/performance/__init__.py\", line 3, in <module>\n    from .distributed_executor import DistributedExecutor, TaskDefinition, TaskResult, LoadBalancer\n  File \"/root/repo/src/performance/distributed_executor.py\", line 20, in <module>\n    import psutil\nModuleNotFoundError: No module named 'psutil'\n"
     },
     "backlog_performance": {
       "success": true,
-      "details": "Processing time: 0.65s"
+      "details": "Processing time: 0.19s"
     },
     "concurrent_requests": {
-      "success": true,
-      "details": "Concurrent requests test completed in 0.00s\n"
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'requests'\n"
     },
     "memory_optimization": {
-      "success": true,
-      "details": "Memory optimization test: 0.00MB freed\n"
+      "success": false,
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'psutil'\n"
     },
     "auto_scaling": {
       "success": false,
-      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAttributeError: 'DistributedExecutor' object has no attribute '_auto_scale_workers'\n"
+      "details": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/root/repo/src/performance/__init__.py\", line 3, in <module>\n    from .distributed_executor import DistributedExecutor, TaskDefinition, TaskResult, LoadBalancer\n  File \"/root/repo/src/performance/distributed_executor.py\", line 20, in <module>\n    import psutil\nModuleNotFoundError: No module named 'psutil'\n"
     }
   },
-  "overall_success": true,
+  "overall_success": false,
   "performance_benchmarks": {
-    "backlog_processing_time": 0.6543483734130859
+    "backlog_processing_time": 0.1868433952331543
   },
   "total_tests": 10,
-  "passed_tests": 7,
-  "success_rate": 0.7
+  "passed_tests": 1,
+  "success_rate": 0.1
 }

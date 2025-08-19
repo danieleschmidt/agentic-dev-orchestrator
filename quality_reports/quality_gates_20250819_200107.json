@@ -1,20 +1,20 @@
 {
-  "timestamp": "2025-08-19T20:06:14.667205",
+  "timestamp": "2025-08-19T20:01:07.316055",
   "gates": {
     "syntax_validation": {
       "score": 100.0,
       "result": "PASSED",
-      "message": "Checked 30 files, 0 syntax errors"
+      "message": "Checked 29 files, 0 syntax errors"
     },
     "quantum_integration": {
-      "score": 95.0,
-      "result": "PASSED",
-      "message": "Quantum system initialized, coherence: 1.000"
+      "score": 0.0,
+      "result": "FAILED",
+      "message": "Quantum integration failed: cannot access local variable 'yaml' where it is not associated with a value"
     },
     "security_validation": {
-      "score": 100.0,
+      "score": 80.0,
       "result": "PASSED",
-      "message": "Security validation completed, score: 100.0"
+      "message": "Security validation completed, score: 80.0"
     },
     "error_recovery": {
       "score": 90.0,
@@ -32,9 +32,9 @@
       "message": "Found 7/7 required files"
     }
   },
-  "overall_score": 94.75,
-  "passed": 6,
-  "failed": 0,
+  "overall_score": 75.58333333333333,
+  "passed": 5,
+  "failed": 1,
   "warnings": 0,
-  "execution_time": 0.14850735664367676
+  "execution_time": 0.1853938102722168
 }

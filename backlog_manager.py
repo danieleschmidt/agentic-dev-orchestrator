@@ -52,9 +52,15 @@ class BacklogManager:
             # Try YAML first, fallback to JSON
             try:
                 import yaml
-                with open(self.backlog_file, 'r') as f:
-                    data = yaml.safe_load(f) or {}
-            except (ImportError, yaml.YAMLError):
+                try:
+                    with open(self.backlog_file, 'r') as f:
+                        data = yaml.safe_load(f) or {}
+                except yaml.YAMLError:
+                    # If YAML parsing fails, try JSON
+                    with open(self.backlog_file, 'r') as f:
+                        data = json.load(f)
+            except ImportError:
+                # YAML not available, try JSON directly
                 try:
                     with open(self.backlog_file, 'r') as f:
                         data = json.load(f)
@@ -117,9 +123,7 @@ class BacklogManager:
         self.merge_and_dedupe_items(discovered_items)
     
     def save_backlog(self) -> None:
-        """Save backlog to YAML file"""
-        import yaml
-        
+        """Save backlog to YAML file (with fallback to JSON)"""
         data = {
             **self.config,
             'metadata': {
@@ -138,8 +142,15 @@ class BacklogManager:
             })
         }
         
-        with open(self.backlog_file, 'w') as f:
-            yaml.dump(data, f, indent=2)
+        # Try YAML first, fallback to JSON
+        try:
+            import yaml
+            with open(self.backlog_file, 'w') as f:
+                yaml.dump(data, f, indent=2)
+        except ImportError:
+            # Fallback to JSON if YAML not available
+            with open(self.backlog_file, 'w') as f:
+                json.dump(data, f, indent=2)
     
     def discover_from_json_files(self) -> List[BacklogItem]:
         """Discover backlog items from backlog/*.json files"""

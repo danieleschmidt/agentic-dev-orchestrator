@@ -6,8 +6,16 @@ Provides comprehensive security validation for all user inputs and file operatio
 
 import re
 import json
-import yaml
 from pathlib import Path
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
+    # Create a mock YAMLError for exception handling
+    class YAMLError(Exception):
+        pass
+    yaml = type('MockYAML', (), {'YAMLError': YAMLError})()
 from typing import Any, Dict, List, Optional, Union
 import logging
 from dataclasses import dataclass
@@ -190,6 +198,10 @@ class SecurityInputValidator:
             return string_result
         
         # YAML parsing with safe loader
+        if not YAML_AVAILABLE:
+            errors.append("YAML parsing not available - install PyYAML")
+            return ValidationResult(False, errors, warnings)
+            
         try:
             parsed_data = yaml.safe_load(data)
             
