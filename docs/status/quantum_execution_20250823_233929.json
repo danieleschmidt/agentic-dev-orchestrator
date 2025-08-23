@@ -1,0 +1,161 @@
+{
+  "execution_summary": {
+    "total_tasks": 7,
+    "completed_tasks": 7,
+    "failed_tasks": 0,
+    "success_rate": 1.0,
+    "average_quantum_efficiency": 1.0,
+    "total_execution_time": 3.243389844894409
+  },
+  "quantum_metrics": {
+    "coherence_level": 1.0,
+    "quantum_gates_applied": 9,
+    "entanglement_groups": 0,
+    "superposition_states": 3
+  },
+  "execution_results": [
+    {
+      "task_id": "quantum_coherence_optimization",
+      "status": "completed",
+      "duration": 0.4136042594909668,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:28.962605"
+    },
+    {
+      "task_id": "entanglement_network_expansion",
+      "status": "completed",
+      "duration": 0.4203643798828125,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:28.969348"
+    },
+    {
+      "task_id": "pip-installable",
+      "status": "completed",
+      "duration": 0.5377748012542725,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:29.086737"
+    },
+    {
+      "task_id": "test-coverage",
+      "status": "completed",
+      "duration": 0.5928425788879395,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:29.141671"
+    },
+    {
+      "task_id": "simple-task",
+      "status": "completed",
+      "duration": 0.39188098907470703,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:29.361530"
+    },
+    {
+      "task_id": "sample-task",
+      "status": "completed",
+      "duration": 0.4832005500793457,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:29.446164"
+    },
+    {
+      "task_id": "superposition_state_management",
+      "status": "completed",
+      "duration": 0.40372228622436523,
+      "quantum_efficiency": 1.0,
+      "entangled_results": [],
+      "error_message": null,
+      "timestamp": "2025-08-23T23:39:29.490773"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "quantum_coherence_optimization",
+      "title": "Quantum Coherence Optimization",
+      "description": "Optimize quantum coherence levels across all execution paths",
+      "status": "completed",
+      "priority": 8.5,
+      "quantum_state": "entangled_high_priority",
+      "entanglement_group": null,
+      "coherence_level": 0.934,
+      "created_at": "2025-08-23T23:39:28.548428"
+    },
+    {
+      "id": "superposition_state_management",
+      "title": "Superposition State Management",
+      "description": "Enhance superposition state management for parallel execution",
+      "status": "completed",
+      "priority": 8.2,
+      "quantum_state": "coherent_execution",
+      "entanglement_group": null,
+      "coherence_level": 0.9479,
+      "created_at": "2025-08-23T23:39:28.548556"
+    },
+    {
+      "id": "entanglement_network_expansion",
+      "title": "Entanglement Network Expansion",
+      "description": "Expand quantum entanglement networks for better task correlation",
+      "status": "completed",
+      "priority": 7.8,
+      "quantum_state": "coherent_execution",
+      "entanglement_group": null,
+      "coherence_level": 0.9396000000000001,
+      "created_at": "2025-08-23T23:39:28.548495"
+    },
+    {
+      "id": "simple-task",
+      "title": "Add welcome message to CLI",
+      "description": "Add a friendly welcome message when users run the ado command",
+      "status": "completed",
+      "priority": 6.0,
+      "quantum_state": "coherent_execution",
+      "entanglement_group": null,
+      "coherence_level": 0.9039,
+      "created_at": "2025-08-23T23:39:28.548143"
+    },
+    {
+      "id": "pip-installable",
+      "title": "Create setup.py for pip installability",
+      "description": "Make ADO installable via 'pip install agentic-dev-orchestrator' as mentioned in README",
+      "status": "completed",
+      "priority": 5.0,
+      "quantum_state": "superposition",
+      "entanglement_group": null,
+      "coherence_level": 0.8814,
+      "created_at": "2025-08-23T23:39:28.547626"
+    },
+    {
+      "id": "sample-task",
+      "title": "Add user authentication to API",
+      "description": "Implement JWT-based authentication for the API endpoints to secure user access",
+      "status": "completed",
+      "priority": 4.2,
+      "quantum_state": "superposition",
+      "entanglement_group": null,
+      "coherence_level": 0.8662,
+      "created_at": "2025-08-23T23:39:28.547943"
+    },
+    {
+      "id": "test-coverage",
+      "title": "Add comprehensive unit tests",
+      "description": "Create pytest-based test suite for backlog_manager.py and autonomous_executor.py with >80% coverage",
+      "status": "completed",
+      "priority": 2.6,
+      "quantum_state": "superposition",
+      "entanglement_group": null,
+      "coherence_level": 0.8321000000000001,
+      "created_at": "2025-08-23T23:39:28.548339"
+    }
+  ],
+  "timestamp": "2025-08-23T23:39:29.491309"
+}
