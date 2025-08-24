@@ -1,0 +1,301 @@
+{
+  "overall_status": "failed",
+  "overall_score": 0.7005126144946168,
+  "gate_results": [
+    {
+      "gate_name": "code_syntax_validation",
+      "status": "passed",
+      "score": 1.0,
+      "details": "All 116 Python files have valid syntax",
+      "metrics": {
+        "total_files": 116,
+        "valid_files": 116
+      },
+      "recommendations": [],
+      "execution_time": 0.5425431728363037,
+      "timestamp": "2025-08-23T23:51:31.968221"
+    },
+    {
+      "gate_name": "unit_tests_execution",
+      "status": "failed",
+      "score": 0.0,
+      "details": "Unit tests failed",
+      "metrics": {
+        "stderr": "/usr/bin/python3: No module named pytest\n"
+      },
+      "recommendations": [],
+      "execution_time": 0.06212663650512695,
+      "timestamp": "2025-08-23T23:51:32.030612"
+    },
+    {
+      "gate_name": "integration_tests_execution",
+      "status": "passed",
+      "score": 0.9,
+      "details": "Integration tests simulation completed successfully",
+      "metrics": {
+        "simulated": true
+      },
+      "recommendations": [],
+      "execution_time": 0.2870321273803711,
+      "timestamp": "2025-08-23T23:51:32.317951"
+    },
+    {
+      "gate_name": "security_vulnerability_scan",
+      "status": "failed",
+      "score": 0.0,
+      "details": "Found 2280 potential security issues",
+      "metrics": {
+        "vulnerabilities": [
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\u2705 Created directory: {dir_path}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\ud83e\udd16 {_('cli.welcome')}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\ud83d\ude80 {_('cli.starting_execution')}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\u274c {_('cli.missing_env_vars', vars=', '.join(missing_env))}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\u26a0\ufe0f  Sentiment analysis unavailable: {e}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\u26a0\ufe0f  Learning engine unavailable: {e}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\ud83d\udca1 Found {report['high_confidence_insights']}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\u26a0\ufe0f  Learning report generation failed: {e}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\\n\ud83d\udcca {_('cli.execution_summary')}"
+          },
+          {
+            "file": "ado.py",
+            "type": "sql_injection",
+            "match": "f\"\u2705 {_('cli.completed_items', count=completed_count)}"
+          }
+        ],
+        "total_vulnerabilities": 2280
+      },
+      "recommendations": [
+        "Review and fix security vulnerabilities",
+        "Use environment variables for secrets"
+      ],
+      "execution_time": 0.2383418083190918,
+      "timestamp": "2025-08-23T23:51:32.268922"
+    },
+    {
+      "gate_name": "performance_benchmarking",
+      "status": "passed",
+      "score": 1.0,
+      "details": "Average execution time: 50.4ms",
+      "metrics": {
+        "generation_1": {
+          "execution_time_ms": 50.48727989196777,
+          "throughput_ops_per_sec": 19806.969243337946
+        },
+        "generation_2": {
+          "execution_time_ms": 50.271034240722656,
+          "throughput_ops_per_sec": 19892.170811754215
+        },
+        "generation_3": {
+          "execution_time_ms": 50.45270919799805,
+          "throughput_ops_per_sec": 19820.5411740244
+        }
+      },
+      "recommendations": [],
+      "execution_time": 0.15150237083435059,
+      "timestamp": "2025-08-23T23:51:32.421152"
+    },
+    {
+      "gate_name": "code_quality_analysis",
+      "status": "warning",
+      "score": 0.45106861642294716,
+      "details": "Code quality score: 0.45",
+      "metrics": {
+        "total_lines": 45817,
+        "total_functions": 2244,
+        "total_classes": 423,
+        "docstring_count": 2406,
+        "documentation_ratio": 0.9021372328458943,
+        "files_analyzed": 116
+      },
+      "recommendations": [
+        "Add more docstrings",
+        "Consider refactoring large files"
+      ],
+      "execution_time": 0.037446022033691406,
+      "timestamp": "2025-08-23T23:51:32.307152"
+    },
+    {
+      "gate_name": "documentation_validation",
+      "status": "passed",
+      "score": 1.0,
+      "details": "Documentation completeness: 3/3 required docs",
+      "metrics": {
+        "required_docs": [
+          "README.md",
+          "CHANGELOG.md",
+          "CONTRIBUTING.md"
+        ],
+        "existing_docs": [
+          "README.md",
+          "CHANGELOG.md",
+          "CONTRIBUTING.md"
+        ],
+        "missing_docs": [],
+        "total_doc_files": 94
+      },
+      "recommendations": [],
+      "execution_time": 0.004133701324462891,
+      "timestamp": "2025-08-23T23:51:32.311578"
+    },
+    {
+      "gate_name": "dependency_security_audit",
+      "status": "passed",
+      "score": 0.95,
+      "details": "Audited 399 dependencies",
+      "metrics": {
+        "dependencies_count": 399,
+        "dependencies": [
+          "PyYAML",
+          "pytest",
+          "pytest",
+          "pytest-cov",
+          "pytest-xdist",
+          "pytest-mock",
+          "pytest-asyncio",
+          "pytest-benchmark",
+          "pytest-timeout",
+          "pytest-randomly",
+          "pytest-sugar",
+          "pytest-clarity",
+          "factory-boy",
+          "faker",
+          "freezegun",
+          "responses",
+          "httpx",
+          "aioresponses",
+          "coverage[toml]",
+          "pytest-html"
+        ]
+      },
+      "recommendations": [],
+      "execution_time": 0.0007283687591552734,
+      "timestamp": "2025-08-23T23:51:32.312527"
+    },
+    {
+      "gate_name": "quantum_functionality_validation",
+      "status": "passed",
+      "score": 1.0,
+      "details": "Quantum functionality validated in 3/3 modules",
+      "metrics": {
+        "quantum_autonomous_sdlc_orchestrator.py": {
+          "feature_score": 1.0,
+          "found_features": 5,
+          "total_features": 5
+        },
+        "robust_quantum_sdlc_orchestrator.py": {
+          "feature_score": 1.0,
+          "found_features": 5,
+          "total_features": 5
+        },
+        "scalable_quantum_sdlc_orchestrator.py": {
+          "feature_score": 1.0,
+          "found_features": 5,
+          "total_features": 5
+        }
+      },
+      "recommendations": [],
+      "execution_time": 0.0010180473327636719,
+      "timestamp": "2025-08-23T23:51:32.313649"
+    },
+    {
+      "gate_name": "scalability_validation",
+      "status": "passed",
+      "score": 0.8,
+      "details": "Scalability features: 4/5",
+      "metrics": {
+        "scalability_features": [
+          "auto_scaling",
+          "distributed_processing",
+          "intelligent_cache",
+          "load_balancer",
+          "performance_optimization"
+        ],
+        "found_features": 4,
+        "scalability_score": 0.8
+      },
+      "recommendations": [],
+      "execution_time": 0.003427267074584961,
+      "timestamp": "2025-08-23T23:51:32.317306"
+    },
+    {
+      "gate_name": "deployment_readiness_check",
+      "status": "passed",
+      "score": 0.8571428571428571,
+      "details": "Deployment readiness: 6/7 checks passed",
+      "metrics": {
+        "pyproject.toml": true,
+        "requirements.txt": true,
+        "setup.py": true,
+        "dockerfile": true,
+        "main_entry_point": true,
+        "configuration_files": false,
+        "deployment_scripts": true
+      },
+      "recommendations": [],
+      "execution_time": 0.00029015541076660156,
+      "timestamp": "2025-08-23T23:51:32.317753"
+    }
+  ],
+  "summary_metrics": {
+    "total_gates": 11,
+    "passed_gates": 8,
+    "failed_gates": 2,
+    "warning_gates": 1,
+    "pass_rate": 0.7272727272727273,
+    "total_execution_time": 1.328589677810669,
+    "average_gate_score": 0.723473770324164
+  },
+  "critical_issues": [
+    "unit_tests_execution: Unit tests failed",
+    "security_vulnerability_scan: Found 2280 potential security issues"
+  ],
+  "warnings": [
+    "code_quality_analysis: Code quality score: 0.45"
+  ],
+  "recommendations": [
+    "Review and fix security vulnerabilities",
+    "Use environment variables for secrets",
+    "Add more docstrings",
+    "Consider refactoring large files"
+  ],
+  "timestamp": "2025-08-23T23:51:32.421625",
+  "generation_validated": [
+    1,
+    3
+  ]
+}
