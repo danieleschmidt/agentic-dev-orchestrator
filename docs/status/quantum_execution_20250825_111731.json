@@ -157,13 +157,5 @@
       "created_at": "2025-08-25T11:17:30.385215"
     }
   ],
-  "timestamp": "2025-08-25T11:17:31.315894",
-  "quantum_state_registry": {
-    "initialized_at": "2025-08-25T11:17:30.383543",
-    "coherence_level": 1.0,
-    "entanglement_map": {},
-    "superposition_states": {},
-    "measurement_history": [],
-    "quantum_gates_applied": 9
-  }
+  "timestamp": "2025-08-25T11:17:31.315894"
 }
