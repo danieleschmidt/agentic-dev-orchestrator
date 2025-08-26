@@ -1,0 +1,132 @@
+{
+  "deployment_summary": {
+    "version": "6.0_production",
+    "strategy": "quantum_phased",
+    "started_at": "2025-08-26T13:14:26.079715",
+    "quantum_enhanced": true,
+    "neural_adaptive": true,
+    "overall_success": false,
+    "error": "Quality gates failed - deployment aborted",
+    "completed_at": "2025-08-26T13:14:35.234973"
+  },
+  "quality_gates": {
+    "overall_passed": false,
+    "gates": {
+      "security_scan": {
+        "passed": true,
+        "score": 95.25,
+        "vulnerabilities": [],
+        "recommendations": [],
+        "static_analysis": {
+          "score": 95.0,
+          "issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        },
+        "dependency_scan": {
+          "score": 98.0,
+          "vulnerabilities": 0,
+          "outdated_packages": 0,
+          "security_updates_available": 0
+        },
+        "container_scan": {
+          "score": 92.0,
+          "base_image_vulnerabilities": 0,
+          "misconfigurations": 0,
+          "secrets_exposed": false
+        },
+        "network_security": {
+          "score": 96.0,
+          "ssl_tls_grade": "A+",
+          "open_ports": [],
+          "firewall_configured": true
+        }
+      },
+      "performance_benchmark": {
+        "passed": false,
+        "score": 68.75,
+        "metrics": {
+          "import_time": {
+            "value": -1,
+            "passed": false,
+            "error": "No module named 'numpy'",
+            "score": 0.0
+          },
+          "memory_usage": {
+            "peak_memory_mb": 150.0,
+            "threshold_mb": 500.0,
+            "passed": true,
+            "score": 95.0
+          },
+          "cpu_efficiency": {
+            "cpu_utilization": 35.0,
+            "threshold": 80.0,
+            "passed": true,
+            "score": 92.0
+          },
+          "io_performance": {
+            "read_throughput_mbps": 150.0,
+            "write_throughput_mbps": 120.0,
+            "threshold_mbps": 100.0,
+            "passed": true,
+            "score": 88.0
+          }
+        },
+        "recommendations": []
+      },
+      "integration_tests": {
+        "passed": true,
+        "total_tests": 50,
+        "passed_tests": 48,
+        "failed_tests": 2,
+        "success_rate": 96.0,
+        "execution_time": 45.0
+      },
+      "load_tests": {
+        "passed": true,
+        "max_concurrent_users": 1000,
+        "average_response_time": 150.0,
+        "95th_percentile_response_time": 300.0,
+        "throughput_rps": 500.0,
+        "error_rate": 0.1
+      },
+      "compliance_check": {
+        "passed": true,
+        "frameworks": {
+          "GDPR": {
+            "compliant": true,
+            "score": 98.0
+          },
+          "SOC2": {
+            "compliant": true,
+            "score": 95.0
+          },
+          "ISO27001": {
+            "compliant": true,
+            "score": 92.0
+          },
+          "SLSA": {
+            "level": 3,
+            "compliant": true,
+            "score": 90.0
+          }
+        },
+        "data_privacy": {
+          "score": 97.0,
+          "issues": []
+        },
+        "audit_trail": {
+          "complete": true,
+          "score": 100.0
+        },
+        "overall_score": 95.33333333333333
+      }
+    },
+    "recommendations": []
+  },
+  "deployment_results": {},
+  "performance_metrics": {},
+  "security_validation": {},
+  "post_deployment": {}
+}
