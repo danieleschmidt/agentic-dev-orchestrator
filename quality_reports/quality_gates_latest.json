@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-08-25T11:13:02.101196",
+  "timestamp": "2025-08-26T13:55:13.066732",
   "gates": {
     "syntax_validation": {
-      "score": 80,
-      "result": "FAILED",
-      "message": "Checked 48 files, 1 syntax errors"
+      "score": 100.0,
+      "result": "PASSED",
+      "message": "Checked 48 files, 0 syntax errors"
     },
     "quantum_integration": {
       "score": 95.0,
@@ -32,9 +32,9 @@
       "message": "Found 7/7 required files"
     }
   },
-  "overall_score": 91.41666666666667,
-  "passed": 5,
-  "failed": 1,
+  "overall_score": 94.75,
+  "passed": 6,
+  "failed": 0,
   "warnings": 0,
-  "execution_time": 1.101161241531372
+  "execution_time": 0.33861708641052246
 }
