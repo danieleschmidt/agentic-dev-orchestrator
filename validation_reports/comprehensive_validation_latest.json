@@ -1,0 +1,247 @@
+{
+  "validation_summary": {
+    "timestamp": "2025-08-26T13:11:05.253365",
+    "execution_time": 0.5014431476593018,
+    "overall_score": 18.885941644562333,
+    "overall_passed": false,
+    "phases_passed": 2,
+    "total_phases": 10,
+    "success_rate": 20.0
+  },
+  "quality_gates": {
+    "code_quality": false,
+    "security": false,
+    "performance": false,
+    "test_coverage": false,
+    "documentation": true,
+    "deployment": true
+  },
+  "phase_results": {
+    "code_quality_analysis": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "formatting": {
+          "score": 0.0,
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'python'"
+        },
+        "linting": {
+          "score": 0.0,
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'python'"
+        }
+      },
+      "recommendations": [
+        "Run 'python -m black .' to format code",
+        "Run 'python -m ruff check . --fix' to fix linting issues"
+      ]
+    },
+    "security_scanning": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "bandit": {
+          "score": 0.0,
+          "passed": false,
+          "error": "[Errno 2] No such file or directory: 'python'"
+        },
+        "patterns": {
+          "score": 0,
+          "passed": false,
+          "issues": [
+            "Potential API key in ado.py",
+            "Potential password in autonomous_executor.py",
+            "Potential password in comprehensive_validation_security.py",
+            "Potential password in deployment_guide.py",
+            "Potential API key in deployment_guide.py",
+            "Potential password in quantum_quality_gates_validator.py",
+            "Potential password in quantum_security_validator.py",
+            "Potential password in robust_quantum_sdlc_orchestrator.py",
+            "Potential API key in robust_quantum_sdlc_orchestrator.py",
+            "Potential API key in run_gen1_validation.py",
+            "Potential API key in run_gen2_validation.py",
+            "Potential API key in run_gen3_validation.py",
+            "Potential password in run_comprehensive_validation.py",
+            "Potential API key in run_comprehensive_validation.py",
+            "Potential password in scripts/repository_health_monitor.py",
+            "Potential API key in src/api/server.py",
+            "Potential password in src/security/comprehensive_scanner.py",
+            "Potential API key in src/security/comprehensive_scanner.py",
+            "Potential password in src/security/enhanced_scanner.py",
+            "Potential API key in src/security/enhanced_scanner.py",
+            "Potential password in src/security/input_validator.py",
+            "Potential password in src/security/scanner.py"
+          ]
+        }
+      },
+      "vulnerabilities": [],
+      "recommendations": [
+        "Address high-severity security issues",
+        "Review and update security patterns",
+        "Consider additional security scanning tools"
+      ]
+    },
+    "performance_testing": {
+      "passed": false,
+      "score": 0.0,
+      "details": {},
+      "benchmarks": {
+        "import_time": {
+          "value": -1,
+          "passed": false,
+          "error": "unexpected character after line continuation character (autonomous_executor.py, line 138)"
+        },
+        "initialization_time": {
+          "value": -1,
+          "passed": false,
+          "error": "cannot access local variable 'TerragONAutonomousSDLCv6' where it is not associated with a value"
+        }
+      },
+      "recommendations": [
+        "Optimize import times",
+        "Review initialization procedures",
+        "Consider lazy loading for large components"
+      ]
+    },
+    "test_coverage_analysis": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "test_execution": {
+          "success_rate": 0.0,
+          "passed": false,
+          "output": "Traceback (most recent call last):\n  File \"/root/repo/test_terragon_autonomous_sdlc_v6.py\", line 10, in <module>\n    import pytest\nModuleNotFoundError: No module named 'pytest'\n"
+        }
+      },
+      "recommendations": [
+        "Improve test coverage to meet 85% threshold",
+        "Add more comprehensive test cases",
+        "Review and fix failing tests"
+      ]
+    },
+    "documentation_validation": {
+      "passed": true,
+      "score": 88.85941644562334,
+      "details": {
+        "required_files": {
+          "score": 100.0,
+          "missing": [],
+          "passed": true
+        },
+        "docstring_coverage": {
+          "coverage": 77.71883289124668,
+          "documented_functions": 1465,
+          "total_functions": 1885,
+          "passed": true
+        }
+      },
+      "recommendations": []
+    },
+    "deployment_readiness": {
+      "passed": true,
+      "score": 100.0,
+      "details": {
+        "deployment_files": {
+          "score": 100.0,
+          "files_present": 4,
+          "total_files": 4
+        },
+        "package_structure": {
+          "score": 100.0,
+          "src_exists": true,
+          "init_exists": true
+        },
+        "version_consistency": {
+          "score": 100.0
+        }
+      },
+      "recommendations": []
+    },
+    "integration_testing": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "component_integration": {
+          "error": "unexpected character after line continuation character (autonomous_executor.py, line 138)",
+          "score": 0.0
+        }
+      },
+      "recommendations": [
+        "Fix component integration issues"
+      ]
+    },
+    "quantum_system_validation": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "quantum_context": {
+          "error": "unexpected character after line continuation character (autonomous_executor.py, line 138)",
+          "score": 0.0
+        }
+      },
+      "recommendations": [
+        "Fix quantum system components"
+      ]
+    },
+    "neural_network_validation": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "neural_processing": {
+          "error": "No module named 'numpy'",
+          "score": 0.0
+        }
+      },
+      "recommendations": [
+        "Fix neural network components"
+      ]
+    },
+    "distributed_system_validation": {
+      "passed": false,
+      "score": 0.0,
+      "details": {
+        "distributed_processing": {
+          "error": "unexpected character after line continuation character (distributed_quantum_orchestrator.py, line 625)",
+          "score": 0.0
+        }
+      },
+      "recommendations": [
+        "Fix distributed system components"
+      ]
+    }
+  },
+  "recommendations": {
+    "high_priority": [
+      "Address high-severity security issues",
+      "Review and update security patterns",
+      "Consider additional security scanning tools"
+    ],
+    "medium_priority": [
+      "Improve test coverage to meet 85% threshold"
+    ],
+    "low_priority": [
+      "Run 'python -m black .' to format code",
+      "Run 'python -m ruff check . --fix' to fix linting issues",
+      "Optimize import times",
+      "Review initialization procedures",
+      "Consider lazy loading for large components",
+      "Add more comprehensive test cases",
+      "Review and fix failing tests",
+      "Fix component integration issues",
+      "Fix quantum system components",
+      "Fix neural network components",
+      "Fix distributed system components"
+    ]
+  },
+  "deployment_ready": false,
+  "next_steps": [
+    "\ud83d\udd12 Address security vulnerabilities before deployment",
+    "\ud83e\uddea Improve test coverage to meet requirements",
+    "\ud83d\udd27 Fix code quality issues",
+    "\u23f3 Complete remaining quality gate requirements before deployment",
+    "Run 'python -m black .' to format code",
+    "Run 'python -m ruff check . --fix' to fix linting issues",
+    "Address high-severity security issues"
+  ]
+}
