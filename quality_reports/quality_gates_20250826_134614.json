@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-08-26T13:46:14.457616",
+  "gates": {
+    "syntax_validation": {
+      "score": 100.0,
+      "result": "PASSED",
+      "message": "Checked 48 files, 0 syntax errors"
+    },
+    "quantum_integration": {
+      "score": 95.0,
+      "result": "PASSED",
+      "message": "Quantum system initialized, coherence: 1.000"
+    },
+    "security_validation": {
+      "score": 100.0,
+      "result": "PASSED",
+      "message": "Security validation completed, score: 100.0"
+    },
+    "error_recovery": {
+      "score": 90.0,
+      "result": "PASSED",
+      "message": "Error recovery system operational"
+    },
+    "performance_optimization": {
+      "score": 83.5,
+      "result": "PASSED",
+      "message": "Performance metrics collected, score: 83.5"
+    },
+    "file_structure": {
+      "score": 100.0,
+      "result": "PASSED",
+      "message": "Found 7/7 required files"
+    }
+  },
+  "overall_score": 94.75,
+  "passed": 6,
+  "failed": 0,
+  "warnings": 0,
+  "execution_time": 0.5230553150177002
+}
